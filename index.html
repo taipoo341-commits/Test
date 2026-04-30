@@ -263,7 +263,8 @@
     }
 
     .code-select,
-    .hour-select {
+    .hour-select,
+    .special-date-select {
       width: 112px;
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 7px;
@@ -315,6 +316,24 @@
       font-weight: 950;
       letter-spacing: 0.06em;
       box-shadow: 0 0 12px rgba(255,51,51,0.18);
+      margin-bottom: 4px;
+    }
+
+    .special-badge {
+      border: 1px solid rgba(253, 186, 116, 0.45);
+      border-radius: 8px;
+      background: rgba(249, 115, 22, 0.16);
+      color: #fed7aa;
+      padding: 4px 7px;
+      font-size: 11px;
+      font-weight: 950;
+      margin-bottom: 4px;
+    }
+
+    .election-badge {
+      border-color: rgba(196, 181, 253, 0.55);
+      background: rgba(139, 92, 246, 0.18);
+      color: #ddd6fe;
     }
 
     .shift-pill {
@@ -349,6 +368,57 @@
     .daily-detail .violation-text {
       color: #fecaca;
       font-weight: 950;
+    }
+
+    .special-panel {
+      margin-top: 16px;
+      padding: 16px;
+    }
+
+    .special-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 14px;
+    }
+
+    .special-card {
+      border: 1px solid rgba(0,240,255,0.14);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.035);
+      padding: 15px;
+    }
+
+    .special-title {
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: 0.16em;
+      margin-bottom: 12px;
+    }
+
+    .special-subtitle {
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      margin: 8px 0 6px;
+    }
+
+    .special-date-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .special-date-row.election-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .special-date-select {
+      width: 100%;
+      height: 34px;
+      text-align: center;
+      font-size: 13px;
     }
 
     .core-stats-panel {
@@ -405,6 +475,13 @@
       gap: 14px;
     }
 
+    .holiday-benefit-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
     .stat-card {
       border: 1px solid rgba(0,240,255,0.14);
       border-radius: 16px;
@@ -427,6 +504,33 @@
       font-weight: 950;
       line-height: 1.2;
       word-break: break-word;
+    }
+
+    .benefit-combo {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .benefit-box {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      background: rgba(0,0,0,0.18);
+      padding: 12px;
+    }
+
+    .benefit-label {
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+
+    .benefit-value {
+      margin-top: 6px;
+      font-size: 22px;
+      font-weight: 950;
     }
 
     .split-grid {
@@ -554,6 +658,7 @@
       .core-stat-item:nth-child(1),
       .core-stat-item:nth-child(2) { border-bottom: 1px solid rgba(0, 240, 255, 0.14); }
       .stats-grid-sub { grid-template-columns: 1fr; }
+      .special-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 760px) {
@@ -564,9 +669,7 @@
         width: 100%;
       }
 
-      .top-header {
-        margin-bottom: 14px;
-      }
+      .top-header { margin-bottom: 14px; }
 
       .title {
         font-size: 26px;
@@ -625,13 +728,9 @@
         border-radius: 8px;
       }
 
-      .day-card {
-        padding: 4px;
-      }
+      .day-card { padding: 4px; }
 
-      .day-top {
-        display: block;
-      }
+      .day-top { display: block; }
 
       .day-number {
         font-size: 12px;
@@ -652,11 +751,10 @@
         height: 23px;
       }
 
-      .card-center {
-        padding: 3px 0;
-      }
+      .card-center { padding: 3px 0; }
 
-      .holiday-badge {
+      .holiday-badge,
+      .special-badge {
         font-size: 9px;
         padding: 2px 3px;
         border-radius: 5px;
@@ -676,13 +774,22 @@
         padding-top: 4px;
       }
 
-      .core-stats-panel {
-        margin-top: 14px;
+      .special-panel { padding: 12px; }
+
+      .special-date-row,
+      .special-date-row.election-row {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 5px;
       }
 
-      .core-stats-grid {
-        grid-template-columns: 1fr;
+      .special-date-select {
+        height: 30px;
+        font-size: 12px;
       }
+
+      .core-stats-panel { margin-top: 14px; }
+
+      .core-stats-grid { grid-template-columns: 1fr; }
 
       .core-stat-item {
         padding: 13px 14px;
@@ -690,24 +797,23 @@
         border-bottom: 1px solid rgba(0, 240, 255, 0.14);
       }
 
-      .core-stat-item:last-child {
-        border-bottom: none;
+      .core-stat-item:last-child { border-bottom: none; }
+
+      .core-stat-label { font-size: 11px; }
+
+      .core-stat-value { font-size: 23px; }
+
+      .stats-grid-sub { grid-template-columns: 1fr; }
+
+      .stat-value { font-size: 22px; }
+
+      .benefit-combo {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
       }
 
-      .core-stat-label {
-        font-size: 11px;
-      }
-
-      .core-stat-value {
-        font-size: 23px;
-      }
-
-      .stats-grid-sub {
-        grid-template-columns: 1fr;
-      }
-
-      .stat-value {
-        font-size: 22px;
+      .benefit-value {
+        font-size: 18px;
       }
 
       .split-grid {
@@ -715,17 +821,11 @@
         gap: 6px;
       }
 
-      .split-box {
-        padding: 8px 5px;
-      }
+      .split-box { padding: 8px 5px; }
 
-      .split-value {
-        font-size: 14px;
-      }
+      .split-value { font-size: 14px; }
 
-      .designer-name {
-        font-size: 20px;
-      }
+      .designer-name { font-size: 20px; }
     }
   </style>
 </head>
@@ -764,7 +864,7 @@
           <div class="hint-box">
             <div class="hint-title">計算說明</div>
             <div class="hint-text">
-              可代班資訊公式：先算「值班上班時間－保養上班時數－國定假日時數」，不足則不可代班；足夠時再納入交接班時數判斷 46 小時上限。
+              另計假日出勤已修正：不再把一般國定假日全部納入；停止辦公與選舉日可在月曆下方手動指定日期。
             </div>
           </div>
         </div>
@@ -782,6 +882,24 @@
         <div class="calendar-body">
           <div id="weekGrid" class="week-grid"></div>
           <div id="dayGrid" class="day-grid"></div>
+        </div>
+      </section>
+
+      <section class="panel special-panel">
+        <div class="special-grid">
+          <div class="special-card">
+            <div class="special-title">停止辦公</div>
+            <div class="special-subtitle">全日</div>
+            <div id="closureFullRow" class="special-date-row"></div>
+            <div class="special-subtitle">半日</div>
+            <div id="closureHalfRow" class="special-date-row"></div>
+          </div>
+
+          <div class="special-card">
+            <div class="special-title">選舉日</div>
+            <div class="special-subtitle">日期</div>
+            <div id="electionRow" class="special-date-row election-row"></div>
+          </div>
         </div>
       </section>
 
@@ -841,18 +959,32 @@
             <div id="substituteInfo" class="stat-value">-</div>
           </div>
         </div>
+
+        <div class="holiday-benefit-grid">
+          <div class="stat-card">
+            <div class="stat-label">假日待遇</div>
+            <div class="benefit-combo">
+              <div class="benefit-box">
+                <div class="benefit-label">另計假日出勤</div>
+                <div id="additionalHolidayWorkHours" class="benefit-value accent-amber">0.00 HR</div>
+              </div>
+              <div class="benefit-box">
+                <div class="benefit-label">得補假</div>
+                <div id="compLeaveHours" class="benefit-value accent-emerald">0.00 HR</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section class="limit-box">
         <div class="limit-title">目前版本狀態</div>
         <ul>
-          <li>手機版的四項主要工時已集中在同一張卡片內，並以分隔線區隔。</li>
-          <li>中間重複的假別小視窗已移除，避免與下方 D8～D11 資訊重複。</li>
-          <li>每日已新增 RESET，可回復該日原本班別。</li>
-          <li>休息日總工時已內嵌 1.33倍、1.67倍、2.66倍。</li>
-          <li>保養上班日已改為保養上班時數，並以 HR 顯示。</li>
-          <li>代班資訊已依指定公式改寫，並依結果套用霓虹綠或霓虹紅。</li>
-          <li>手機版月曆已改為滿版七欄顯示，不強制左右拖曳。</li>
+          <li>另計假日出勤與得補假已合併為一張「假日待遇」卡片。</li>
+          <li>另計假日出勤已排除一般國定假日，避免 5 月勞動節誤算 8 小時。</li>
+          <li>停止辦公全日、停止辦公半日、選舉日已新增手動日期欄位。</li>
+          <li>停止辦公全日與半日會在月曆卡片上標示，並納入另計假日出勤第一版計算。</li>
+          <li>選舉日會在月曆卡片上標示，並納入另計假日出勤第一版計算。</li>
         </ul>
       </section>
 
@@ -911,6 +1043,12 @@
     const SUBSTITUTE_CODES = new Set([21,22,23]);
 
     const manualRecords = {};
+    const specialDates = {
+      closureFull: [0, 0, 0, 0, 0],
+      closureHalf: [0, 0, 0, 0, 0],
+      election: [0, 0, 0]
+    };
+
     let calendarData = { workDict: {}, holidayMap: new Map() };
 
     function toRocYear(date = new Date()) {
@@ -993,6 +1131,11 @@
       if (holidayName.includes("初一") || holidayName.includes("初二") || holidayName.includes("初三")) return "春節";
       if (holidayName.includes("開國") || holidayName.includes("新年")) return "新年";
       return "國定假日";
+    }
+
+    function isSpecialHolidayForBenefits(holidayName) {
+      const type = getHolidayTypeName(holidayName);
+      return ["小年夜", "除夕", "春節", "新年"].includes(type);
     }
 
     function isValidActualCode(dayInfo) {
@@ -1123,6 +1266,18 @@
       return { workDict, holidayMap };
     }
 
+    function isClosureFullDay(day) {
+      return specialDates.closureFull.includes(Number(day));
+    }
+
+    function isClosureHalfDay(day) {
+      return specialDates.closureHalf.includes(Number(day));
+    }
+
+    function isElectionDay(day) {
+      return specialDates.election.includes(Number(day));
+    }
+
     function calcD7ActualCode(dayInfo) {
       return Number(dayInfo.actualCode);
     }
@@ -1140,6 +1295,14 @@
       if (code === 0) return "空班";
       if (code === 9) return "調整例假日";
       if (code === 10) return "調班空班";
+
+      if (isElectionDay(dayInfo.day) && valueName && isWorkCode(code)) {
+        return `選舉投票日${actionName}${valueName}`;
+      }
+
+      if ((isClosureFullDay(dayInfo.day) || isClosureHalfDay(dayInfo.day)) && valueName && isWorkCode(code)) {
+        return `停止辦公${isClosureHalfDay(dayInfo.day) ? "半日" : "日"}${actionName}${valueName}`;
+      }
 
       if (isLeaveCode(code)) {
         return getLabel(code);
@@ -1393,6 +1556,85 @@
       };
     }
 
+    function calcElectionAdditionalHours(dayInfo) {
+      const value = getCodeValue(dayInfo.actualCode);
+      if (value === 1) return 8;
+      if (value === 2) return 6;
+      if (value === 3) return 7;
+      return 0;
+    }
+
+    function calcAdditionalHolidayWorkHours(days) {
+      return days.reduce((sum, dayInfo) => {
+        if (dayInfo.isViolation) return sum;
+        if (!isWorkCode(dayInfo.actualCode)) return sum;
+
+        const hours = Number(dayInfo.attendanceHours || 0);
+        if (hours <= 0) return sum;
+
+        if (isElectionDay(dayInfo.day)) {
+          return sum + calcElectionAdditionalHours(dayInfo);
+        }
+
+        if (isClosureHalfDay(dayInfo.day)) {
+          return sum + 4;
+        }
+
+        if (isClosureFullDay(dayInfo.day)) {
+          return sum + Math.min(hours, 8);
+        }
+
+        if (!isSpecialHolidayForBenefits(dayInfo.holidayName)) {
+          return sum;
+        }
+
+        const type = getHolidayTypeName(dayInfo.holidayName);
+
+        if (type === "新年") return sum + 4;
+        if (type === "除夕") return sum + 8;
+        if (type === "春節") return sum + 8;
+        if (type === "小年夜") return sum + 8;
+
+        return sum;
+      }, 0);
+    }
+
+    function calcCompLeaveHours(days, additionalHolidayWorkHours) {
+      const rawCompHours = days.reduce((sum, dayInfo) => {
+        if (dayInfo.isViolation) return sum;
+        if (!isWorkCode(dayInfo.actualCode)) return sum;
+
+        const hours = Number(dayInfo.attendanceHours || 0);
+        if (hours <= 0) return sum;
+
+        if (isClosureHalfDay(dayInfo.day)) {
+          return sum + 4;
+        }
+
+        if (isClosureFullDay(dayInfo.day)) {
+          return sum + Math.min(hours, 8);
+        }
+
+        if (!isSpecialHolidayForBenefits(dayInfo.holidayName)) {
+          return sum;
+        }
+
+        const type = getHolidayTypeName(dayInfo.holidayName);
+
+        if (type === "新年") {
+          return sum + (hours >= 5 ? 4 : 0);
+        }
+
+        if (type === "小年夜" || type === "除夕" || type === "春節") {
+          return sum + (hours >= 5 ? 8 : Math.ceil(hours));
+        }
+
+        return sum;
+      }, 0);
+
+      return Math.max(0, rawCompHours - Number(additionalHolidayWorkHours || 0));
+    }
+
     function buildDays() {
       const rocYear = Number(document.getElementById("rocYear").value);
       const month = Number(document.getElementById("month").value);
@@ -1426,6 +1668,42 @@
       }
 
       return applySevenDayViolation(days);
+    }
+
+    function buildDateOptions(maxDay, selectedValue) {
+      let html = `<option value="0">－</option>`;
+      for (let i = 1; i <= maxDay; i++) {
+        html += `<option value="${i}" ${Number(selectedValue) === i ? "selected" : ""}>${i}</option>`;
+      }
+      return html;
+    }
+
+    function renderSpecialDateControls() {
+      const rocYear = Number(document.getElementById("rocYear").value);
+      const month = Number(document.getElementById("month").value);
+      const year = rocYear + 1911;
+      const daysInMonth = new Date(year, month, 0).getDate();
+
+      document.getElementById("closureFullRow").innerHTML = specialDates.closureFull.map((value, idx) => {
+        return `<select class="special-date-select" data-group="closureFull" data-index="${idx}">${buildDateOptions(daysInMonth, value)}</select>`;
+      }).join("");
+
+      document.getElementById("closureHalfRow").innerHTML = specialDates.closureHalf.map((value, idx) => {
+        return `<select class="special-date-select" data-group="closureHalf" data-index="${idx}">${buildDateOptions(daysInMonth, value)}</select>`;
+      }).join("");
+
+      document.getElementById("electionRow").innerHTML = specialDates.election.map((value, idx) => {
+        return `<select class="special-date-select" data-group="election" data-index="${idx}">${buildDateOptions(daysInMonth, value)}</select>`;
+      }).join("");
+
+      document.querySelectorAll(".special-date-select").forEach(sel => {
+        sel.addEventListener("change", function() {
+          const group = this.dataset.group;
+          const index = Number(this.dataset.index);
+          specialDates[group][index] = Number(this.value);
+          renderAll(false);
+        });
+      });
     }
 
     function renderCalendar() {
@@ -1466,6 +1744,10 @@
         }).join("");
 
         const holidayHtml = d.holidayName ? `<div class="holiday-badge">${d.holidayName}</div>` : "";
+        const closureFullHtml = isClosureFullDay(d.day) ? `<div class="special-badge">停止辦公全日</div>` : "";
+        const closureHalfHtml = isClosureHalfDay(d.day) ? `<div class="special-badge">停止辦公半日</div>` : "";
+        const electionHtml = isElectionDay(d.day) ? `<div class="special-badge election-badge">選舉日</div>` : "";
+
         const d11Text = d.isViolation ? `<span class="violation-text">違規</span>` : `${fmtHour(d.attendanceHours)}HR`;
 
         const detailHtml = `
@@ -1489,7 +1771,7 @@
               </div>
             </div>
             <div class="card-center">
-              <div>${holidayHtml}</div>
+              <div>${holidayHtml}${closureFullHtml}${closureHalfHtml}${electionHtml}</div>
             </div>
             <div class="shift-pill ${pillClass}">${displayLabel}</div>
             ${detailHtml}
@@ -1576,6 +1858,9 @@
       const nightFee = initialNight * 250 + deepNight * 400;
       const substitute = calcSubstituteInfo(totalHours, maintenanceHours, nationalHolidayHours, handoverHours);
 
+      const additionalHolidayWorkHours = calcAdditionalHolidayWorkHours(days);
+      const compLeaveHours = calcCompLeaveHours(days, additionalHolidayWorkHours);
+
       document.getElementById("totalHours").innerHTML = `${fmtHour(totalHours)}<span class="stat-suffix">HR</span>`;
       document.getElementById("handoverHours").innerHTML = `${fmtHour(handoverHours)}<span class="stat-suffix">HR</span>`;
       document.getElementById("nationalHolidayHours").innerHTML = `${fmtHour(nationalHolidayHours)}<span class="stat-suffix">HR</span>`;
@@ -1587,6 +1872,8 @@
       document.getElementById("code6Hours").textContent = `${fmtHour(split.code6)} HR`;
 
       document.getElementById("nightFee").innerHTML = `${nightFee.toLocaleString()}<span class="stat-suffix">元</span>`;
+      document.getElementById("additionalHolidayWorkHours").textContent = `${fmtHour(additionalHolidayWorkHours)} HR`;
+      document.getElementById("compLeaveHours").textContent = `${fmtHour(compLeaveHours)} HR`;
 
       const substituteInfoEl = document.getElementById("substituteInfo");
       substituteInfoEl.textContent = substitute.text;
@@ -1627,11 +1914,18 @@
         await loadCalendar();
       }
 
+      renderSpecialDateControls();
       renderCalendar();
     }
 
     function clearManualRecords() {
       Object.keys(manualRecords).forEach(k => delete manualRecords[k]);
+    }
+
+    function clearSpecialDates() {
+      specialDates.closureFull = [0, 0, 0, 0, 0];
+      specialDates.closureHalf = [0, 0, 0, 0, 0];
+      specialDates.election = [0, 0, 0];
     }
 
     function init() {
@@ -1661,11 +1955,13 @@
 
       document.getElementById("month").addEventListener("change", () => {
         clearManualRecords();
+        clearSpecialDates();
         renderAll(false);
       });
 
       document.getElementById("rocYear").addEventListener("change", () => {
         clearManualRecords();
+        clearSpecialDates();
         renderAll(true);
       });
 
