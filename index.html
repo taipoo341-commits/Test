@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>個人版加班待遇計算</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: #0d0f12;
+      color: #e5e7eb;
+      font-family: "Segoe UI", "Microsoft JhengHei", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body { overflow-x: hidden; }
+    select, input, button { font-family: inherit; }
+    select option { background: #111827; color: #e5e7eb; }
+
+    .app {
+      min-height: 100vh;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top left, rgba(0, 240, 255, 0.13), transparent 34%),
+        radial-gradient(circle at top right, rgba(139, 92, 246, 0.14), transparent 28%),
+        #0d0f12;
+    }
+    .container { width: 100%; max-width: 1380px; margin: 0 auto; }
+    .top-header { text-align: center; margin-bottom: 24px; }
+    .eyebrow { color: #64748b; font-size: 12px; font-weight: 900; letter-spacing: 0.34em; text-transform: uppercase; }
+    .title {
+      margin: 12px 0 0;
+      color: #00f0ff;
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 950;
+      letter-spacing: 0.13em;
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.82), 0 0 28px rgba(0, 240, 255, 0.36);
+    }
+    .subtitle { margin-top: 10px; color: #94a3b8; font-size: 14px; letter-spacing: 0.1em; }
+
+    .panel {
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      background: rgba(10, 12, 16, 0.92);
+      border-radius: 18px;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.10), inset 0 0 30px rgba(0, 240, 255, 0.04);
+    }
+    .control-panel { padding: 18px; margin-bottom: 22px; }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(160px, 1fr)) minmax(260px, auto);
+      gap: 16px;
+      align-items: end;
+    }
+    .field-label { display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 12px; font-weight: 900; letter-spacing: 0.2em; }
+    .cyber-input, .cyber-select {
+      width: 100%;
+      height: 46px;
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      border-radius: 12px;
+      background: #12161c;
+      color: #fff;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 900;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .cyber-input:focus, .cyber-select:focus { border-color: rgba(0, 240, 255, 0.85); box-shadow: 0 0 16px rgba(0, 240, 255, 0.26); }
+    .hint-box { border: 1px solid rgba(255, 157, 0, 0.35); border-radius: 12px; background: rgba(255, 157, 0, 0.07); color: #fed7aa; padding: 12px 14px; font-size: 12px; line-height: 1.6; }
+    .hint-title { color: #fdba74; font-weight: 950; letter-spacing: 0.12em; }
+    .hint-text { color: rgba(255, 237, 213, 0.82); margin-top: 3px; }
+
+    .calendar-panel { overflow: hidden; }
+    .calendar-head { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 18px 20px; border-bottom: 1px solid rgba(0, 240, 255, 0.12); background: #111722; }
+    .calendar-title { margin: 0; color: #fff; font-size: clamp(20px, 2.4vw, 28px); font-weight: 950; letter-spacing: 0.10em; }
+    .calendar-note { margin-top: 5px; color: #64748b; font-size: 12px; letter-spacing: 0.08em; }
+    .sync-message { color: #67e8f9; font-size: 14px; font-weight: 900; text-align: right; white-space: nowrap; }
+    .calendar-body { padding: 14px; }
+    .week-grid, .day-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
+    .week-grid { margin-bottom: 10px; }
+    .week-cell { border-radius: 10px; background: rgba(255,255,255,0.035); color: #94a3b8; text-align: center; padding: 10px 4px; font-size: 14px; font-weight: 950; letter-spacing: 0.20em; }
+    .day-card, .empty-card { min-height: 154px; border-radius: 14px; }
+    .empty-card { border: 1px solid rgba(255,255,255,0.035); background: rgba(255,255,255,0.012); }
+    .day-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 9px;
+      border: 1px solid rgba(0, 240, 255, 0.11);
+      background: #141a27;
+      transition: transform 0.18s, border 0.18s, box-shadow 0.18s;
+    }
+    .day-card:hover { transform: translateY(-2px); border-color: rgba(0, 240, 255, 0.62); box-shadow: 0 0 24px rgba(0, 240, 255, 0.18); }
+    .day-card.weekend { border-color: rgba(255, 51, 51, 0.35); background: rgba(255, 51, 51, 0.07); }
+    .day-card.holiday { border-color: rgba(251, 113, 133, 0.78); background: rgba(255, 51, 51, 0.12); box-shadow: 0 0 18px rgba(255, 51, 51, 0.16); }
+    .day-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .day-number { color: #fff; font-size: 16px; font-weight: 950; text-shadow: 0 0 6px rgba(255,255,255,0.42); }
+    .code-select, .hour-select {
+      width: 96px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 7px;
+      background: rgba(0,0,0,0.46);
+      color: #e2e8f0;
+      padding: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      outline: none;
+    }
+    .hour-select { width: 70px; margin-top: 4px; }
+    .select-stack { display: flex; flex-direction: column; align-items: flex-end; }
+    .card-center { flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6px 0; }
+    .holiday-badge { border: 1px solid rgba(253,164,175,0.38); border-radius: 8px; background: rgba(244,63,94,0.12); color: #fecdd3; padding: 5px 8px; font-size: 12px; font-weight: 950; letter-spacing: 0.06em; box-shadow: 0 0 12px rgba(255,51,51,0.18); }
+    .leave-badge { margin-top: 6px; border: 1px solid rgba(110,231,183,0.35); border-radius: 8px; background: rgba(16,185,129,0.10); color: #a7f3d0; padding: 4px 7px; font-size: 11px; font-weight: 900; letter-spacing: 0.06em; }
+    .shift-pill { border: 1px solid rgba(255,255,255,0.25); border-radius: 9px; padding: 7px 8px; text-align: center; font-size: 14px; font-weight: 950; letter-spacing: 0.06em; box-shadow: 0 8px 16px rgba(0,0,0,0.22); }
+    .pill-blue { background: linear-gradient(90deg, #0ea5e9, #2563eb); color: #fff; border-color: rgba(125,211,252,0.62); }
+    .pill-yellow { background: linear-gradient(90deg, #fcd34d, #f59e0b); color: #111827; border-color: rgba(253,224,71,0.7); }
+    .pill-purple { background: linear-gradient(90deg, #8b5cf6, #6d28d9); color: #fff; border-color: rgba(196,181,253,0.7); }
+    .pill-white { background: linear-gradient(90deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05)); color: #fff; border-color: rgba(255,255,255,0.38); }
+    .pill-green { background: linear-gradient(90deg, #34d399, #0d9488); color: #fff; border-color: rgba(167,243,208,0.62); }
+    .pill-cyan { background: linear-gradient(90deg, #22d3ee, #0284c7); color: #fff; border-color: rgba(165,243,252,0.62); }
+    .pill-slate { background: linear-gradient(90deg, #cbd5e1, #64748b); color: #111827; border-color: rgba(226,232,240,0.7); }
+    .pill-red { background: linear-gradient(90deg, #fb7185, #b91c1c); color: #fff; border-color: rgba(253,164,175,0.7); }
+
+    .stats-grid-main { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+    .stats-panel { padding: 16px; margin-top: 16px; }
+    .stats-grid-sub { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+    .stat-card { border: 1px solid rgba(0,240,255,0.14); border-radius: 16px; background: rgba(255,255,255,0.035); padding: 15px; box-shadow: 0 0 22px rgba(0,240,255,0.05); }
+    .stat-label { color: #94a3b8; font-size: 12px; letter-spacing: 0.16em; font-weight: 800; }
+    .stat-value { margin-top: 8px; color: #67e8f9; font-size: 25px; font-weight: 950; line-height: 1.2; word-break: break-word; }
+    .stat-suffix { margin-left: 4px; color: #64748b; font-size: 14px; font-weight: 800; }
+    .accent-cyan { color: #67e8f9; } .accent-sky { color: #7dd3fc; } .accent-rose { color: #fda4af; } .accent-amber { color: #fcd34d; } .accent-violet { color: #c4b5fd; } .accent-emerald { color: #6ee7b7; } .accent-green { color: #86efac; }
+    .limit-box { margin-top: 16px; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; background: rgba(255,255,255,0.025); padding: 16px; color: #94a3b8; font-size: 12px; line-height: 1.75; }
+    .limit-title { color: #cbd5e1; font-weight: 950; letter-spacing: 0.16em; }
+    .limit-box ul { margin: 8px 0 0; padding-left: 22px; }
+
+    @media (max-width: 1100px) {
+      .controls-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .hint-box { grid-column: 1 / -1; }
+      .stats-grid-main { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .stats-grid-sub { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .app { padding: 14px; }
+      .controls-grid { grid-template-columns: 1fr; }
+      .calendar-head { display: block; }
+      .sync-message { text-align: left; margin-top: 10px; white-space: normal; }
+      .calendar-body { overflow-x: auto; }
+      .week-grid, .day-grid { min-width: 860px; }
+      .stats-grid-main, .stats-grid-sub { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="container">
+      <header class="top-header">
+        <div class="eyebrow">Personal Overtime Core Prototype</div>
+        <h1 class="title">個人版加班待遇計算</h1>
+        <div class="subtitle">第一版版型預覽：月曆、班別、國定假日、基本工時計算</div>
+      </header>
+
+      <section class="panel control-panel">
+        <div class="controls-grid">
+          <label>
+            <span class="field-label">班別</span>
+            <select id="shiftGroup" class="cyber-select">
+              <option value="A">A 班</option>
+              <option value="B">B 班</option>
+              <option value="C">C 班</option>
+              <option value="D" selected>D 班</option>
+            </select>
+          </label>
+
+          <label>
+            <span class="field-label">民國年份</span>
+            <input id="rocYear" class="cyber-input" type="number" />
+          </label>
+
+          <label>
+            <span class="field-label">月份</span>
+            <select id="month" class="cyber-select"></select>
+          </label>
+
+          <div class="hint-box">
+            <div class="hint-title">版型說明</div>
+            <div class="hint-text">代碼下拉選單已改成中文。請假代碼可再選部分小時，例如特休 5HR。</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel calendar-panel">
+        <div class="calendar-head">
+          <div>
+            <h2 id="calendarTitle" class="calendar-title">班別：D　民國 115 年　4 月</h2>
+            <div class="calendar-note">週一至週日排列；國定假日和值別上下分開顯示</div>
+          </div>
+          <div id="syncMessage" class="sync-message">初始化中...</div>
+        </div>
+        <div class="calendar-body">
+          <div id="weekGrid" class="week-grid"></div>
+          <div id="dayGrid" class="day-grid"></div>
+        </div>
+      </section>
+
+      <section class="stats-grid-main">
+        <div class="stat-card"><div class="stat-label">值班上班時間</div><div id="totalHours" class="stat-value accent-cyan">0.0<span class="stat-suffix">HR</span></div></div>
+        <div class="stat-card"><div class="stat-label">交接班時數</div><div id="handoverHours" class="stat-value accent-sky">0.0<span class="stat-suffix">HR</span></div></div>
+        <div class="stat-card"><div class="stat-label">國定假日時數</div><div id="nationalHolidayHours" class="stat-value accent-rose">0.0<span class="stat-suffix">HR</span></div></div>
+        <div class="stat-card"><div class="stat-label">保養上班日</div><div id="maintenanceDays" class="stat-value accent-amber">-</div></div>
+      </section>
+
+      <section class="panel stats-panel">
+        <div class="stats-grid-sub">
+          <div class="stat-card"><div class="stat-label">休息日總工時</div><div id="restHours" class="stat-value accent-violet">0.0<span class="stat-suffix">HR</span></div></div>
+          <div class="stat-card"><div class="stat-label">代號 7</div><div id="code7Hours" class="stat-value accent-cyan">0.0<span class="stat-suffix">HR</span></div></div>
+          <div class="stat-card"><div class="stat-label">代號 8</div><div id="code8Hours" class="stat-value accent-emerald">0.0<span class="stat-suffix">HR</span></div></div>
+          <div class="stat-card"><div class="stat-label">代號 6</div><div id="code6Hours" class="stat-value accent-amber">0.0<span class="stat-suffix">HR</span></div></div>
+          <div class="stat-card"><div class="stat-label">夜點費</div><div id="nightFee" class="stat-value accent-rose">0<span class="stat-suffix">元</span></div></div>
+          <div class="stat-card"><div class="stat-label">代班資訊</div><div id="substituteInfo" class="stat-value accent-green">-</div></div>
+        </div>
+      </section>
+
+      <section class="limit-box">
+        <div class="limit-title">目前版本限制</div>
+        <ul>
+          <li>此版使用純 HTML、CSS、JavaScript，不依賴 React、Tailwind 或 Babel。</li>
+          <li>部分小時請假目前先做基礎扣時，後續會再依 Excel D11、D10、AP9、AQ9 精修。</li>
+          <li>交通費依需求暫不納入。</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const SHIFT_OFFSETS = { A: 0, B: 9, C: 6, D: 3 };
+    const CYCLE_CODES = [2, 2, 2, 1, 1, 1, 0, 0, 3, 3, 3, 0];
+    const CYCLE_HOURS = [8, 8, 6.5, 9, 9, 9, 0, 0, 8.5, 7, 7, 0];
+    const WEEK_LABELS = ["一", "二", "三", "四", "五", "六", "日"];
+    const CODE_LABELS = {
+      0: "空班", 1: "一值", 2: "二值", 3: "三值", 4: "受訓", 4.1: "出差", 4.2: "公假", 4.3: "公出",
+      5: "特休", 5.1: "特補", 5.2: "特事", 5.3: "特病", 5.4: "特停", 5.5: "特公",
+      6: "補假", 6.1: "補事", 6.2: "補病", 6.3: "補休", 6.4: "補公",
+      7: "病假", 7.1: "事病",
+      8: "事假", 8.1: "喪假", 8.2: "婚假", 8.3: "陪產假", 8.4: "停止辦公日", 8.5: "家庭照顧假", 8.6: "身心調適假", 8.7: "身特", 8.8: "身補",
+      9: "調整例假日", 10: "調空", 11: "調一", 12: "調二", 13: "調三", 21: "代一", 22: "代二", 23: "代三"
+    };
+    const CODE_OPTIONS = [0,1,2,3,4,4.1,4.2,4.3,5,5.1,5.2,5.3,5.4,5.5,6,6.1,6.2,6.3,6.4,7,7.1,8,8.1,8.2,8.3,8.4,8.5,8.6,8.7,8.8,9,10,11,12,13,21,22,23];
+    const LEAVE_CODES = new Set([4,4.1,4.2,4.3,5,5.1,5.2,5.3,5.4,5.5,6,6.1,6.2,6.3,6.4,7,7.1,8,8.1,8.2,8.3,8.4,8.5,8.6,8.7,8.8]);
+    const manualRecords = {};
+    let calendarData = { workDict: {}, holidayMap: new Map() };
+
+    function toRocYear(date = new Date()) { return date.getFullYear() - 1911; }
+    function dateKey(year, month, day) { return `${year}/${month}/${day}`; }
+    function getMondayFirstIndex(date) { const d = date.getDay(); return d === 0 ? 6 : d - 1; }
+    function numberKey(value) { return String(Number(value)); }
+    function getLabel(code) { return CODE_LABELS[numberKey(code)] || `代碼${code}`; }
+    function getPillClass(code) {
+      const n = Number(code);
+      if ([1,11,21].includes(n)) return "pill-blue";
+      if ([2,12,22].includes(n)) return "pill-yellow";
+      if ([3,13,23].includes(n)) return "pill-purple";
+      if (n === 0 || n === 10) return "pill-white";
+      if (n >= 5 && n < 9) return "pill-green";
+      if ([4,4.1,4.2,4.3].includes(n)) return "pill-cyan";
+      if (n === 9) return "pill-slate";
+      return "pill-red";
+    }
+    function isLeaveCode(code) { return LEAVE_CODES.has(Number(code)); }
+    function isWorkCode(code) { return [1,2,3,11,12,13,21,22,23].includes(Number(code)); }
+
+    function normalizeHolidayName(row) {
+      const raw = row.description || "";
+      if (row.date.endsWith("0101")) return "開國紀念日";
+      if (row.date.endsWith("0228")) return "和平紀念日";
+      if (row.date.endsWith("0928")) return "教師節";
+      if (row.date.endsWith("1025")) return "光復節";
+      if (raw.includes("除夕")) return "除夕";
+      if (raw.includes("春節")) return "春節";
+      if (raw.includes("兒童") && raw.includes("清明")) return "兒童節/清明節";
+      if (raw.includes("民族掃墓")) return "清明節";
+      return raw;
+    }
+
+    function processTaiwanCalendar(jsonData) {
+      const workDict = {};
+      const holidayMap = new Map();
+      jsonData.forEach(row => {
+        const desc = row.description || "";
+        let isHoliday = row.isHoliday;
+        if (desc.includes("補行上班") || desc.includes("調整上班")) isHoliday = false;
+        if (desc.includes("調整放假")) isHoliday = true;
+        if (isHoliday === false) {
+          const m = parseInt(row.date.slice(4, 6), 10);
+          workDict[m] = (workDict[m] || 0) + 1;
+        }
+      });
+      const processed = [];
+      jsonData.forEach(row => {
+        const desc = row.description || "";
+        const keep = desc.trim() !== "" && !desc.includes("補假") && !desc.includes("放假") && !desc.includes("補行上班") && !desc.includes("調整放假") && !desc.includes("調整上班");
+        if (!keep) return;
+        processed.push({
+          y: parseInt(row.date.slice(0, 4), 10),
+          m: parseInt(row.date.slice(4, 6), 10),
+          d: parseInt(row.date.slice(6, 8), 10),
+          desc: normalizeHolidayName(row)
+        });
+      });
+      const spring = processed.filter(x => x.desc === "春節").sort((a,b) => new Date(a.y,a.m-1,a.d) - new Date(b.y,b.m-1,b.d));
+      spring.forEach((x, i) => { if (i === 0) x.desc = "初一"; if (i === 1) x.desc = "初二"; if (i === 2) x.desc = "初三"; });
+      const eves = processed.filter(x => x.desc === "除夕");
+      const xiaoNianYe = eves.map(x => {
+        const prev = new Date(x.y, x.m - 1, x.d);
+        prev.setDate(prev.getDate() - 1);
+        return { y: prev.getFullYear(), m: prev.getMonth() + 1, d: prev.getDate(), desc: "小年夜" };
+      });
+      [...processed, ...xiaoNianYe].forEach(x => holidayMap.set(dateKey(x.y, x.m, x.d), x.desc));
+      return { workDict, holidayMap };
+    }
+
+    function calcBaseShift(year, month, day, shiftGroup) {
+      const baseDate = new Date(2026, 0, 1);
+      const current = new Date(year, month - 1, day);
+      const diffDays = Math.round((current - baseDate) / 86400000);
+      const offset = SHIFT_OFFSETS[shiftGroup] ?? 3;
+      const index = ((diffDays % 12) + 12 + offset) % 12;
+      return { cycleIndex: index, baseCode: CYCLE_CODES[index], baseHours: CYCLE_HOURS[index] };
+    }
+
+    function calcWorkHours(dayInfo) {
+      const code = Number(dayInfo.actualCode);
+      const leaveHours = Number(dayInfo.leaveHours || 0);
+      if ([0,10,9].includes(code)) return 0;
+      if (isWorkCode(code)) return Math.max(0, dayInfo.baseHours - leaveHours);
+      if ([4,4.1,4.2,4.3].includes(code)) return Math.max(0, 8 - leaveHours);
+      if (code >= 5 && code < 9) return Math.max(0, dayInfo.baseHours - leaveHours);
+      return Math.max(0, dayInfo.baseHours - leaveHours);
+    }
+
+    function splitTwelve(hours) {
+      const input = Math.max(0, Number(hours) || 0);
+      const cycles = Math.floor(input / 12);
+      const remainder = input % 12;
+      return {
+        code7: cycles * 2 + Math.min(remainder, 2),
+        code8: cycles * 6 + Math.min(Math.max(remainder - 2, 0), 6),
+        code6: cycles * 4 + Math.max(remainder - 8, 0)
+      };
+    }
+
+    function buildDays() {
+      const rocYear = Number(document.getElementById("rocYear").value);
+      const month = Number(document.getElementById("month").value);
+      const shiftGroup = document.getElementById("shiftGroup").value;
+      const year = rocYear + 1911;
+      const daysInMonth = new Date(year, month, 0).getDate();
+      const days = [];
+      for (let day = 1; day <= daysInMonth; day++) {
+        const current = new Date(year, month - 1, day);
+        const base = calcBaseShift(year, month, day, shiftGroup);
+        const record = manualRecords[day] || {};
+        const actualCode = record.code !== undefined ? Number(record.code) : base.baseCode;
+        const leaveHours = record.leaveHours !== undefined ? Number(record.leaveHours) : 0;
+        days.push({
+          day,
+          date: current,
+          weekIndex: getMondayFirstIndex(current),
+          baseCode: base.baseCode,
+          baseHours: base.baseHours,
+          actualCode,
+          leaveHours,
+          holidayName: calendarData.holidayMap.get(dateKey(year, month, day)) || "",
+          isWeekend: current.getDay() === 0 || current.getDay() === 6
+        });
+      }
+      return days;
+    }
+
+    function renderCalendar() {
+      const rocYear = Number(document.getElementById("rocYear").value);
+      const month = Number(document.getElementById("month").value);
+      const shiftGroup = document.getElementById("shiftGroup").value;
+      const year = rocYear + 1911;
+      document.getElementById("calendarTitle").textContent = `班別：${shiftGroup}　民國 ${rocYear} 年　${month} 月`;
+
+      const weekGrid = document.getElementById("weekGrid");
+      weekGrid.innerHTML = WEEK_LABELS.map(x => `<div class="week-cell">${x}</div>`).join("");
+
+      const days = buildDays();
+      const firstOffset = days[0] ? days[0].weekIndex : 0;
+      const totalCells = Math.ceil((firstOffset + days.length) / 7) * 7;
+      const dayGrid = document.getElementById("dayGrid");
+      let html = "";
+      for (let i = 0; i < totalCells; i++) {
+        const dayIndex = i - firstOffset;
+        if (dayIndex < 0 || dayIndex >= days.length) {
+          html += `<div class="empty-card"></div>`;
+          continue;
+        }
+        const d = days[dayIndex];
+        const cardClass = `day-card ${d.isWeekend ? "weekend" : ""} ${d.holidayName ? "holiday" : ""}`;
+        const pillClass = getPillClass(d.actualCode);
+        const codeOptions = CODE_OPTIONS.map(code => `<option value="${code}" ${Number(code) === Number(d.actualCode) ? "selected" : ""}>${code} ${getLabel(code)}</option>`).join("");
+        const hourDisabled = isLeaveCode(d.actualCode) || isWorkCode(d.actualCode) ? "" : "disabled";
+        const hourOptions = [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9].map(h => `<option value="${h}" ${Number(h) === Number(d.leaveHours) ? "selected" : ""}>${h}HR</option>`).join("");
+        const holidayHtml = d.holidayName ? `<div class="holiday-badge">${d.holidayName}</div>` : "";
+        const leaveHtml = d.leaveHours > 0 ? `<div class="leave-badge">${getLabel(d.actualCode)} ${d.leaveHours}HR</div>` : "";
+        html += `
+          <div class="${cardClass}">
+            <div class="day-top">
+              <div class="day-number">${d.day}</div>
+              <div class="select-stack">
+                <select class="code-select" data-day="${d.day}" data-type="code">${codeOptions}</select>
+                <select class="hour-select" data-day="${d.day}" data-type="hour" ${hourDisabled}>${hourOptions}</select>
+              </div>
+            </div>
+            <div class="card-center"><div>${holidayHtml}${leaveHtml}</div></div>
+            <div class="shift-pill ${pillClass}">${d.leaveHours > 0 ? getLabel(d.actualCode) : getLabel(d.actualCode)}</div>
+          </div>`;
+      }
+      dayGrid.innerHTML = html;
+      dayGrid.querySelectorAll("select").forEach(sel => {
+        sel.addEventListener("change", function() {
+          const day = Number(this.dataset.day);
+          const type = this.dataset.type;
+          if (!manualRecords[day]) manualRecords[day] = {};
+          if (type === "code") {
+            manualRecords[day].code = Number(this.value);
+            if (!isLeaveCode(Number(this.value)) && !isWorkCode(Number(this.value))) manualRecords[day].leaveHours = 0;
+          } else {
+            manualRecords[day].leaveHours = Number(this.value);
+          }
+          renderAll(false);
+        });
+      });
+      renderSummary(days);
+    }
+
+    function renderSummary(days) {
+      const month = Number(document.getElementById("month").value);
+      const totalHours = days.reduce((s, d) => s + calcWorkHours(d), 0);
+      const handoverHours = days.reduce((s, d) => isWorkCode(d.actualCode) ? s + 0.5 : s, 0);
+      const nationalHolidayHours = days.reduce((s, d) => d.holidayName && isWorkCode(d.actualCode) ? s + Math.min(calcWorkHours(d), 8) : s, 0);
+      const maintenanceDays = calendarData.workDict[month] || 0;
+      const maintenanceHours = maintenanceDays * 8;
+      const restHours = Math.max(0, totalHours + handoverHours - maintenanceHours - nationalHolidayHours);
+      const split = splitTwelve(restHours);
+      const initialNight = days.filter(d => [3,13,23].includes(Number(d.actualCode))).length;
+      const deepNight = days.filter(d => [1,11,21].includes(Number(d.actualCode))).length;
+      const nightFee = initialNight * 250 + deepNight * 400;
+      const substituteInfo = restHours > 46 ? `超過 ${(restHours - 46).toFixed(1)} HR` : `可代班 ${(46 - restHours).toFixed(1)} HR`;
+
+      document.getElementById("totalHours").innerHTML = `${totalHours.toFixed(1)}<span class="stat-suffix">HR</span>`;
+      document.getElementById("handoverHours").innerHTML = `${handoverHours.toFixed(1)}<span class="stat-suffix">HR</span>`;
+      document.getElementById("nationalHolidayHours").innerHTML = `${nationalHolidayHours.toFixed(1)}<span class="stat-suffix">HR</span>`;
+      document.getElementById("maintenanceDays").innerHTML = maintenanceDays ? `${maintenanceDays}<span class="stat-suffix">日</span>` : "-";
+      document.getElementById("restHours").innerHTML = `${restHours.toFixed(1)}<span class="stat-suffix">HR</span>`;
+      document.getElementById("code7Hours").innerHTML = `${split.code7.toFixed(1)}<span class="stat-suffix">HR</span>`;
+      document.getElementById("code8Hours").innerHTML = `${split.code8.toFixed(1)}<span class="stat-suffix">HR</span>`;
+      document.getElementById("code6Hours").innerHTML = `${split.code6.toFixed(1)}<span class="stat-suffix">HR</span>`;
+      document.getElementById("nightFee").innerHTML = `${nightFee.toLocaleString()}<span class="stat-suffix">元</span>`;
+      document.getElementById("substituteInfo").textContent = substituteInfo;
+      document.getElementById("substituteInfo").className = `stat-value ${substituteInfo.startsWith("超過") ? "accent-rose" : "accent-green"}`;
+    }
+
+    async function loadCalendar() {
+      const rocYear = Number(document.getElementById("rocYear").value);
+      const sync = document.getElementById("syncMessage");
+      sync.textContent = "同步行事曆中...";
+      try {
+        const res = await fetch(`https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/${rocYear + 1911}.json`);
+        if (!res.ok) throw new Error("讀取失敗");
+        const json = await res.json();
+        calendarData = processTaiwanCalendar(json);
+        sync.textContent = "已同步台灣行事曆資料";
+      } catch (err) {
+        calendarData = { workDict: {}, holidayMap: new Map() };
+        sync.textContent = "無法讀取行事曆資料，假日暫不顯示";
+      }
+    }
+
+    async function renderAll(needLoadCalendar) {
+      if (needLoadCalendar) await loadCalendar();
+      renderCalendar();
+    }
+
+    function init() {
+      const now = new Date();
+      document.getElementById("rocYear").value = toRocYear(now);
+      const monthSelect = document.getElementById("month");
+      monthSelect.innerHTML = "";
+      for (let i = 1; i <= 12; i++) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = `${i} 月`;
+        if (i === now.getMonth() + 1) opt.selected = true;
+        monthSelect.appendChild(opt);
+      }
+      document.getElementById("shiftGroup").addEventListener("change", () => { Object.keys(manualRecords).forEach(k => delete manualRecords[k]); renderAll(false); });
+      document.getElementById("month").addEventListener("change", () => { Object.keys(manualRecords).forEach(k => delete manualRecords[k]); renderAll(false); });
+      document.getElementById("rocYear").addEventListener("change", () => { Object.keys(manualRecords).forEach(k => delete manualRecords[k]); renderAll(true); });
+      renderAll(true);
+    }
+
+    init();
+  </script>
+</body>
+</html>
