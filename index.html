@@ -12,9 +12,12 @@
       font-display: swap;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       min-height: 100%;
       background: #0d0f12;
@@ -22,9 +25,20 @@
       font-family: "Segoe UI", "Microsoft JhengHei", Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    body { overflow-x: hidden; }
-    select, input, button { font-family: inherit; }
-    select option { background: #111827; color: #e5e7eb; }
+    body {
+      overflow-x: hidden;
+    }
+
+    select,
+    input,
+    button {
+      font-family: inherit;
+    }
+
+    select option {
+      background: #111827;
+      color: #e5e7eb;
+    }
 
     .app {
       min-height: 100vh;
@@ -140,7 +154,9 @@
       margin-top: 3px;
     }
 
-    .calendar-panel { overflow: hidden; }
+    .calendar-panel {
+      overflow: hidden;
+    }
 
     .calendar-head {
       display: flex;
@@ -175,7 +191,9 @@
       white-space: nowrap;
     }
 
-    .calendar-body { padding: 14px; }
+    .calendar-body {
+      padding: 14px;
+    }
 
     .week-grid,
     .day-grid {
@@ -184,11 +202,13 @@
       gap: 10px;
     }
 
-    .week-grid { margin-bottom: 10px; }
+    .week-grid {
+      margin-bottom: 10px;
+    }
 
     .week-cell {
       border-radius: 10px;
-      background: rgba(255,255,255,0.035);
+      background: rgba(255, 255, 255, 0.035);
       color: #94a3b8;
       text-align: center;
       padding: 10px 4px;
@@ -204,8 +224,8 @@
     }
 
     .empty-card {
-      border: 1px solid rgba(255,255,255,0.035);
-      background: rgba(255,255,255,0.012);
+      border: 1px solid rgba(255, 255, 255, 0.035);
+      background: rgba(255, 255, 255, 0.012);
     }
 
     .day-card {
@@ -252,7 +272,7 @@
       color: #fff;
       font-size: 16px;
       font-weight: 950;
-      text-shadow: 0 0 6px rgba(255,255,255,0.42);
+      text-shadow: 0 0 6px rgba(255, 255, 255, 0.42);
     }
 
     .select-stack {
@@ -264,11 +284,12 @@
 
     .code-select,
     .hour-select,
-    .special-date-select {
+    .special-date-select,
+    .special-type-select {
       width: 112px;
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 7px;
-      background: rgba(0,0,0,0.46);
+      background: rgba(0, 0, 0, 0.46);
       color: #e2e8f0;
       padding: 4px;
       font-size: 11px;
@@ -276,8 +297,13 @@
       outline: none;
     }
 
-    .hour-select { width: 78px; }
-    .hour-select:disabled { opacity: 0.35; }
+    .hour-select {
+      width: 78px;
+    }
+
+    .hour-select:disabled {
+      opacity: 0.35;
+    }
 
     .reset-btn {
       width: 78px;
@@ -307,15 +333,15 @@
     }
 
     .holiday-badge {
-      border: 1px solid rgba(253,164,175,0.38);
+      border: 1px solid rgba(253, 164, 175, 0.38);
       border-radius: 8px;
-      background: rgba(244,63,94,0.12);
+      background: rgba(244, 63, 94, 0.12);
       color: #fecdd3;
       padding: 5px 8px;
       font-size: 12px;
       font-weight: 950;
       letter-spacing: 0.06em;
-      box-shadow: 0 0 12px rgba(255,51,51,0.18);
+      box-shadow: 0 0 12px rgba(255, 51, 51, 0.18);
       margin-bottom: 4px;
     }
 
@@ -337,23 +363,57 @@
     }
 
     .shift-pill {
-      border: 1px solid rgba(255,255,255,0.25);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: 9px;
       padding: 7px 8px;
       text-align: center;
       font-size: 14px;
       font-weight: 950;
       letter-spacing: 0.06em;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.22);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.22);
     }
 
-    .pill-one { background: linear-gradient(90deg, #ef4444, #b91c1c); color: #fff; border-color: rgba(252,165,165,0.72); }
-    .pill-two { background: linear-gradient(90deg, #22c55e, #15803d); color: #fff; border-color: rgba(134,239,172,0.72); }
-    .pill-three { background: linear-gradient(90deg, #fbbf24, #f97316); color: #111827; border-color: rgba(253,186,116,0.78); }
-    .pill-white { background: linear-gradient(90deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05)); color: #fff; border-color: rgba(255,255,255,0.38); }
-    .pill-leave { background: linear-gradient(90deg, #34d399, #0d9488); color: #fff; border-color: rgba(167,243,208,0.62); }
-    .pill-other { background: linear-gradient(90deg, #cbd5e1, #64748b); color: #111827; border-color: rgba(226,232,240,0.7); }
-    .pill-alert { background: linear-gradient(90deg, #fb7185, #b91c1c); color: #fff; border-color: rgba(253,164,175,0.7); }
+    .pill-one {
+      background: linear-gradient(90deg, #ef4444, #b91c1c);
+      color: #fff;
+      border-color: rgba(252, 165, 165, 0.72);
+    }
+
+    .pill-two {
+      background: linear-gradient(90deg, #22c55e, #15803d);
+      color: #fff;
+      border-color: rgba(134, 239, 172, 0.72);
+    }
+
+    .pill-three {
+      background: linear-gradient(90deg, #fbbf24, #f97316);
+      color: #111827;
+      border-color: rgba(253, 186, 116, 0.78);
+    }
+
+    .pill-white {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.38);
+    }
+
+    .pill-leave {
+      background: linear-gradient(90deg, #34d399, #0d9488);
+      color: #fff;
+      border-color: rgba(167, 243, 208, 0.62);
+    }
+
+    .pill-other {
+      background: linear-gradient(90deg, #cbd5e1, #64748b);
+      color: #111827;
+      border-color: rgba(226, 232, 240, 0.7);
+    }
+
+    .pill-alert {
+      background: linear-gradient(90deg, #fb7185, #b91c1c);
+      color: #fff;
+      border-color: rgba(253, 164, 175, 0.7);
+    }
 
     .daily-detail {
       margin-top: 6px;
@@ -361,7 +421,7 @@
       line-height: 1.55;
       color: #94a3b8;
       text-align: left;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
       padding-top: 6px;
     }
 
@@ -372,7 +432,44 @@
 
     .special-panel {
       margin-top: 16px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .special-toggle {
+      width: 100%;
+      border: none;
+      background: rgba(17, 23, 34, 0.96);
+      color: #67e8f9;
+      padding: 15px 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.12);
+    }
+
+    .special-toggle:hover {
+      background: rgba(14, 165, 233, 0.12);
+    }
+
+    .special-summary {
+      color: #94a3b8;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      margin-top: 3px;
+      text-align: left;
+    }
+
+    .special-content {
+      display: none;
       padding: 16px;
+    }
+
+    .special-content.open {
+      display: block;
     }
 
     .special-grid {
@@ -382,9 +479,9 @@
     }
 
     .special-card {
-      border: 1px solid rgba(0,240,255,0.14);
+      border: 1px solid rgba(0, 240, 255, 0.14);
       border-radius: 16px;
-      background: rgba(255,255,255,0.035);
+      background: rgba(255, 255, 255, 0.035);
       padding: 15px;
     }
 
@@ -396,25 +493,25 @@
       margin-bottom: 12px;
     }
 
-    .special-subtitle {
-      color: #94a3b8;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.1em;
-      margin: 8px 0 6px;
-    }
-
-    .special-date-row {
+    .special-record-list {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
     }
 
-    .special-date-row.election-row {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .special-record {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
 
-    .special-date-select {
+    .special-election-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .special-date-select,
+    .special-type-select {
       width: 100%;
       height: 34px;
       text-align: center;
@@ -435,7 +532,7 @@
     .core-stat-item {
       padding: 16px;
       border-right: 1px solid rgba(0, 240, 255, 0.14);
-      background: rgba(255,255,255,0.025);
+      background: rgba(255, 255, 255, 0.025);
     }
 
     .core-stat-item:last-child {
@@ -483,11 +580,11 @@
     }
 
     .stat-card {
-      border: 1px solid rgba(0,240,255,0.14);
+      border: 1px solid rgba(0, 240, 255, 0.14);
       border-radius: 16px;
-      background: rgba(255,255,255,0.035);
+      background: rgba(255, 255, 255, 0.035);
       padding: 15px;
-      box-shadow: 0 0 22px rgba(0,240,255,0.05);
+      box-shadow: 0 0 22px rgba(0, 240, 255, 0.05);
     }
 
     .stat-label {
@@ -514,9 +611,9 @@
     }
 
     .benefit-box {
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
-      background: rgba(0,0,0,0.18);
+      background: rgba(0, 0, 0, 0.18);
       padding: 12px;
     }
 
@@ -541,9 +638,9 @@
     }
 
     .split-box {
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
-      background: rgba(0,0,0,0.18);
+      background: rgba(0, 0, 0, 0.18);
       padding: 10px;
     }
 
@@ -581,9 +678,9 @@
 
     .limit-box {
       margin-top: 16px;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
-      background: rgba(255,255,255,0.025);
+      background: rgba(255, 255, 255, 0.025);
       padding: 16px;
       color: #94a3b8;
       font-size: 12px;
@@ -651,25 +748,49 @@
     }
 
     @media (max-width: 1100px) {
-      .controls-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .hint-box { grid-column: 1 / -1; }
-      .core-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .core-stat-item:nth-child(2) { border-right: none; }
+      .controls-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .hint-box {
+        grid-column: 1 / -1;
+      }
+
+      .core-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .core-stat-item:nth-child(2) {
+        border-right: none;
+      }
+
       .core-stat-item:nth-child(1),
-      .core-stat-item:nth-child(2) { border-bottom: 1px solid rgba(0, 240, 255, 0.14); }
-      .stats-grid-sub { grid-template-columns: 1fr; }
-      .special-grid { grid-template-columns: 1fr; }
+      .core-stat-item:nth-child(2) {
+        border-bottom: 1px solid rgba(0, 240, 255, 0.14);
+      }
+
+      .stats-grid-sub {
+        grid-template-columns: 1fr;
+      }
+
+      .special-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 760px) {
-      .app { padding: 8px; }
+      .app {
+        padding: 8px;
+      }
 
       .container {
         max-width: none;
         width: 100%;
       }
 
-      .top-header { margin-bottom: 14px; }
+      .top-header {
+        margin-bottom: 14px;
+      }
 
       .title {
         font-size: 26px;
@@ -728,9 +849,13 @@
         border-radius: 8px;
       }
 
-      .day-card { padding: 4px; }
+      .day-card {
+        padding: 4px;
+      }
 
-      .day-top { display: block; }
+      .day-top {
+        display: block;
+      }
 
       .day-number {
         font-size: 12px;
@@ -751,7 +876,9 @@
         height: 23px;
       }
 
-      .card-center { padding: 3px 0; }
+      .card-center {
+        padding: 3px 0;
+      }
 
       .holiday-badge,
       .special-badge {
@@ -774,22 +901,37 @@
         padding-top: 4px;
       }
 
-      .special-panel { padding: 12px; }
-
-      .special-date-row,
-      .special-date-row.election-row {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: 5px;
+      .special-toggle {
+        padding: 12px;
       }
 
-      .special-date-select {
+      .special-content {
+        padding: 12px;
+      }
+
+      .special-record {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+
+      .special-election-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      .special-date-select,
+      .special-type-select {
         height: 30px;
         font-size: 12px;
       }
 
-      .core-stats-panel { margin-top: 14px; }
+      .core-stats-panel {
+        margin-top: 14px;
+      }
 
-      .core-stats-grid { grid-template-columns: 1fr; }
+      .core-stats-grid {
+        grid-template-columns: 1fr;
+      }
 
       .core-stat-item {
         padding: 13px 14px;
@@ -797,15 +939,25 @@
         border-bottom: 1px solid rgba(0, 240, 255, 0.14);
       }
 
-      .core-stat-item:last-child { border-bottom: none; }
+      .core-stat-item:last-child {
+        border-bottom: none;
+      }
 
-      .core-stat-label { font-size: 11px; }
+      .core-stat-label {
+        font-size: 11px;
+      }
 
-      .core-stat-value { font-size: 23px; }
+      .core-stat-value {
+        font-size: 23px;
+      }
 
-      .stats-grid-sub { grid-template-columns: 1fr; }
+      .stats-grid-sub {
+        grid-template-columns: 1fr;
+      }
 
-      .stat-value { font-size: 22px; }
+      .stat-value {
+        font-size: 22px;
+      }
 
       .benefit-combo {
         grid-template-columns: 1fr 1fr;
@@ -821,11 +973,17 @@
         gap: 6px;
       }
 
-      .split-box { padding: 8px 5px; }
+      .split-box {
+        padding: 8px 5px;
+      }
 
-      .split-value { font-size: 14px; }
+      .split-value {
+        font-size: 14px;
+      }
 
-      .designer-name { font-size: 20px; }
+      .designer-name {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
@@ -864,7 +1022,7 @@
           <div class="hint-box">
             <div class="hint-title">計算說明</div>
             <div class="hint-text">
-              另計假日出勤已修正：不再把一般國定假日全部納入；停止辦公與選舉日可在月曆下方手動指定日期。
+              停止辦公預設為全日；只有一值最後一天遇全日停止辦公時以 7.75HR 計，其他一值全日停止辦公以 9.00HR 計。
             </div>
           </div>
         </div>
@@ -886,19 +1044,25 @@
       </section>
 
       <section class="panel special-panel">
-        <div class="special-grid">
-          <div class="special-card">
-            <div class="special-title">停止辦公</div>
-            <div class="special-subtitle">全日</div>
-            <div id="closureFullRow" class="special-date-row"></div>
-            <div class="special-subtitle">半日</div>
-            <div id="closureHalfRow" class="special-date-row"></div>
+        <button id="specialToggle" class="special-toggle" type="button">
+          <div>
+            <div>特殊事件設定</div>
+            <div id="specialSummary" class="special-summary">未啟用</div>
           </div>
+          <div id="specialToggleIcon">＋</div>
+        </button>
 
-          <div class="special-card">
-            <div class="special-title">選舉日</div>
-            <div class="special-subtitle">日期</div>
-            <div id="electionRow" class="special-date-row election-row"></div>
+        <div id="specialContent" class="special-content">
+          <div class="special-grid">
+            <div class="special-card">
+              <div class="special-title">停止辦公</div>
+              <div id="closureRecordList" class="special-record-list"></div>
+            </div>
+
+            <div class="special-card">
+              <div class="special-title">選舉日</div>
+              <div id="electionRecordList" class="special-election-row"></div>
+            </div>
           </div>
         </div>
       </section>
@@ -980,11 +1144,10 @@
       <section class="limit-box">
         <div class="limit-title">目前版本狀態</div>
         <ul>
-          <li>另計假日出勤與得補假已合併為一張「假日待遇」卡片。</li>
-          <li>另計假日出勤已排除一般國定假日，避免 5 月勞動節誤算 8 小時。</li>
-          <li>停止辦公全日、停止辦公半日、選舉日已新增手動日期欄位。</li>
-          <li>停止辦公全日與半日會在月曆卡片上標示，並納入另計假日出勤第一版計算。</li>
-          <li>選舉日會在月曆卡片上標示，並納入另計假日出勤第一版計算。</li>
+          <li>停止辦公日期一選即預設為全日。</li>
+          <li>一值全日停止辦公：只有一值最後一天為 7.75HR，其餘一值為 9.00HR。</li>
+          <li>停止辦公上午為 00:00～12:00，下午為 13:30～24:00，晚上為 18:00～24:00。</li>
+          <li>選舉日三值 D10 加 120 分鐘，二值 D10 扣 15 分鐘。</li>
         </ul>
       </section>
 
@@ -1008,6 +1171,21 @@
     const WEEK_LABELS = ["一", "二", "三", "四", "五", "六", "日"];
     const PREVIOUS_MONTH_WORK_CARRY = [0, 1, 2, 3, 4, 5, 6, 0, 0, 1, 2, 3];
 
+    const CLOSURE_TYPE_LABELS = {
+      none: "－",
+      full: "全日",
+      morning: "上午",
+      afternoon: "下午",
+      night: "晚上"
+    };
+
+    const CLOSURE_INTERVALS = {
+      full: [0, 24],
+      morning: [0, 12],
+      afternoon: [13.5, 24],
+      night: [18, 24]
+    };
+
     const CODE_LABELS = {
       0: "空班", 1: "一值", 2: "二值", 3: "三值",
       4: "受訓", 4.1: "出差", 4.2: "公假", 4.3: "公出",
@@ -1021,35 +1199,42 @@
     };
 
     const CODE_OPTIONS = [
-      0,1,2,3,
-      4,4.1,4.2,4.3,
-      5,5.1,5.2,5.3,5.4,5.5,
-      6,6.1,6.2,6.3,6.4,
-      7,7.1,
-      8,8.1,8.2,8.3,8.4,8.5,8.6,8.7,8.8,
-      9,10,11,12,13,21,22,23
+      0, 1, 2, 3,
+      4, 4.1, 4.2, 4.3,
+      5, 5.1, 5.2, 5.3, 5.4, 5.5,
+      6, 6.1, 6.2, 6.3, 6.4,
+      7, 7.1,
+      8, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8,
+      9, 10, 11, 12, 13, 21, 22, 23
     ];
 
     const LEAVE_CODES = new Set([
-      4,4.1,4.2,4.3,
-      5,5.1,5.2,5.3,5.4,5.5,
-      6,6.1,6.2,6.3,6.4,
-      7,7.1,
-      8,8.1,8.2,8.3,8.4,8.5,8.6,8.7,8.8
+      4, 4.1, 4.2, 4.3,
+      5, 5.1, 5.2, 5.3, 5.4, 5.5,
+      6, 6.1, 6.2, 6.3, 6.4,
+      7, 7.1,
+      8, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8
     ]);
 
-    const WORK_CODES = new Set([1,2,3,11,12,13,21,22,23]);
-    const ADJUST_CODES = new Set([10,11,12,13]);
-    const SUBSTITUTE_CODES = new Set([21,22,23]);
+    const WORK_CODES = new Set([1, 2, 3, 11, 12, 13, 21, 22, 23]);
+    const ADJUST_CODES = new Set([10, 11, 12, 13]);
+    const SUBSTITUTE_CODES = new Set([21, 22, 23]);
 
     const manualRecords = {};
+
     const specialDates = {
-      closureFull: [0, 0, 0, 0, 0],
-      closureHalf: [0, 0, 0, 0, 0],
+      closure: [
+        { day: 0, type: "full" },
+        { day: 0, type: "full" },
+        { day: 0, type: "full" },
+        { day: 0, type: "full" },
+        { day: 0, type: "full" }
+      ],
       election: [0, 0, 0]
     };
 
     let calendarData = { workDict: {}, holidayMap: new Map() };
+    let specialPanelOpen = false;
 
     function toRocYear(date = new Date()) {
       return date.getFullYear() - 1911;
@@ -1095,9 +1280,9 @@
 
     function getCodeValue(code) {
       const n = Number(code);
-      if ([1,11,21].includes(n)) return 1;
-      if ([2,12,22].includes(n)) return 2;
-      if ([3,13,23].includes(n)) return 3;
+      if ([1, 11, 21].includes(n)) return 1;
+      if ([2, 12, 22].includes(n)) return 2;
+      if ([3, 13, 23].includes(n)) return 3;
       return 0;
     }
 
@@ -1153,9 +1338,9 @@
     function getPillClass(code) {
       const n = Number(code);
 
-      if ([1,11,21].includes(n)) return "pill-one";
-      if ([2,12,22].includes(n)) return "pill-two";
-      if ([3,13,23].includes(n)) return "pill-three";
+      if ([1, 11, 21].includes(n)) return "pill-one";
+      if ([2, 12, 22].includes(n)) return "pill-two";
+      if ([3, 13, 23].includes(n)) return "pill-three";
       if (n === 0 || n === 10) return "pill-white";
       if (isLeaveCode(n)) return "pill-leave";
       if (n === 9) return "pill-other";
@@ -1266,16 +1451,16 @@
       return { workDict, holidayMap };
     }
 
-    function isClosureFullDay(day) {
-      return specialDates.closureFull.includes(Number(day));
-    }
-
-    function isClosureHalfDay(day) {
-      return specialDates.closureHalf.includes(Number(day));
-    }
-
     function isElectionDay(day) {
       return specialDates.election.includes(Number(day));
+    }
+
+    function getClosureRecordsForDay(day) {
+      return specialDates.closure.filter(item => Number(item.day) === Number(day) && item.type !== "none");
+    }
+
+    function hasClosure(day) {
+      return getClosureRecordsForDay(day).length > 0;
     }
 
     function calcD7ActualCode(dayInfo) {
@@ -1284,7 +1469,6 @@
 
     function calcD8ChangeText(dayInfo) {
       const code = Number(dayInfo.actualCode);
-      const baseCode = Number(dayInfo.baseCode);
       const value = getCodeValue(code);
       const valueName = getValueName(value);
       const actionName = getActionName(code);
@@ -1300,8 +1484,8 @@
         return `選舉投票日${actionName}${valueName}`;
       }
 
-      if ((isClosureFullDay(dayInfo.day) || isClosureHalfDay(dayInfo.day)) && valueName && isWorkCode(code)) {
-        return `停止辦公${isClosureHalfDay(dayInfo.day) ? "半日" : "日"}${actionName}${valueName}`;
+      if (hasClosure(dayInfo.day) && valueName && isWorkCode(code)) {
+        return `停止辦公${actionName}${valueName}`;
       }
 
       if (isLeaveCode(code)) {
@@ -1312,7 +1496,7 @@
         if (holidayType && valueName) return `${holidayType}${actionName}${valueName}`;
         if (isSubstituteCode(code)) return `代班${valueName}`;
         if (isAdjustCode(code)) return `調班${valueName}`;
-        if (code === baseCode) return getBaseDisplayName(dayInfo);
+        if (code === Number(dayInfo.baseCode)) return getBaseDisplayName(dayInfo);
         return `調班${valueName}`;
       }
 
@@ -1336,6 +1520,17 @@
       return "";
     }
 
+    function calcElectionD10AdjustmentMinutes(dayInfo) {
+      if (!isElectionDay(dayInfo.day)) return 0;
+
+      const value = getCodeValue(dayInfo.actualCode);
+
+      if (value === 3) return 120;
+      if (value === 2) return -15;
+
+      return 0;
+    }
+
     function calcD10OvertimeMinutes(dayInfo) {
       const code = Number(dayInfo.actualCode);
       const baseCode = Number(dayInfo.baseCode);
@@ -1345,11 +1540,14 @@
       if (dayInfo.changeText === "違規") return 0;
       if (code === 0 || code === 9 || code === 10) return 0;
 
-      if (isWorkCode(code)) return 30;
+      let minutes = 0;
 
-      if (isLeaveCode(code) && isWorkCode(baseCode) && leaveHours > 0) return 15;
+      if (isWorkCode(code)) minutes = 30;
+      if (isLeaveCode(code) && isWorkCode(baseCode) && leaveHours > 0) minutes = 15;
 
-      return 0;
+      minutes += calcElectionD10AdjustmentMinutes(dayInfo);
+
+      return Math.max(0, minutes);
     }
 
     function calcD11AttendanceHours(dayInfo) {
@@ -1520,6 +1718,75 @@
       return dayInfo.changeText || getLabel(code);
     }
 
+    function getShiftIntervalsForClosure(dayInfo) {
+      const code = Number(dayInfo.actualCode);
+      const baseCode = Number(dayInfo.baseCode);
+      const cycleIndex = Number(dayInfo.cycleIndex);
+      const value = getCodeValue(code);
+
+      let effectiveValue = value;
+      let effectiveCode = code;
+
+      if (isLeaveCode(code)) {
+        effectiveValue = baseCode;
+        effectiveCode = baseCode;
+      }
+
+      if (effectiveValue === 1) {
+        if (cycleIndex === 5) return [[-1.25, 7.75]];
+        return [[0, 9]];
+      }
+
+      if (effectiveValue === 2) {
+        if (effectiveCode === baseCode && cycleIndex === 2) return [[7.75, 14.25]];
+        return [[7.75, 15.75]];
+      }
+
+      if (effectiveValue === 3) {
+        if (effectiveCode === baseCode && cycleIndex === 8) return [[14.25, 22.75]];
+        return [[15.75, 22.75]];
+      }
+
+      return [];
+    }
+
+    function overlapHours(aStart, aEnd, bStart, bEnd) {
+      return Math.max(0, Math.min(aEnd, bEnd) - Math.max(aStart, bStart));
+    }
+
+    function getClosureRecordsForDay(day) {
+      return specialDates.closure.filter(item => Number(item.day) === Number(day) && item.type !== "none");
+    }
+
+    function hasClosure(day) {
+      return getClosureRecordsForDay(day).length > 0;
+    }
+
+    function calcClosureOverlapHours(dayInfo) {
+      const records = getClosureRecordsForDay(dayInfo.day);
+      if (!records.length) return 0;
+
+      const intervals = getShiftIntervalsForClosure(dayInfo);
+      if (!intervals.length) return 0;
+
+      let total = 0;
+
+      records.forEach(record => {
+        const closureInterval = CLOSURE_INTERVALS[record.type];
+        if (!closureInterval) return;
+
+        intervals.forEach(workInterval => {
+          total += overlapHours(workInterval[0], workInterval[1], closureInterval[0], closureInterval[1]);
+        });
+      });
+
+      if (Number(dayInfo.actualCode) === 8.4) {
+        total -= Number(dayInfo.leaveHours || 0);
+      }
+
+      return Math.max(0, total);
+    }
+
     function splitTwelve(hours) {
       const input = Math.max(0, Number(hours) || 0);
       const cycles = Math.floor(input / 12);
@@ -1567,6 +1834,10 @@
     function calcAdditionalHolidayWorkHours(days) {
       return days.reduce((sum, dayInfo) => {
         if (dayInfo.isViolation) return sum;
+
+        const closureHours = calcClosureOverlapHours(dayInfo);
+        if (closureHours > 0) return sum + closureHours;
+
         if (!isWorkCode(dayInfo.actualCode)) return sum;
 
         const hours = Number(dayInfo.attendanceHours || 0);
@@ -1574,14 +1845,6 @@
 
         if (isElectionDay(dayInfo.day)) {
           return sum + calcElectionAdditionalHours(dayInfo);
-        }
-
-        if (isClosureHalfDay(dayInfo.day)) {
-          return sum + 4;
-        }
-
-        if (isClosureFullDay(dayInfo.day)) {
-          return sum + Math.min(hours, 8);
         }
 
         if (!isSpecialHolidayForBenefits(dayInfo.holidayName)) {
@@ -1602,18 +1865,14 @@
     function calcCompLeaveHours(days, additionalHolidayWorkHours) {
       const rawCompHours = days.reduce((sum, dayInfo) => {
         if (dayInfo.isViolation) return sum;
+
+        const closureHours = calcClosureOverlapHours(dayInfo);
+        if (closureHours > 0) return sum + closureHours;
+
         if (!isWorkCode(dayInfo.actualCode)) return sum;
 
         const hours = Number(dayInfo.attendanceHours || 0);
         if (hours <= 0) return sum;
-
-        if (isClosureHalfDay(dayInfo.day)) {
-          return sum + 4;
-        }
-
-        if (isClosureFullDay(dayInfo.day)) {
-          return sum + Math.min(hours, 8);
-        }
 
         if (!isSpecialHolidayForBenefits(dayInfo.holidayName)) {
           return sum;
@@ -1678,32 +1937,71 @@
       return html;
     }
 
+    function buildClosureTypeOptions(selectedType) {
+      return Object.entries(CLOSURE_TYPE_LABELS).map(([value, label]) => {
+        return `<option value="${value}" ${selectedType === value ? "selected" : ""}>${label}</option>`;
+      }).join("");
+    }
+
+    function updateSpecialSummary() {
+      const closureCount = specialDates.closure.filter(item => item.day > 0 && item.type !== "none").length;
+      const electionCount = specialDates.election.filter(day => Number(day) > 0).length;
+      const summary = [];
+
+      if (closureCount > 0) summary.push(`停止辦公 ${closureCount} 筆`);
+      if (electionCount > 0) summary.push(`選舉日 ${electionCount} 筆`);
+
+      document.getElementById("specialSummary").textContent = summary.length ? summary.join("，") : "未啟用";
+      document.getElementById("specialToggleIcon").textContent = specialPanelOpen ? "－" : "＋";
+      document.getElementById("specialContent").classList.toggle("open", specialPanelOpen);
+    }
+
     function renderSpecialDateControls() {
       const rocYear = Number(document.getElementById("rocYear").value);
       const month = Number(document.getElementById("month").value);
       const year = rocYear + 1911;
       const daysInMonth = new Date(year, month, 0).getDate();
 
-      document.getElementById("closureFullRow").innerHTML = specialDates.closureFull.map((value, idx) => {
-        return `<select class="special-date-select" data-group="closureFull" data-index="${idx}">${buildDateOptions(daysInMonth, value)}</select>`;
+      document.getElementById("closureRecordList").innerHTML = specialDates.closure.map((record, idx) => {
+        return `
+          <div class="special-record">
+            <select class="special-date-select" data-group="closureDay" data-index="${idx}">
+              ${buildDateOptions(daysInMonth, record.day)}
+            </select>
+            <select class="special-type-select" data-group="closureType" data-index="${idx}">
+              ${buildClosureTypeOptions(record.type)}
+            </select>
+          </div>
+        `;
       }).join("");
 
-      document.getElementById("closureHalfRow").innerHTML = specialDates.closureHalf.map((value, idx) => {
-        return `<select class="special-date-select" data-group="closureHalf" data-index="${idx}">${buildDateOptions(daysInMonth, value)}</select>`;
-      }).join("");
-
-      document.getElementById("electionRow").innerHTML = specialDates.election.map((value, idx) => {
+      document.getElementById("electionRecordList").innerHTML = specialDates.election.map((value, idx) => {
         return `<select class="special-date-select" data-group="election" data-index="${idx}">${buildDateOptions(daysInMonth, value)}</select>`;
       }).join("");
 
-      document.querySelectorAll(".special-date-select").forEach(sel => {
+      document.querySelectorAll(".special-date-select, .special-type-select").forEach(sel => {
         sel.addEventListener("change", function() {
           const group = this.dataset.group;
           const index = Number(this.dataset.index);
-          specialDates[group][index] = Number(this.value);
+
+          if (group === "closureDay") {
+            specialDates.closure[index].day = Number(this.value);
+          }
+
+          if (group === "closureType") {
+            specialDates.closure[index].type = this.value;
+            if (this.value === "none") specialDates.closure[index].day = 0;
+          }
+
+          if (group === "election") {
+            specialDates.election[index] = Number(this.value);
+          }
+
           renderAll(false);
         });
       });
+
+      updateSpecialSummary();
     }
 
     function renderCalendar() {
@@ -1739,15 +2037,17 @@
 
         const hourDisabled = isLeaveCode(d.actualCode) ? "" : "disabled";
 
-        const hourOptions = [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9].map(h => {
+        const hourOptions = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9].map(h => {
           return `<option value="${h}" ${Number(h) === Number(d.leaveHours) ? "selected" : ""}>${fmtHour(h)}HR</option>`;
         }).join("");
 
         const holidayHtml = d.holidayName ? `<div class="holiday-badge">${d.holidayName}</div>` : "";
-        const closureFullHtml = isClosureFullDay(d.day) ? `<div class="special-badge">停止辦公全日</div>` : "";
-        const closureHalfHtml = isClosureHalfDay(d.day) ? `<div class="special-badge">停止辦公半日</div>` : "";
-        const electionHtml = isElectionDay(d.day) ? `<div class="special-badge election-badge">選舉日</div>` : "";
 
+        const closureHtml = getClosureRecordsForDay(d.day).map(record => {
+          return `<div class="special-badge">停止辦公${CLOSURE_TYPE_LABELS[record.type]}</div>`;
+        }).join("");
+
+        const electionHtml = isElectionDay(d.day) ? `<div class="special-badge election-badge">選舉日</div>` : "";
         const d11Text = d.isViolation ? `<span class="violation-text">違規</span>` : `${fmtHour(d.attendanceHours)}HR`;
 
         const detailHtml = `
@@ -1771,7 +2071,7 @@
               </div>
             </div>
             <div class="card-center">
-              <div>${holidayHtml}${closureFullHtml}${closureHalfHtml}${electionHtml}</div>
+              <div>${holidayHtml}${closureHtml}${electionHtml}</div>
             </div>
             <div class="shift-pill ${pillClass}">${displayLabel}</div>
             ${detailHtml}
@@ -1848,11 +2148,11 @@
       const split = splitTwelve(restHours);
 
       const initialNight = days.filter(dayInfo => {
-        return !dayInfo.isViolation && [3,13,23].includes(Number(dayInfo.actualCode));
+        return !dayInfo.isViolation && [3, 13, 23].includes(Number(dayInfo.actualCode));
       }).length;
 
       const deepNight = days.filter(dayInfo => {
-        return !dayInfo.isViolation && [1,11,21].includes(Number(dayInfo.actualCode));
+        return !dayInfo.isViolation && [1, 11, 21].includes(Number(dayInfo.actualCode));
       }).length;
 
       const nightFee = initialNight * 250 + deepNight * 400;
@@ -1923,8 +2223,13 @@
     }
 
     function clearSpecialDates() {
-      specialDates.closureFull = [0, 0, 0, 0, 0];
-      specialDates.closureHalf = [0, 0, 0, 0, 0];
+      specialDates.closure = [
+        { day: 0, type: "full" },
+        { day: 0, type: "full" },
+        { day: 0, type: "full" },
+        { day: 0, type: "full" },
+        { day: 0, type: "full" }
+      ];
       specialDates.election = [0, 0, 0];
     }
 
@@ -1947,6 +2252,11 @@
 
         monthSelect.appendChild(opt);
       }
+
+      document.getElementById("specialToggle").addEventListener("click", () => {
+        specialPanelOpen = !specialPanelOpen;
+        updateSpecialSummary();
+      });
 
       document.getElementById("shiftGroup").addEventListener("change", () => {
         clearManualRecords();
