@@ -6,6 +6,12 @@
   <title>個人版加班待遇計算</title>
 
   <style>
+    @font-face {
+      font-family: "RemachineScript";
+      src: url("./RemachineScript_Personal_Use.ttf") format("truetype");
+      font-display: swap;
+    }
+
     * { box-sizing: border-box; }
 
     html, body {
@@ -345,11 +351,47 @@
       font-weight: 950;
     }
 
-    .stats-grid-main {
+    .core-stats-panel {
+      margin-top: 22px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .core-stats-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 22px;
+    }
+
+    .core-stat-item {
+      padding: 16px;
+      border-right: 1px solid rgba(0, 240, 255, 0.14);
+      background: rgba(255,255,255,0.025);
+    }
+
+    .core-stat-item:last-child {
+      border-right: none;
+    }
+
+    .core-stat-label {
+      color: #94a3b8;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      font-weight: 900;
+    }
+
+    .core-stat-value {
+      margin-top: 8px;
+      font-size: 25px;
+      font-weight: 950;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    .stat-suffix {
+      margin-left: 4px;
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 800;
     }
 
     .stats-panel {
@@ -385,13 +427,6 @@
       font-weight: 950;
       line-height: 1.2;
       word-break: break-word;
-    }
-
-    .stat-suffix {
-      margin-left: 4px;
-      color: #64748b;
-      font-size: 14px;
-      font-weight: 800;
     }
 
     .split-grid {
@@ -430,6 +465,16 @@
     .accent-emerald { color: #6ee7b7; }
     .accent-green { color: #86efac; }
 
+    .substitute-ok {
+      color: #39ff88 !important;
+      text-shadow: 0 0 8px rgba(57, 255, 136, 0.85), 0 0 18px rgba(57, 255, 136, 0.45);
+    }
+
+    .substitute-alert {
+      color: #ff3333 !important;
+      text-shadow: 0 0 8px rgba(255, 51, 51, 0.95), 0 0 18px rgba(255, 51, 51, 0.5);
+    }
+
     .limit-box {
       margin-top: 16px;
       border: 1px solid rgba(255,255,255,0.1);
@@ -452,21 +497,235 @@
       padding-left: 22px;
     }
 
+    .designer-footer {
+      margin-top: 40px;
+      text-align: center;
+      padding-bottom: 8px;
+    }
+
+    .designer-inner {
+      display: inline-block;
+      position: relative;
+    }
+
+    .designer-label {
+      color: #4b5563;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 900;
+    }
+
+    .designer-name {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      color: transparent;
+      background: linear-gradient(90deg, #22d3ee, #3b82f6, #9333ea);
+      -webkit-background-clip: text;
+      background-clip: text;
+      text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    }
+
+    .designer-script {
+      font-family: "RemachineScript", "Segoe UI", sans-serif;
+      font-size: 1.3em;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+
+    .designer-line {
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+      opacity: 0.6;
+    }
+
     @media (max-width: 1100px) {
       .controls-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .hint-box { grid-column: 1 / -1; }
-      .stats-grid-main { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .core-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .core-stat-item:nth-child(2) { border-right: none; }
+      .core-stat-item:nth-child(1),
+      .core-stat-item:nth-child(2) { border-bottom: 1px solid rgba(0, 240, 255, 0.14); }
       .stats-grid-sub { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 760px) {
-      .app { padding: 14px; }
-      .controls-grid { grid-template-columns: 1fr; }
-      .calendar-head { display: block; }
-      .sync-message { text-align: left; margin-top: 10px; white-space: normal; }
-      .calendar-body { overflow-x: auto; }
-      .week-grid, .day-grid { min-width: 900px; }
-      .stats-grid-main, .stats-grid-sub { grid-template-columns: 1fr; }
+      .app { padding: 8px; }
+
+      .container {
+        max-width: none;
+        width: 100%;
+      }
+
+      .top-header {
+        margin-bottom: 14px;
+      }
+
+      .title {
+        font-size: 26px;
+        letter-spacing: 0.08em;
+      }
+
+      .subtitle {
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .controls-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .calendar-head {
+        display: block;
+        padding: 14px;
+      }
+
+      .calendar-title {
+        font-size: 20px;
+        letter-spacing: 0.05em;
+      }
+
+      .sync-message {
+        text-align: left;
+        margin-top: 10px;
+        white-space: normal;
+        font-size: 12px;
+      }
+
+      .calendar-body {
+        padding: 6px;
+        overflow-x: visible;
+      }
+
+      .week-grid,
+      .day-grid {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 4px;
+        width: 100%;
+        min-width: 0;
+      }
+
+      .week-cell {
+        padding: 6px 0;
+        font-size: 11px;
+        letter-spacing: 0;
+      }
+
+      .day-card,
+      .empty-card {
+        min-height: 132px;
+        border-radius: 8px;
+      }
+
+      .day-card {
+        padding: 4px;
+      }
+
+      .day-top {
+        display: block;
+      }
+
+      .day-number {
+        font-size: 12px;
+        margin-bottom: 3px;
+      }
+
+      .select-stack {
+        align-items: stretch;
+        gap: 3px;
+      }
+
+      .code-select,
+      .hour-select,
+      .reset-btn {
+        width: 100%;
+        font-size: 9px;
+        padding: 2px;
+        height: 23px;
+      }
+
+      .card-center {
+        padding: 3px 0;
+      }
+
+      .holiday-badge {
+        font-size: 9px;
+        padding: 2px 3px;
+        border-radius: 5px;
+      }
+
+      .shift-pill {
+        font-size: 10px;
+        padding: 4px 2px;
+        border-radius: 6px;
+        letter-spacing: 0;
+      }
+
+      .daily-detail {
+        font-size: 8px;
+        line-height: 1.35;
+        margin-top: 4px;
+        padding-top: 4px;
+      }
+
+      .core-stats-panel {
+        margin-top: 14px;
+      }
+
+      .core-stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .core-stat-item {
+        padding: 13px 14px;
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 240, 255, 0.14);
+      }
+
+      .core-stat-item:last-child {
+        border-bottom: none;
+      }
+
+      .core-stat-label {
+        font-size: 11px;
+      }
+
+      .core-stat-value {
+        font-size: 23px;
+      }
+
+      .stats-grid-sub {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-value {
+        font-size: 22px;
+      }
+
+      .split-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      .split-box {
+        padding: 8px 5px;
+      }
+
+      .split-value {
+        font-size: 14px;
+      }
+
+      .designer-name {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
@@ -526,25 +785,27 @@
         </div>
       </section>
 
-      <section class="stats-grid-main">
-        <div class="stat-card">
-          <div class="stat-label">值班上班時間</div>
-          <div id="totalHours" class="stat-value accent-cyan">0.00<span class="stat-suffix">HR</span></div>
-        </div>
+      <section class="panel core-stats-panel">
+        <div class="core-stats-grid">
+          <div class="core-stat-item">
+            <div class="core-stat-label">值班上班時間</div>
+            <div id="totalHours" class="core-stat-value accent-cyan">0.00<span class="stat-suffix">HR</span></div>
+          </div>
 
-        <div class="stat-card">
-          <div class="stat-label">交接班時數</div>
-          <div id="handoverHours" class="stat-value accent-sky">0.00<span class="stat-suffix">HR</span></div>
-        </div>
+          <div class="core-stat-item">
+            <div class="core-stat-label">交接班時數</div>
+            <div id="handoverHours" class="core-stat-value accent-sky">0.00<span class="stat-suffix">HR</span></div>
+          </div>
 
-        <div class="stat-card">
-          <div class="stat-label">國定假日時數</div>
-          <div id="nationalHolidayHours" class="stat-value accent-rose">0.00<span class="stat-suffix">HR</span></div>
-        </div>
+          <div class="core-stat-item">
+            <div class="core-stat-label">國定假日時數</div>
+            <div id="nationalHolidayHours" class="core-stat-value accent-rose">0.00<span class="stat-suffix">HR</span></div>
+          </div>
 
-        <div class="stat-card">
-          <div class="stat-label">保養上班時數</div>
-          <div id="maintenanceHours" class="stat-value accent-amber">0.00<span class="stat-suffix">HR</span></div>
+          <div class="core-stat-item">
+            <div class="core-stat-label">保養上班時數</div>
+            <div id="maintenanceHours" class="core-stat-value accent-amber">0.00<span class="stat-suffix">HR</span></div>
+          </div>
         </div>
       </section>
 
@@ -577,7 +838,7 @@
 
           <div class="stat-card">
             <div class="stat-label">代班資訊</div>
-            <div id="substituteInfo" class="stat-value accent-green">-</div>
+            <div id="substituteInfo" class="stat-value">-</div>
           </div>
         </div>
       </section>
@@ -585,13 +846,26 @@
       <section class="limit-box">
         <div class="limit-title">目前版本狀態</div>
         <ul>
+          <li>手機版的四項主要工時已集中在同一張卡片內，並以分隔線區隔。</li>
           <li>中間重複的假別小視窗已移除，避免與下方 D8～D11 資訊重複。</li>
           <li>每日已新增 RESET，可回復該日原本班別。</li>
           <li>休息日總工時已內嵌 1.33倍、1.67倍、2.66倍。</li>
           <li>保養上班日已改為保養上班時數，並以 HR 顯示。</li>
-          <li>代班資訊已依指定公式改寫。</li>
+          <li>代班資訊已依指定公式改寫，並依結果套用霓虹綠或霓虹紅。</li>
+          <li>手機版月曆已改為滿版七欄顯示，不強制左右拖曳。</li>
         </ul>
       </section>
+
+      <footer class="designer-footer">
+        <div class="designer-inner">
+          <span class="designer-label">System Designed By</span>
+          <div class="designer-name">
+            <span>複值</span>
+            <span class="designer-script">D-Joe.T</span>
+          </div>
+          <div class="designer-line"></div>
+        </div>
+      </footer>
     </div>
   </div>
 
@@ -1313,14 +1587,16 @@
       document.getElementById("code6Hours").textContent = `${fmtHour(split.code6)} HR`;
 
       document.getElementById("nightFee").innerHTML = `${nightFee.toLocaleString()}<span class="stat-suffix">元</span>`;
-      document.getElementById("substituteInfo").textContent = substitute.text;
 
-      const substituteClass =
-        substitute.status === "ok" ? "accent-green" :
-        substitute.status === "over" ? "accent-rose" :
-        "accent-rose";
+      const substituteInfoEl = document.getElementById("substituteInfo");
+      substituteInfoEl.textContent = substitute.text;
 
-      document.getElementById("substituteInfo").className = `stat-value ${substituteClass}`;
+      substituteInfoEl.className = "stat-value";
+      if (substitute.status === "ok") {
+        substituteInfoEl.classList.add("substitute-ok");
+      } else {
+        substituteInfoEl.classList.add("substitute-alert");
+      }
     }
 
     async function loadCalendar() {
