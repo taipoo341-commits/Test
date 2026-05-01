@@ -622,8 +622,132 @@
       box-shadow: 0 0 10px rgba(0, 240, 255, 0.18);
     }
 
+    .reset-field {
+      align-self: end;
+    }
+
+    .reset-warning-label {
+      color: #fca5a5;
+      text-shadow: 0 0 8px rgba(255, 51, 51, 0.9), 0 0 18px rgba(255, 51, 51, 0.45);
+    }
+
+    .reset-danger {
+      border-color: rgba(255, 51, 51, 0.65);
+      background: rgba(127, 29, 29, 0.35);
+      color: #fecaca;
+      text-shadow: 0 0 8px rgba(255, 51, 51, 0.95), 0 0 18px rgba(255, 51, 51, 0.5);
+    }
+
+    .reset-danger:hover {
+      background: rgba(185, 28, 28, 0.45);
+      box-shadow: 0 0 16px rgba(255, 51, 51, 0.35);
+    }
+
     .collapsed-detail {
       display: none !important;
+    }
+
+    .compact-summary {
+      margin-top: 8px;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.6;
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 760px) {
+      .controls-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+        align-items: end;
+      }
+
+      .hint-box {
+        grid-column: 1 / -1;
+        padding: 10px;
+      }
+
+      .field-label {
+        font-size: 9px;
+        letter-spacing: 0.06em;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+
+      .cyber-input,
+      .cyber-select {
+        height: 34px;
+        font-size: 13px;
+        border-radius: 9px;
+      }
+
+      .reset-field .sub-panel-toggle {
+        height: 34px;
+        margin-top: 0;
+        padding: 4px 3px;
+        border-radius: 9px;
+        font-size: 9px;
+        letter-spacing: 0;
+      }
+
+      .core-stats-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .core-stat-item {
+        padding: 9px 5px;
+        border-right: 1px solid rgba(0, 240, 255, 0.14);
+        border-bottom: none;
+      }
+
+      .core-stat-item:last-child {
+        border-right: none;
+      }
+
+      .core-stat-label {
+        font-size: 9px;
+        letter-spacing: 0.02em;
+        line-height: 1.25;
+      }
+
+      .core-stat-value {
+        font-size: 16px;
+      }
+
+      .core-stat-value .stat-suffix,
+      .stat-suffix {
+        font-size: 9px;
+      }
+
+      .stats-grid-sub {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .stats-grid-sub .stat-card:nth-child(3) {
+        grid-column: 1 / -1;
+      }
+
+      .stat-card {
+        padding: 12px;
+      }
+
+      .stat-label {
+        font-size: 11px;
+      }
+
+      .stat-value {
+        font-size: 21px;
+      }
+
+      .holiday-benefit-grid {
+        margin-top: 10px;
+      }
+
+      .benefit-combo {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     .accent-cyan { color: #67e8f9; }
@@ -836,12 +960,16 @@
             <select id="month" class="cyber-select"></select>
           </label>
 
+          <label class="reset-field">
+            <span class="field-label reset-warning-label">⚠ 當月RESET</span>
+            <button id="monthResetBtn" class="sub-panel-toggle reset-danger" type="button">當月 RESET</button>
+          </label>
+
           <div class="hint-box">
             <div class="hint-title">計算說明</div>
             <div class="hint-text">
               部分請假：D9 顯示 HR、D10 為 15、D11 不扣請假時數；全日請假：D9 空白、D10 為 0。
             </div>
-            <button id="monthResetBtn" class="sub-panel-toggle" type="button">當月 RESET</button>
           </div>
         </div>
       </section>
@@ -888,7 +1016,7 @@
       <section class="panel core-stats-panel">
         <div class="core-stats-grid">
           <div class="core-stat-item">
-            <div class="core-stat-label">值班上班時間</div>
+            <div class="core-stat-label">值班總工時</div>
             <div id="totalHours" class="core-stat-value accent-cyan">0<span class="stat-suffix">HR</span></div>
           </div>
 
@@ -912,7 +1040,7 @@
       <section class="panel stats-panel">
         <div class="stats-grid-sub">
           <div class="stat-card">
-            <div class="stat-label">休息日總工時</div>
+            <div class="stat-label">12切總工時</div>
             <div id="restHours" class="stat-value accent-violet">0<span class="stat-suffix">HR</span></div>
             <button id="restSplitToggle" class="sub-panel-toggle" type="button">展開倍率明細</button>
 
@@ -946,7 +1074,9 @@
         <div class="holiday-benefit-grid">
           <div class="stat-card">
             <div class="stat-label">假日待遇</div>
-            <div class="benefit-combo">
+            <div id="holidayBenefitSummary" class="compact-summary">另計假日出勤 0 HR、得補假 0 HR</div>
+            <button id="holidayBenefitToggle" class="sub-panel-toggle" type="button">展開假日待遇</button>
+            <div id="holidayBenefitDetails" class="benefit-combo collapsed-detail">
               <div class="benefit-box">
                 <div class="benefit-label">另計假日出勤</div>
                 <div id="additionalHolidayWorkHours" class="benefit-value accent-amber">0 HR</div>
@@ -988,9 +1118,9 @@
         <ul>
           <li>部分請假：D8 顯示假別加 HR、D9 顯示 HR、D10 為 15、D11 不扣請假時數。</li>
           <li>全日請假：D8 顯示假別、D9 空白、D10 為 0、D11 依特扣日規則計算。</li>
-          <li>休息日總工時已避免將 15 分鐘直接換算為 0.25HR。</li>
+          <li>12切總工時依值班總工時、保養時數、國定時數與交接班時計算。</li>
           <li>當月資料會依班別、民國年、月份儲存在瀏覽器 localStorage，當月 RESET 會清除目前月份設定。</li>
-          <li>早餐、午晚餐已納入新年與開國紀念日判斷；餐費與其他獎金、倍率明細預設收合。</li>
+          <li>早餐、午晚餐已納入新年與開國紀念日判斷；假日待遇、餐費與其他獎金、倍率明細預設收合。</li>
         </ul>
       </section>
 
@@ -1079,6 +1209,7 @@
     let calendarData = { workDict: {}, holidayMap: new Map() };
     let specialPanelOpen = false;
     let restSplitOpen = false;
+    let holidayBenefitOpen = false;
     let rewardPanelOpen = false;
     let activeStorageKey = "";
 
@@ -1109,6 +1240,7 @@
         manualRecords: JSON.parse(JSON.stringify(manualRecords)),
         specialDates: JSON.parse(JSON.stringify(specialDates)),
         restSplitOpen,
+        holidayBenefitOpen,
         rewardPanelOpen,
         savedAt: new Date().toISOString()
       };
@@ -1131,20 +1263,20 @@
       clearObject(manualRecords);
       resetSpecialDatesToDefault();
       restSplitOpen = false;
+      holidayBenefitOpen = false;
       rewardPanelOpen = false;
 
       try {
         const raw = localStorage.getItem(storageKey);
         if (!raw) return;
         const data = JSON.parse(raw);
-        if (data.manualRecords && typeof data.manualRecords === "object") {
-          Object.assign(manualRecords, data.manualRecords);
-        }
+        if (data.manualRecords && typeof data.manualRecords === "object") Object.assign(manualRecords, data.manualRecords);
         if (data.specialDates && typeof data.specialDates === "object") {
           specialDates.closure = Array.isArray(data.specialDates.closure) ? data.specialDates.closure : specialDates.closure;
           specialDates.election = Array.isArray(data.specialDates.election) ? data.specialDates.election : specialDates.election;
         }
         restSplitOpen = Boolean(data.restSplitOpen);
+        holidayBenefitOpen = Boolean(data.holidayBenefitOpen);
         rewardPanelOpen = Boolean(data.rewardPanelOpen);
       } catch (err) {
         console.warn("無法讀取當月資料", err);
@@ -1157,6 +1289,7 @@
       clearObject(manualRecords);
       resetSpecialDatesToDefault();
       restSplitOpen = false;
+      holidayBenefitOpen = false;
       rewardPanelOpen = false;
       renderAll(false);
     }
@@ -1174,6 +1307,13 @@
       if (restSplitDetails && restSplitToggle) {
         restSplitDetails.classList.toggle("collapsed-detail", !restSplitOpen);
         restSplitToggle.textContent = restSplitOpen ? "收合倍率明細" : "展開倍率明細";
+      }
+
+      const holidayBenefitDetails = document.getElementById("holidayBenefitDetails");
+      const holidayBenefitToggle = document.getElementById("holidayBenefitToggle");
+      if (holidayBenefitDetails && holidayBenefitToggle) {
+        holidayBenefitDetails.classList.toggle("collapsed-detail", !holidayBenefitOpen);
+        holidayBenefitToggle.textContent = holidayBenefitOpen ? "收合假日待遇" : "展開假日待遇";
       }
 
       const rewardDetails = document.getElementById("rewardDetails");
@@ -2381,6 +2521,7 @@
       document.getElementById("nightFee").innerHTML = `${nightFee.toLocaleString()}<span class="stat-suffix">元</span>`;
       document.getElementById("additionalHolidayWorkHours").textContent = `${fmtHourText(additionalHolidayWorkHours)}`;
       document.getElementById("compLeaveHours").textContent = `${fmtHourText(compLeaveHours)}`;
+      document.getElementById("holidayBenefitSummary").textContent = `另計假日出勤 ${fmtHourText(additionalHolidayWorkHours)}、得補假 ${fmtHourText(compLeaveHours)}`;
       document.getElementById("breakfastCount").textContent = `${breakfastCount} 次`;
       document.getElementById("lunchDinnerCount").textContent = `${lunchDinnerCount} 次`;
       document.getElementById("lunarNewYearRedEnvelopeCount").textContent = `${lunarNewYearRedEnvelopeCount} 次`;
@@ -2459,6 +2600,12 @@
 
       document.getElementById("restSplitToggle").addEventListener("click", () => {
         restSplitOpen = !restSplitOpen;
+        saveCurrentMonthState();
+        updateCollapsePanels();
+      });
+
+      document.getElementById("holidayBenefitToggle").addEventListener("click", () => {
+        holidayBenefitOpen = !holidayBenefitOpen;
         saveCurrentMonthState();
         updateCollapsePanels();
       });
