@@ -967,10 +967,13 @@
     }
 
 
-    .batch-panel { margin-top: 16px; padding: 0; overflow: hidden; }
-    .batch-content { padding: 16px; }
+    .batch-panel,
+    .overhaul-panel { margin-top: 16px; padding: 0; overflow: hidden; }
+    .batch-content,
+    .overhaul-content { padding: 16px; }
     .batch-row-list { display: grid; gap: 10px; }
-    .batch-row {
+    .batch-row,
+    .overhaul-range-row {
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 8px;
@@ -980,7 +983,9 @@
       background: rgba(255, 255, 255, 0.035);
       padding: 12px;
     }
-    .batch-field-title {
+    .overhaul-range-row { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 12px; }
+    .batch-field-title,
+    .overhaul-field-title {
       color: #94a3b8;
       font-size: 10px;
       font-weight: 950;
@@ -988,7 +993,8 @@
       margin-bottom: 5px;
       text-align: center;
     }
-    .batch-select {
+    .batch-select,
+    .overhaul-select {
       width: 100%;
       height: 34px;
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -1000,7 +1006,8 @@
       font-weight: 850;
       outline: none;
     }
-    .batch-action-btn {
+    .batch-action-btn,
+    .overhaul-action-btn {
       width: 100%;
       height: 34px;
       border-radius: 8px;
@@ -1012,25 +1019,190 @@
       cursor: pointer;
       letter-spacing: 0.08em;
     }
-    .batch-action-btn:hover { background: rgba(16, 185, 129, 0.26); box-shadow: 0 0 12px rgba(16, 185, 129, 0.22); }
-    .batch-clear-btn {
+    .batch-action-btn:hover,
+    .overhaul-action-btn:hover { background: rgba(16, 185, 129, 0.26); box-shadow: 0 0 12px rgba(16, 185, 129, 0.22); }
+    .batch-clear-btn,
+    .overhaul-clear-btn {
       border-color: rgba(251, 113, 133, 0.42);
       background: rgba(244, 63, 94, 0.14);
       color: #fda4af;
     }
-    .batch-clear-btn:hover { background: rgba(244, 63, 94, 0.24); box-shadow: 0 0 12px rgba(244, 63, 94, 0.22); }
-    .batch-note {
+    .batch-clear-btn:hover,
+    .overhaul-clear-btn:hover { background: rgba(244, 63, 94, 0.24); box-shadow: 0 0 12px rgba(244, 63, 94, 0.22); }
+    .batch-note,
+    .overhaul-note {
       margin-top: 10px;
       color: #94a3b8;
       font-size: 12px;
       line-height: 1.65;
     }
 
+    .overhaul-rule-text {
+      margin-top: 0;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    .overhaul-day-btn.out-of-range {
+      opacity: 0.28;
+      cursor: not-allowed;
+      filter: grayscale(0.55);
+    }
+
+    .overhaul-calendar-wrap {
+      border: 1px solid rgba(0, 240, 255, 0.14);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.035);
+      padding: 12px;
+    }
+    .overhaul-calendar-title {
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+    .overhaul-week-grid,
+    .overhaul-calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .overhaul-week-cell {
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.035);
+      color: #94a3b8;
+      text-align: center;
+      padding: 6px 0;
+      font-size: 10px;
+      font-weight: 950;
+    }
+    .overhaul-day-btn,
+    .overhaul-empty-cell {
+      min-height: 42px;
+      border-radius: 9px;
+    }
+    .overhaul-empty-cell { background: rgba(255, 255, 255, 0.012); border: 1px solid rgba(255, 255, 255, 0.04); }
+    .overhaul-day-btn {
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(0, 0, 0, 0.30);
+      color: #e5e7eb;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 950;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+    .overhaul-day-btn.in-range {
+      border-color: rgba(251, 191, 36, 0.48);
+      background: rgba(251, 191, 36, 0.12);
+      color: #fde68a;
+    }
+    .overhaul-day-btn.proxy-mark {
+      border-color: rgba(52, 211, 153, 0.72);
+      background: rgba(16, 185, 129, 0.18);
+      color: #6ee7b7;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.18);
+    }
+    .overhaul-day-proxy-text {
+      color: #6ee7b7;
+      font-size: 9px;
+      line-height: 1;
+    }
+    .proxy-badge {
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      border-radius: 8px;
+      background: rgba(16, 185, 129, 0.16);
+      color: #a7f3d0;
+      padding: 4px 7px;
+      font-size: 10px;
+      font-weight: 950;
+      margin-bottom: 4px;
+    }
+    .overhaul-choice-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.62);
+      z-index: 9999;
+      padding: 18px;
+    }
+    .overhaul-choice-modal.open { display: flex; }
+    .overhaul-choice-card {
+      width: min(360px, 100%);
+      border: 1px solid rgba(0, 240, 255, 0.32);
+      border-radius: 18px;
+      background: #101722;
+      box-shadow: 0 0 28px rgba(0, 240, 255, 0.18);
+      padding: 18px;
+    }
+    .overhaul-choice-title {
+      color: #e5e7eb;
+      font-size: 16px;
+      font-weight: 950;
+      text-align: center;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+    .overhaul-choice-buttons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .overhaul-choice-btn {
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid rgba(103, 232, 249, 0.30);
+      background: rgba(14, 165, 233, 0.10);
+      color: #67e8f9;
+      font-size: 13px;
+      font-weight: 950;
+      cursor: pointer;
+    }
+    .overhaul-choice-btn.default-choice {
+      border-color: rgba(52, 211, 153, 0.64);
+      background: rgba(16, 185, 129, 0.20);
+      color: #a7f3d0;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.20);
+    }
+    .overhaul-choice-btn.clear-choice {
+      border-color: rgba(251, 113, 133, 0.48);
+      background: rgba(244, 63, 94, 0.14);
+      color: #fda4af;
+    }
+    .overhaul-choice-cancel {
+      margin-top: 10px;
+      width: 100%;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      background: rgba(148, 163, 184, 0.08);
+      color: #cbd5e1;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
     @media (max-width: 760px) {
-      .batch-content { padding: 12px !important; }
-      .batch-row { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 6px !important; padding: 9px !important; }
-      .batch-field-title { font-size: 9px !important; letter-spacing: 0 !important; }
-      .batch-select, .batch-action-btn { height: 30px !important; font-size: 10px !important; }
+      .batch-content,
+      .overhaul-content { padding: 12px !important; }
+      .batch-row,
+      .overhaul-range-row { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 6px !important; padding: 9px !important; }
+      .batch-field-title,
+      .overhaul-field-title { font-size: 9px !important; letter-spacing: 0 !important; }
+      .batch-select,
+      .overhaul-select,
+      .batch-action-btn,
+      .overhaul-action-btn { height: 30px !important; font-size: 10px !important; }
+      .overhaul-day-btn,
+      .overhaul-empty-cell { min-height: 34px !important; }
+      .overhaul-week-grid,
+      .overhaul-calendar-grid { gap: 4px !important; }
     }
 
   </style>
@@ -1059,7 +1231,7 @@
 
           <label>
             <span class="field-label">民國年份</span>
-            <input id="rocYear" class="cyber-input" type="number" />
+            <input id="rocYear" class="cyber-input" type="text" inputmode="numeric" maxlength="3" />
           </label>
 
           <label>
@@ -1129,14 +1301,52 @@
         <button id="batchToggle" class="special-toggle" type="button">
           <div>
             <div>區間批次請假／受訓設定</div>
-            <div id="batchSummary" class="special-summary">可一次套用連續特休、受訓或其他假別</div>
+            <div id="batchSummary" class="special-summary">可一次套用連續特休、受訓或常用假別</div>
           </div>
           <div id="batchToggleIcon">＋</div>
         </button>
         <div id="batchContent" class="batch-content special-content">
           <div id="batchRangeList" class="batch-row-list"></div>
           <div class="batch-note">
-            預設「只套用上班日」，原本空班不會被改掉；若要把空班也設為受訓，請將模式改為「包含空班」。受訓遇到六日或國定假日會依 D8 規則顯示週休或國定假日，D10 與 D11 均為 0。
+            批次假別保留常用長區間項目。選擇「受訓」時，模式會自動預設為「包含空班」；受訓遇到六日或國定假日會依 D8 規則顯示週休或國定假日，D10 與 D11 均為 0。
+          </div>
+        </div>
+      </section>
+
+      <section class="panel overhaul-panel">
+        <button id="overhaulToggle" class="special-toggle" type="button">
+          <div>
+            <div>機組大修待遇設定</div>
+            <div id="overhaulSummary" class="special-summary">未啟用</div>
+          </div>
+          <div id="overhaulToggleIcon">＋</div>
+        </button>
+        <div id="overhaulContent" class="overhaul-content special-content">
+          <div class="overhaul-range-row">
+            <label>
+              <div class="overhaul-field-title">大修起日</div>
+              <select id="overhaulStartDay" class="overhaul-select"></select>
+            </label>
+            <label>
+              <div class="overhaul-field-title">大修訖日</div>
+              <select id="overhaulEndDay" class="overhaul-select"></select>
+            </label>
+            <div>
+              <div class="overhaul-field-title">狀態</div>
+              <button id="overhaulClearBtn" class="overhaul-action-btn overhaul-clear-btn" type="button">清除大修</button>
+            </div>
+            <div>
+              <div class="overhaul-field-title">規則</div>
+              <div class="overhaul-rule-text">區間內預設 D10=0</div>
+            </div>
+          </div>
+          <div class="overhaul-calendar-wrap">
+            <div class="overhaul-calendar-title">代理小月曆：點日期後選 15、30 或清除，預設選項為 30</div>
+            <div id="overhaulWeekGrid" class="overhaul-week-grid"></div>
+            <div id="overhaulCalendarGrid" class="overhaul-calendar-grid"></div>
+          </div>
+          <div class="overhaul-note">
+            未設定大修起訖日時，代理小月曆不可使用。設定大修起訖日後，只有大修區間內且非空班日期可以設定代理 D10；若當日為代班，D10 仍依代班優先計算。
           </div>
         </div>
       </section>
@@ -1247,8 +1457,10 @@
           <li>12切總工時依值班總工時、保養時數、國定時數與交接班時計算。</li>
           <li>當月資料會依班別、民國年、月份儲存在瀏覽器 localStorage，當月 RESET 會清除目前月份設定。</li>
           <li>班別下拉選單依 A/B/C/D 顯示霓虹高亮；餐費與其他獎金、倍率明細預設收合。</li>
-          <li>教育訓練可設定 3 筆日期與時數，時數以 0.5 HR 為單位並直接併入 D10 超時分鐘。</li>
-          <li>區間批次請假／受訓設定可一次套用連續特休、受訓或其他假別；受訓遇六日或國定假日會顯示週休或國定假日，D10 與 D11 均為 0。</li>
+          <li>教育訓練可設定 2 筆日期與時數，時數以 0.5 HR 為單位並直接併入 D10 超時分鐘。</li>
+          <li>區間批次請假／受訓設定提供 3 列，假別順序為 5、4、7、8.1、8.2、8.5、8.6；受訓會自動以包含空班模式套用。</li>
+          <li>機組大修待遇設定可指定大修起訖日，區間內 D10 預設為 0；代理小月曆只有大修區間內且非空班日期可選，代班 D10 優先於大修規則。</li>
+          <li>公司新年判斷已納入 D8：1/1 的一、二、三值與 12/31 一般出勤日的三值，會顯示為新年出勤。</li>
         </ul>
       </section>
 
@@ -1262,6 +1474,19 @@
           <div class="designer-line"></div>
         </div>
       </footer>
+    </div>
+  </div>
+
+
+  <div id="overhaulChoiceModal" class="overhaul-choice-modal" aria-hidden="true">
+    <div class="overhaul-choice-card">
+      <div id="overhaulChoiceTitle" class="overhaul-choice-title">選擇代理 D10</div>
+      <div class="overhaul-choice-buttons">
+        <button class="overhaul-choice-btn" type="button" data-overhaul-choice="15">15</button>
+        <button class="overhaul-choice-btn default-choice" type="button" data-overhaul-choice="30">30</button>
+        <button class="overhaul-choice-btn clear-choice" type="button" data-overhaul-choice="clear">清除</button>
+      </div>
+      <button id="overhaulChoiceCancel" class="overhaul-choice-cancel" type="button">取消</button>
     </div>
   </div>
 
@@ -1323,8 +1548,23 @@
 
     const manualRecords = {};
 
-    const BATCH_RANGE_CODES = [4, 4.1, 4.2, 4.3, 5, 5.1, 5.2, 5.3, 5.4, 5.5, 6, 6.1, 6.2, 6.3, 6.4, 6.5, 7, 7.1, 7.2, 7.3, 8, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8];
+    const BATCH_RANGE_CODES = [5, 4, 7, 8.1, 8.2, 8.5, 8.6];
+    const BATCH_RANGE_LABELS = {
+      5: "特休",
+      4: "受訓",
+      7: "病假",
+      8.1: "喪假",
+      8.2: "婚假",
+      8.5: "家庭照顧假",
+      8.6: "身心照顧假"
+    };
     const batchRangeRecords = [];
+    const overhaulSettings = {
+      startDay: 0,
+      endDay: 0,
+      overrides: {}
+    };
+    let selectedOverhaulDay = 0;
 
     const specialDates = {
       closure: [
@@ -1337,7 +1577,6 @@
       election: [0, 0, 0],
       training: [
         { day: 0, hours: 3 },
-        { day: 0, hours: 3 },
         { day: 0, hours: 3 }
       ]
     };
@@ -1345,6 +1584,7 @@
     let calendarData = { workDict: {}, holidayMap: new Map() };
     let specialPanelOpen = false;
     let batchPanelOpen = false;
+    let overhaulPanelOpen = false;
     let restSplitOpen = false;
     let rewardPanelOpen = false;
     let activeStorageKey = "";
@@ -1371,15 +1611,13 @@
       specialDates.election = [0, 0, 0];
       specialDates.training = [
         { day: 0, hours: 3 },
-        { day: 0, hours: 3 },
         { day: 0, hours: 3 }
       ];
     }
 
-
     function resetBatchRangeRecordsToDefault() {
       batchRangeRecords.length = 0;
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 3; i++) {
         batchRangeRecords.push({
           startDay: 0,
           endDay: 0,
@@ -1390,12 +1628,21 @@
       }
     }
 
+    function resetOverhaulSettingsToDefault() {
+      overhaulSettings.startDay = 0;
+      overhaulSettings.endDay = 0;
+      overhaulSettings.overrides = {};
+      selectedOverhaulDay = 0;
+    }
+
     function getStateSnapshot() {
       return {
         manualRecords: JSON.parse(JSON.stringify(manualRecords)),
         specialDates: JSON.parse(JSON.stringify(specialDates)),
         batchRangeRecords: JSON.parse(JSON.stringify(batchRangeRecords)),
         batchPanelOpen,
+        overhaulPanelOpen,
+        overhaulSettings: JSON.parse(JSON.stringify(overhaulSettings)),
         restSplitOpen,
         rewardPanelOpen,
         savedAt: new Date().toISOString()
@@ -1416,7 +1663,9 @@
       clearObject(manualRecords);
       resetSpecialDatesToDefault();
       resetBatchRangeRecordsToDefault();
+      resetOverhaulSettingsToDefault();
       batchPanelOpen = false;
+      overhaulPanelOpen = false;
       restSplitOpen = false;
       rewardPanelOpen = false;
       try {
@@ -1427,20 +1676,41 @@
         if (data.specialDates && typeof data.specialDates === "object") {
           specialDates.closure = Array.isArray(data.specialDates.closure) ? data.specialDates.closure : specialDates.closure;
           specialDates.election = Array.isArray(data.specialDates.election) ? data.specialDates.election : specialDates.election;
-          specialDates.training = Array.isArray(data.specialDates.training) ? data.specialDates.training : specialDates.training;
+          specialDates.training = Array.isArray(data.specialDates.training) ? data.specialDates.training.slice(0, 2) : specialDates.training;
+          while (specialDates.training.length < 2) specialDates.training.push({ day: 0, hours: 3 });
         }
         if (Array.isArray(data.batchRangeRecords)) {
           batchRangeRecords.length = 0;
-          data.batchRangeRecords.slice(0, 5).forEach(item => batchRangeRecords.push({
+          data.batchRangeRecords.slice(0, 3).forEach(item => batchRangeRecords.push({
             startDay: Number(item.startDay || 0),
             endDay: Number(item.endDay || 0),
             code: Number(item.code || 5),
             leaveHours: Number(item.leaveHours || 0),
             mode: item.mode === "all" ? "all" : "workOnly"
           }));
-          while (batchRangeRecords.length < 5) batchRangeRecords.push({ startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly" });
+          while (batchRangeRecords.length < 3) batchRangeRecords.push({ startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly" });
+        }
+        if (data.overhaulSettings && typeof data.overhaulSettings === "object") {
+          overhaulSettings.startDay = Number(data.overhaulSettings.startDay || 0);
+          overhaulSettings.endDay = Number(data.overhaulSettings.endDay || 0);
+          if (Array.isArray(data.overhaulSettings.overrides)) {
+            overhaulSettings.overrides = {};
+            data.overhaulSettings.overrides.forEach(item => {
+              const day = Number(item.day || 0);
+              const minutes = Number(item.minutes || 0);
+              if (day > 0 && (minutes === 15 || minutes === 30)) overhaulSettings.overrides[String(day)] = minutes;
+            });
+          } else if (data.overhaulSettings.overrides && typeof data.overhaulSettings.overrides === "object") {
+            overhaulSettings.overrides = {};
+            Object.entries(data.overhaulSettings.overrides).forEach(([day, minutes]) => {
+              const dayNumber = Number(day);
+              const minuteNumber = Number(minutes);
+              if (dayNumber > 0 && (minuteNumber === 15 || minuteNumber === 30)) overhaulSettings.overrides[String(dayNumber)] = minuteNumber;
+            });
+          }
         }
         batchPanelOpen = Boolean(data.batchPanelOpen);
+        overhaulPanelOpen = Boolean(data.overhaulPanelOpen);
         restSplitOpen = Boolean(data.restSplitOpen);
         rewardPanelOpen = Boolean(data.rewardPanelOpen);
       } catch (err) { console.warn("無法讀取當月資料", err); }
@@ -1452,7 +1722,9 @@
       clearObject(manualRecords);
       resetSpecialDatesToDefault();
       resetBatchRangeRecordsToDefault();
+      resetOverhaulSettingsToDefault();
       batchPanelOpen = false;
+      overhaulPanelOpen = false;
       restSplitOpen = false;
       rewardPanelOpen = false;
       renderAll(false);
@@ -1597,6 +1869,24 @@
       return isSpringLikeHoliday(holidayName) || isNewYearHoliday(holidayName, month, day);
     }
 
+    function getEffectiveShiftValueForHoliday(dayInfo) {
+      const code = Number(dayInfo.actualCode);
+      const codeValue = getCodeValue(code);
+      if (codeValue > 0) return codeValue;
+      if (isLeaveCode(code)) return Number(dayInfo.baseCode || 0);
+      return 0;
+    }
+
+    function isCompanyNewYearWorkPeriod(dayInfo) {
+      const month = Number(dayInfo.month);
+      const day = Number(dayInfo.day);
+      const value = getEffectiveShiftValueForHoliday(dayInfo);
+      return (
+        (month === 1 && day === 1 && value > 0 && value < 4) ||
+        (month === 12 && day === 31 && !dayInfo.isWeekend && value === 3)
+      );
+    }
+
     function isValidActualCode(dayInfo) {
       const code = Number(dayInfo.actualCode);
       const baseCode = Number(dayInfo.baseCode);
@@ -1731,6 +2021,35 @@
       return getTrainingRecordsForDay(day).reduce((sum, item) => sum + Math.round(Number(item.hours || 0) * 60), 0);
     }
 
+    function isOverhaulActiveDay(day) {
+      const startDay = Number(overhaulSettings.startDay || 0);
+      const endDay = Number(overhaulSettings.endDay || 0);
+      if (startDay <= 0 || endDay <= 0) return false;
+      return Number(day) >= Math.min(startDay, endDay) && Number(day) <= Math.max(startDay, endDay);
+    }
+
+    function getOverhaulOverrideMinutes(day) {
+      if (!isOverhaulActiveDay(day)) return null;
+      const minutes = Number((overhaulSettings.overrides || {})[String(Number(day))] || 0);
+      return (minutes === 15 || minutes === 30) ? minutes : null;
+    }
+
+    function setOverhaulOverrideMinutes(day, minutes) {
+      const dayKey = String(Number(day));
+      const minuteNumber = Number(minutes);
+      if (minuteNumber === 15 || minuteNumber === 30) {
+        overhaulSettings.overrides[dayKey] = minuteNumber;
+      } else {
+        delete overhaulSettings.overrides[dayKey];
+      }
+    }
+
+    function isOverhaulProxySelectableDay(day, year, month, shiftGroup) {
+      if (!isOverhaulActiveDay(day)) return false;
+      const base = calcBaseShift(year, month, day, shiftGroup);
+      return Number(base.baseCode) !== 0;
+    }
+
     function calcD7ActualCode(dayInfo) {
       return Number(dayInfo.actualCode);
     }
@@ -1782,6 +2101,10 @@
         return `停止辦公${actionName}${valueName}`;
       }
 
+      if (isCompanyNewYearWorkPeriod(dayInfo) && valueName && isWorkCode(code)) {
+        return `新年${actionName}${valueName}`;
+      }
+
       if (isLeaveCode(code)) {
         const label = getLabel(code);
         return hasPartialLeaveHrText(dayInfo) ? `${label}${fmtHourWithUnit(getEffectiveLeaveHours(dayInfo))}` : label;
@@ -1830,6 +2153,12 @@
       if (dayInfo.noteText === "錯誤登錄") return 0;
       if (dayInfo.changeText === "違規") return 0;
       if (code === 4 && isRestTextForD11(dayInfo.changeText)) return 0;
+
+      if (isSubstituteCode(code)) return 30 + trainingMinutes;
+
+      const overhaulOverrideMinutes = getOverhaulOverrideMinutes(dayInfo.day);
+      if (overhaulOverrideMinutes !== null) return overhaulOverrideMinutes;
+      if (isOverhaulActiveDay(dayInfo.day)) return 0;
 
       if (code === 0 || code === 9 || code === 10) return trainingMinutes;
 
@@ -2240,7 +2569,7 @@
 
     function getSpecialFixedBenefitHours(dayInfo) {
       const type = getHolidayTypeName(dayInfo.holidayName);
-      if (isNewYearHoliday(dayInfo.holidayName, dayInfo.month, dayInfo.day)) return 4;
+      if (isCompanyNewYearWorkPeriod(dayInfo) || isNewYearHoliday(dayInfo.holidayName, dayInfo.month, dayInfo.day)) return 4;
       if (type === "小年夜") return 8;
       if (type === "除夕") return 8;
       if (type === "春節") return 8;
@@ -2283,7 +2612,7 @@
           return sum + calcElectionAdditionalHours(dayInfo);
         }
 
-        if (!isSpecialHolidayForBenefits(dayInfo.holidayName, dayInfo.month, dayInfo.day)) return sum;
+        if (!isSpecialHolidayForBenefits(dayInfo.holidayName, dayInfo.month, dayInfo.day) && !isCompanyNewYearWorkPeriod(dayInfo)) return sum;
         if (!isValidBenefitWorkDay(dayInfo)) return sum;
 
         const fixedHours = getSpecialFixedBenefitHours(dayInfo);
@@ -2313,7 +2642,7 @@
           return sum + calcElectionAdditionalHours(dayInfo);
         }
 
-        if (!isSpecialHolidayForBenefits(dayInfo.holidayName, dayInfo.month, dayInfo.day)) return sum;
+        if (!isSpecialHolidayForBenefits(dayInfo.holidayName, dayInfo.month, dayInfo.day) && !isCompanyNewYearWorkPeriod(dayInfo)) return sum;
         if (!isValidBenefitWorkDay(dayInfo)) return sum;
 
         const fixedHours = getSpecialFixedBenefitHours(dayInfo);
@@ -2322,7 +2651,7 @@
         if (actualWorkHours <= 0) return sum;
 
         if (hasPartialLeaveHrText(dayInfo)) {
-          if (isNewYearHoliday(dayInfo.holidayName, dayInfo.month, dayInfo.day)) {
+          if (isCompanyNewYearWorkPeriod(dayInfo) || isNewYearHoliday(dayInfo.holidayName, dayInfo.month, dayInfo.day)) {
             return sum + (actualWorkHours >= 5 ? 4 : 0);
           }
 
@@ -2357,7 +2686,9 @@
       const isNewYearMealHoliday =
         holidayName.includes("新年") ||
         holidayName.includes("開國紀念") ||
-        holidayName.includes("中華民國開國紀念日");
+        holidayName.includes("中華民國開國紀念日") ||
+        String(dayInfo.changeText || "").includes("新年") ||
+        isCompanyNewYearWorkPeriod(dayInfo);
       return isSpringMealHoliday || isNewYearMealHoliday || hasClosure(dayInfo.day);
     }
 
@@ -2493,7 +2824,7 @@
 
     function updateBatchSummary() {
       const activeCount = batchRangeRecords.filter(item => Number(item.startDay) > 0 && Number(item.endDay) > 0).length;
-      const summary = activeCount > 0 ? `已設定 ${activeCount} 筆區間，可按套用寫入每日考勤` : "可一次套用連續特休、受訓或其他假別";
+      const summary = activeCount > 0 ? `已設定 ${activeCount} 筆區間，可按套用寫入每日考勤` : "可一次套用連續特休、受訓或常用假別";
       const batchSummary = document.getElementById("batchSummary");
       const batchToggleIcon = document.getElementById("batchToggleIcon");
       const batchContent = document.getElementById("batchContent");
@@ -2504,7 +2835,8 @@
 
     function buildBatchCodeOptions(selectedCode) {
       return BATCH_RANGE_CODES.map(code => {
-        return `<option value="${code}" ${Number(selectedCode) === Number(code) ? "selected" : ""}>${code} ${getLabel(code)}</option>`;
+        const label = BATCH_RANGE_LABELS[keyOf(code)] || getLabel(code);
+        return `<option value="${code}" ${Number(selectedCode) === Number(code) ? "selected" : ""}>${code} ${label}</option>`;
       }).join("");
     }
 
@@ -2519,12 +2851,13 @@
     function normalizeBatchRangeRecord(record) {
       const startDay = Number(record.startDay || 0);
       const endDay = Number(record.endDay || 0);
+      const code = Number(record.code || 5);
       return {
         startDay: Math.min(startDay, endDay),
         endDay: Math.max(startDay, endDay),
-        code: Number(record.code || 5),
+        code,
         leaveHours: Number(record.leaveHours || 0),
-        mode: record.mode === "all" ? "all" : "workOnly"
+        mode: code === 4 ? "all" : (record.mode === "all" ? "all" : "workOnly")
       };
     }
 
@@ -2593,7 +2926,7 @@
             </label>
             <label>
               <div class="batch-field-title">模式</div>
-              <select class="batch-select" data-batch-field="mode" data-index="${idx}">
+              <select class="batch-select" data-batch-field="mode" data-index="${idx}" ${safeRecord.code === 4 ? "disabled" : ""}>
                 <option value="workOnly" ${safeRecord.mode === "workOnly" ? "selected" : ""}>只套用上班日</option>
                 <option value="all" ${safeRecord.mode === "all" ? "selected" : ""}>包含空班</option>
               </select>
@@ -2616,8 +2949,9 @@
           } else {
             batchRangeRecords[index][field] = this.value;
           }
+          if (field === "code" && Number(this.value) === 4) batchRangeRecords[index].mode = "all";
           saveCurrentMonthState();
-          updateBatchSummary();
+          renderAll(false);
         });
       });
       list.querySelectorAll("button[data-batch-action]").forEach(btn => {
@@ -2628,6 +2962,131 @@
         });
       });
       updateBatchSummary();
+    }
+
+    function updateOverhaulSummary() {
+      const startDay = Number(overhaulSettings.startDay || 0);
+      const endDay = Number(overhaulSettings.endDay || 0);
+      const active = startDay > 0 && endDay > 0;
+      const overrideCount = Object.keys(overhaulSettings.overrides || {}).length;
+      const summary = active ? `大修 ${Math.min(startDay, endDay)}～${Math.max(startDay, endDay)} 日，代理 ${overrideCount} 日` : "未啟用";
+      const overhaulSummary = document.getElementById("overhaulSummary");
+      const overhaulToggleIcon = document.getElementById("overhaulToggleIcon");
+      const overhaulContent = document.getElementById("overhaulContent");
+      if (overhaulSummary) overhaulSummary.textContent = summary;
+      if (overhaulToggleIcon) overhaulToggleIcon.textContent = overhaulPanelOpen ? "－" : "＋";
+      if (overhaulContent) overhaulContent.classList.toggle("open", overhaulPanelOpen);
+    }
+
+    function openOverhaulChoiceModal(day) {
+      if (!isOverhaulActiveDay(day)) return;
+      selectedOverhaulDay = Number(day);
+      const modal = document.getElementById("overhaulChoiceModal");
+      const title = document.getElementById("overhaulChoiceTitle");
+      if (title) title.textContent = `${selectedOverhaulDay} 日代理 D10`;
+      if (modal) {
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+      }
+    }
+
+    function closeOverhaulChoiceModal() {
+      const modal = document.getElementById("overhaulChoiceModal");
+      if (modal) {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+      }
+      selectedOverhaulDay = 0;
+    }
+
+    function applyOverhaulChoice(choice) {
+      if (!selectedOverhaulDay) return;
+      if (choice === "15" || choice === "30") {
+        setOverhaulOverrideMinutes(selectedOverhaulDay, Number(choice));
+      }
+      if (choice === "clear") {
+        setOverhaulOverrideMinutes(selectedOverhaulDay, 0);
+      }
+      saveCurrentMonthState();
+      closeOverhaulChoiceModal();
+      renderAll(false);
+    }
+
+    function handleOverhaulCalendarClick(day, year, month, shiftGroup) {
+      if (!isOverhaulProxySelectableDay(day, year, month, shiftGroup)) return;
+      openOverhaulChoiceModal(day);
+    }
+
+    function renderOverhaulCalendar(daysInMonth, firstOffset, year, month, shiftGroup) {
+      const weekGrid = document.getElementById("overhaulWeekGrid");
+      const grid = document.getElementById("overhaulCalendarGrid");
+      if (!weekGrid || !grid) return;
+      weekGrid.innerHTML = WEEK_LABELS.map(label => `<div class="overhaul-week-cell">${label}</div>`).join("");
+      const totalCells = Math.ceil((firstOffset + daysInMonth) / 7) * 7;
+      let html = "";
+      for (let i = 0; i < totalCells; i++) {
+        const day = i - firstOffset + 1;
+        if (day < 1 || day > daysInMonth) {
+          html += `<div class="overhaul-empty-cell"></div>`;
+          continue;
+        }
+        const minutes = getOverhaulOverrideMinutes(day);
+        const inRange = isOverhaulActiveDay(day);
+        const selectable = isOverhaulProxySelectableDay(day, year, month, shiftGroup);
+        html += `
+          <button class="overhaul-day-btn ${selectable ? "in-range" : "out-of-range"} ${minutes !== null ? "proxy-mark" : ""}" type="button" data-overhaul-day="${day}" ${selectable ? "" : "disabled"}>
+            <span>${day}</span>
+            ${minutes !== null ? `<span class="overhaul-day-proxy-text">代理${minutes}</span>` : ""}
+          </button>
+        `;
+      }
+      grid.innerHTML = html;
+      grid.querySelectorAll("button[data-overhaul-day]").forEach(btn => {
+        btn.addEventListener("click", function() {
+          handleOverhaulCalendarClick(Number(this.dataset.overhaulDay), year, month, shiftGroup);
+        });
+      });
+    }
+
+    function renderOverhaulControls() {
+      const rocYear = Number(document.getElementById("rocYear").value);
+      const month = Number(document.getElementById("month").value);
+      const year = rocYear + 1911;
+      const shiftGroup = document.getElementById("shiftGroup").value;
+      const daysInMonth = new Date(year, month, 0).getDate();
+      const firstOffset = getMondayFirstIndex(new Date(year, month - 1, 1));
+      const startSelect = document.getElementById("overhaulStartDay");
+      const endSelect = document.getElementById("overhaulEndDay");
+      if (!startSelect || !endSelect) return;
+      startSelect.innerHTML = buildDateOptions(daysInMonth, overhaulSettings.startDay);
+      endSelect.innerHTML = buildDateOptions(daysInMonth, overhaulSettings.endDay);
+      startSelect.onchange = function() {
+        overhaulSettings.startDay = Number(this.value);
+        Object.keys(overhaulSettings.overrides || {}).forEach(day => {
+          if (!isOverhaulProxySelectableDay(Number(day), year, month, shiftGroup)) delete overhaulSettings.overrides[day];
+        });
+        saveCurrentMonthState();
+        renderAll(false);
+      };
+      endSelect.onchange = function() {
+        overhaulSettings.endDay = Number(this.value);
+        Object.keys(overhaulSettings.overrides || {}).forEach(day => {
+          if (!isOverhaulProxySelectableDay(Number(day), year, month, shiftGroup)) delete overhaulSettings.overrides[day];
+        });
+        saveCurrentMonthState();
+        renderAll(false);
+      };
+      const clearBtn = document.getElementById("overhaulClearBtn");
+      if (clearBtn) {
+        clearBtn.onclick = function() {
+          resetOverhaulSettingsToDefault();
+          overhaulPanelOpen = true;
+          saveCurrentMonthState();
+          renderAll(false);
+        };
+      }
+      renderOverhaulCalendar(daysInMonth, firstOffset, year, month, shiftGroup);
+      updateOverhaulSummary();
     }
 
     function updateSpecialSummary() {
@@ -2762,6 +3221,8 @@
         }).join("");
 
         const electionHtml = isElectionDay(d.day) ? `<div class="special-badge election-badge">選舉日</div>` : "";
+        const proxyMinutes = getOverhaulOverrideMinutes(d.day);
+        const proxyHtml = proxyMinutes !== null ? `<div class="proxy-badge">代理${proxyMinutes}分</div>` : "";
 
         const d11Text = d.isViolation || d.attendanceHours === "違規"
           ? `<span class="violation-text">違規</span>`
@@ -2790,7 +3251,7 @@
               </div>
             </div>
             <div class="card-center">
-              <div>${holidayHtml}${closureHtml}${trainingHtml}${electionHtml}</div>
+              <div>${holidayHtml}${closureHtml}${trainingHtml}${electionHtml}${proxyHtml}</div>
             </div>
             <div class="shift-pill ${pillClass}">${displayLabel}</div>
             ${detailHtml}
@@ -2915,6 +3376,7 @@
       if (needLoadCalendar) await loadCalendar();
       renderSpecialDateControls();
       renderBatchRangeControls();
+      renderOverhaulControls();
       renderCalendar();
       updateShiftSelectStyle();
     }
@@ -2951,10 +3413,42 @@
         updateSpecialSummary();
       });
 
+      const rocYearInput = document.getElementById("rocYear");
+      rocYearInput.setAttribute("maxlength", "3");
+      rocYearInput.addEventListener("focus", function() {
+        this.select();
+      });
+      rocYearInput.addEventListener("click", function() {
+        this.select();
+      });
+      rocYearInput.addEventListener("input", function() {
+        this.value = String(this.value || "").replace(/\D/g, "").slice(0, 3);
+      });
+
       document.getElementById("batchToggle").addEventListener("click", () => {
         batchPanelOpen = !batchPanelOpen;
         saveCurrentMonthState();
         updateBatchSummary();
+      });
+
+      document.getElementById("overhaulToggle").addEventListener("click", () => {
+        overhaulPanelOpen = !overhaulPanelOpen;
+        saveCurrentMonthState();
+        updateOverhaulSummary();
+      });
+
+      document.querySelectorAll("button[data-overhaul-choice]").forEach(btn => {
+        btn.addEventListener("click", function() {
+          applyOverhaulChoice(this.dataset.overhaulChoice);
+        });
+      });
+
+      document.getElementById("overhaulChoiceCancel").addEventListener("click", () => {
+        closeOverhaulChoiceModal();
+      });
+
+      document.getElementById("overhaulChoiceModal").addEventListener("click", event => {
+        if (event.target && event.target.id === "overhaulChoiceModal") closeOverhaulChoiceModal();
       });
 
       document.getElementById("monthResetBtn").addEventListener("click", () => {
@@ -2983,6 +3477,9 @@
       });
 
       document.getElementById("rocYear").addEventListener("change", () => {
+        const rocYearInput = document.getElementById("rocYear");
+        rocYearInput.value = String(rocYearInput.value || "").replace(/\D/g, "").slice(0, 3);
+        if (rocYearInput.value === "") rocYearInput.value = toRocYear(new Date());
         switchMonthState(true);
       });
 
