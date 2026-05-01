@@ -524,6 +524,10 @@
       margin-top: 16px;
     }
 
+    .holiday-benefit-grid.conditional-hidden {
+      display: none;
+    }
+
     .stat-card {
       border: 1px solid rgba(0, 240, 255, 0.14);
       border-radius: 16px;
@@ -1127,6 +1131,18 @@
       font-weight: 950;
       margin-bottom: 4px;
     }
+
+    .overhaul-main-badge {
+      border: 1px solid rgba(251, 191, 36, 0.52);
+      border-radius: 8px;
+      background: rgba(251, 191, 36, 0.14);
+      color: #fde68a;
+      padding: 4px 7px;
+      font-size: 10px;
+      font-weight: 950;
+      margin-bottom: 4px;
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.16);
+    }
     .overhaul-choice-modal {
       position: fixed;
       inset: 0;
@@ -1459,7 +1475,9 @@
           <li>班別下拉選單依 A/B/C/D 顯示霓虹高亮；餐費與其他獎金、倍率明細預設收合。</li>
           <li>教育訓練可設定 2 筆日期與時數，時數以 0.5 HR 為單位並直接併入 D10 超時分鐘。</li>
           <li>區間批次請假／受訓設定提供 3 列，假別順序為 5、4、7、8.1、8.2、8.5、8.6；受訓會自動以包含空班模式套用。</li>
-          <li>機組大修待遇設定可指定大修起訖日，區間內 D10 預設為 0；代理小月曆只有大修區間內且非空班日期可選，代班 D10 優先於大修規則。</li>
+          <li>機組大修待遇設定可指定大修起訖日，區間內 D10 預設為 0；主月曆會顯示「大修中」，代理小月曆設定 15 或 30 分後會改顯示「大修代理15分」或「大修代理30分」；代理小月曆只有大修區間內且非空班日期可選，代班 D10 優先於大修規則。</li>
+      <li>假日待遇、餐費與其他獎金卡片改為條件式顯示；只有遇到新年、春節、停止辦公日或選舉日設定時才顯示，明細仍維持手動展開。</li>
+      <li>區間批次請假／受訓設定已修正起訖日正規化邏輯；只有起日與訖日都有值時才自動排序，避免手機先選起日後被移到訖日。</li>
           <li>公司新年判斷已納入 D8：1/1 的一、二、三值與 12/31 一般出勤日的三值，會顯示為新年出勤。</li>
         </ul>
       </section>
@@ -2732,6 +2750,23 @@
       return [1, 3, 21, 23].includes(Number(targetDay.actualCode)) ? 1 : 0;
     }
 
+    function shouldShowHolidayBenefitGrid(days) {
+      const hasClosureSetting = specialDates.closure.some(item => Number(item.day) > 0 && item.type !== "none");
+      const hasElectionSetting = specialDates.election.some(day => Number(day) > 0);
+      const hasHolidayBenefitDay = days.some(dayInfo => {
+        return isCompanyNewYearWorkPeriod(dayInfo) ||
+          isNewYearHoliday(dayInfo.holidayName, dayInfo.month, dayInfo.day) ||
+          isSpringLikeHoliday(dayInfo.holidayName);
+      });
+      return hasHolidayBenefitDay || hasClosureSetting || hasElectionSetting;
+    }
+
+    function updateHolidayBenefitGridVisibility(days) {
+      const holidayBenefitGrid = document.querySelector(".holiday-benefit-grid");
+      if (!holidayBenefitGrid) return;
+      holidayBenefitGrid.classList.toggle("conditional-hidden", !shouldShowHolidayBenefitGrid(days));
+    }
+
     function calcNationalHolidayHours(days) {
       return days.reduce((sum, dayInfo) => {
         const hours = safeHours(dayInfo.attendanceHours);
@@ -2852,9 +2887,10 @@
       const startDay = Number(record.startDay || 0);
       const endDay = Number(record.endDay || 0);
       const code = Number(record.code || 5);
+      const hasBothDays = startDay > 0 && endDay > 0;
       return {
-        startDay: Math.min(startDay, endDay),
-        endDay: Math.max(startDay, endDay),
+        startDay: hasBothDays ? Math.min(startDay, endDay) : startDay,
+        endDay: hasBothDays ? Math.max(startDay, endDay) : endDay,
         code,
         leaveHours: Number(record.leaveHours || 0),
         mode: code === 4 ? "all" : (record.mode === "all" ? "all" : "workOnly")
@@ -3222,7 +3258,10 @@
 
         const electionHtml = isElectionDay(d.day) ? `<div class="special-badge election-badge">選舉日</div>` : "";
         const proxyMinutes = getOverhaulOverrideMinutes(d.day);
-        const proxyHtml = proxyMinutes !== null ? `<div class="proxy-badge">代理${proxyMinutes}分</div>` : "";
+        const overhaulActive = isOverhaulActiveDay(d.day);
+        const overhaulMainHtml = proxyMinutes !== null
+          ? `<div class="proxy-badge">大修代理${proxyMinutes}分</div>`
+          : (overhaulActive ? `<div class="overhaul-main-badge">大修中</div>` : "");
 
         const d11Text = d.isViolation || d.attendanceHours === "違規"
           ? `<span class="violation-text">違規</span>`
@@ -3251,7 +3290,7 @@
               </div>
             </div>
             <div class="card-center">
-              <div>${holidayHtml}${closureHtml}${trainingHtml}${electionHtml}${proxyHtml}</div>
+              <div>${holidayHtml}${closureHtml}${trainingHtml}${electionHtml}${overhaulMainHtml}</div>
             </div>
             <div class="shift-pill ${pillClass}">${displayLabel}</div>
             ${detailHtml}
@@ -3322,6 +3361,7 @@
 
       const nightFee = initialNight * 250 + deepNight * 400;
       const substitute = calcSubstituteInfo(totalHours, maintenanceHours, nationalHolidayHours, apAq.restHours);
+      updateHolidayBenefitGridVisibility(days);
 
       document.getElementById("totalHours").innerHTML = `${fmtHour(totalHours)}<span class="stat-suffix">HR</span>`;
       document.getElementById("handoverHours").innerHTML = `${fmtHour(apAq.handoverHours)}<span class="stat-suffix">HR</span>`;
