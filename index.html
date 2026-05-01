@@ -2005,6 +2005,12 @@
       if (!records.length) return 0;
       if (dayInfo.changeText === "錯誤登錄" || dayInfo.noteText === "錯誤登錄") return 0;
 
+      const actualCode = Number(dayInfo.actualCode);
+
+      if (isLeaveCode(actualCode) && isFullDayLeave(dayInfo)) {
+        return 0;
+      }
+
       const intervals = getShiftIntervalsForClosure(dayInfo);
       if (!intervals.length) return 0;
 
@@ -2019,7 +2025,7 @@
         });
       });
 
-      if (Number(dayInfo.actualCode) === 8.4 && hasPartialLeaveHrText(dayInfo)) {
+      if (isLeaveCode(actualCode) && hasPartialLeaveHrText(dayInfo)) {
         total -= getEffectiveLeaveHours(dayInfo);
       }
 
@@ -2187,8 +2193,16 @@
 
     function isSpecialMealBenefitDay(dayInfo) {
       const holidayName = String(dayInfo.holidayName || "");
-      const isSpringMealHoliday = holidayName.includes("初一") || holidayName.includes("初二") || holidayName.includes("初三") || holidayName.includes("小年夜") || holidayName.includes("除夕");
-      const isNewYearMealHoliday = holidayName.includes("新年") || holidayName.includes("開國紀念日") || holidayName.includes("中華民國開國紀念日");
+      const isSpringMealHoliday =
+        holidayName.includes("初一") ||
+        holidayName.includes("初二") ||
+        holidayName.includes("初三") ||
+        holidayName.includes("小年夜") ||
+        holidayName.includes("除夕");
+      const isNewYearMealHoliday =
+        holidayName.includes("新年") ||
+        holidayName.includes("開國紀念") ||
+        holidayName.includes("中華民國開國紀念日");
       return isSpringMealHoliday || isNewYearMealHoliday || hasClosure(dayInfo.day);
     }
 
@@ -2202,7 +2216,11 @@
       if (dayInfo.isViolation) return false;
       if (dayInfo.changeText === "錯誤登錄" || dayInfo.noteText === "錯誤登錄") return false;
       if (!isSpecialMealBenefitDay(dayInfo)) return false;
-      if (!validCodes.includes(Number(dayInfo.actualCode))) return false;
+      if (isLeaveCode(dayInfo.actualCode) && isFullDayLeave(dayInfo)) return false;
+      const mealCode = isLeaveCode(dayInfo.actualCode) && hasPartialLeaveHrText(dayInfo)
+        ? Number(dayInfo.baseCode)
+        : Number(dayInfo.actualCode);
+      if (!validCodes.includes(mealCode)) return false;
       const leaveHours = hasPartialLeaveHrText(dayInfo) ? getEffectiveLeaveHours(dayInfo) : 0;
       if (leaveHours === 0) return true;
       return getMealActualWorkHours(dayInfo) >= 2;
