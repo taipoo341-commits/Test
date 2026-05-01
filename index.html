@@ -643,38 +643,55 @@
 
     .collapsed-detail { display: none !important; }
 
-    .compact-summary {
-      margin-top: 8px;
-      color: #94a3b8;
-      font-size: 12px;
-      font-weight: 850;
-      line-height: 1.6;
-      letter-spacing: 0.04em;
+    .shift-select-colorized {
+      border-width: 2px;
+      transition: border-color .18s ease, box-shadow .18s ease, color .18s ease, background .18s ease;
     }
 
-    .mobile-shift-choices { display: none; }
-
-    .mobile-shift-choice {
-      border: 2px solid currentColor;
-      border-radius: 10px;
-      background: rgba(0, 0, 0, 0.28);
-      padding: 8px 0;
-      font-size: 16px;
-      font-weight: 950;
-      line-height: 1;
-      cursor: pointer;
-      letter-spacing: 0.08em;
+    .shift-select-colorized.shift-active-A {
+      color: #00f0ff;
+      border-color: rgba(0, 240, 255, 0.92);
+      background: rgba(0, 240, 255, 0.10);
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.62), inset 0 0 16px rgba(0, 240, 255, 0.12);
+      text-shadow: 0 0 8px rgba(0, 240, 255, 0.95);
     }
 
-    .mobile-shift-choice.shift-a { color: #00f0ff; text-shadow: 0 0 8px rgba(0, 240, 255, 0.95); }
-    .mobile-shift-choice.shift-b { color: #00ff66; text-shadow: 0 0 8px rgba(0, 255, 102, 0.95); }
-    .mobile-shift-choice.shift-c { color: #ff9d00; text-shadow: 0 0 8px rgba(255, 157, 0, 0.95); }
-    .mobile-shift-choice.shift-d { color: #ffee00; text-shadow: 0 0 8px rgba(255, 238, 0, 0.95); }
+    .shift-select-colorized.shift-active-B {
+      color: #00ff66;
+      border-color: rgba(0, 255, 102, 0.92);
+      background: rgba(0, 255, 102, 0.09);
+      box-shadow: 0 0 18px rgba(0, 255, 102, 0.58), inset 0 0 16px rgba(0, 255, 102, 0.11);
+      text-shadow: 0 0 8px rgba(0, 255, 102, 0.95);
+    }
 
-    .mobile-shift-choice.active.shift-a { background: rgba(0, 240, 255, 0.13); box-shadow: 0 0 18px rgba(0, 240, 255, 0.65), inset 0 0 18px rgba(0, 240, 255, 0.16); }
-    .mobile-shift-choice.active.shift-b { background: rgba(0, 255, 102, 0.11); box-shadow: 0 0 18px rgba(0, 255, 102, 0.65), inset 0 0 18px rgba(0, 255, 102, 0.14); }
-    .mobile-shift-choice.active.shift-c { background: rgba(255, 157, 0, 0.11); box-shadow: 0 0 18px rgba(255, 157, 0, 0.65), inset 0 0 18px rgba(255, 157, 0, 0.14); }
-    .mobile-shift-choice.active.shift-d { background: rgba(255, 238, 0, 0.11); box-shadow: 0 0 18px rgba(255, 238, 0, 0.65), inset 0 0 18px rgba(255, 238, 0, 0.14); }
+    .shift-select-colorized.shift-active-C {
+      color: #ff9d00;
+      border-color: rgba(255, 157, 0, 0.92);
+      background: rgba(255, 157, 0, 0.09);
+      box-shadow: 0 0 18px rgba(255, 157, 0, 0.58), inset 0 0 16px rgba(255, 157, 0, 0.11);
+      text-shadow: 0 0 8px rgba(255, 157, 0, 0.95);
+    }
+
+    .shift-select-colorized.shift-active-D {
+      color: #ffee00;
+      border-color: rgba(255, 238, 0, 0.92);
+      background: rgba(255, 238, 0, 0.09);
+      box-shadow: 0 0 18px rgba(255, 238, 0, 0.58), inset 0 0 16px rgba(255, 238, 0, 0.11);
+      text-shadow: 0 0 8px rgba(255, 238, 0, 0.95);
+    }
+
+    .shift-select-colorized option[value="A"] { color: #00f0ff; }
+    .shift-select-colorized option[value="B"] { color: #00ff66; }
+    .shift-select-colorized option[value="C"] { color: #ff9d00; }
+    .shift-select-colorized option[value="D"] { color: #ffee00; }
+
+    .holiday-benefit-grid .benefit-value {
+      font-size: 18px;
+    }
+
+    .holiday-benefit-grid .benefit-box {
+      padding: 10px;
+    }
 
     .accent-cyan { color: #67e8f9; }
     .accent-sky { color: #7dd3fc; }
@@ -856,26 +873,18 @@
 
     @media (max-width: 760px) {
       .control-panel { padding: 12px !important; }
+
       .controls-grid {
         display: grid !important;
-        grid-template-columns: 1.15fr 1fr 1fr 1.25fr !important;
+        grid-template-columns: 1.05fr 1fr 1fr 1.25fr !important;
         gap: 6px !important;
         align-items: start !important;
       }
+
       .controls-grid > label,
       .controls-grid > .reset-field { min-width: 0 !important; }
       .controls-grid .hint-box { grid-column: 1 / -1 !important; }
-      #shiftGroup { display: none !important; }
-      .mobile-shift-choices {
-        display: grid !important;
-        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-        gap: 4px !important;
-      }
-      .mobile-shift-choice {
-        height: 34px !important;
-        padding: 0 !important;
-        font-size: 15px !important;
-      }
+
       .field-label {
         display: block !important;
         min-height: 24px !important;
@@ -886,13 +895,17 @@
         letter-spacing: 0.03em !important;
         white-space: nowrap !important;
       }
+
       .cyber-input,
       .cyber-select {
         height: 34px !important;
         min-height: 34px !important;
         font-size: 13px !important;
         border-radius: 9px !important;
+        padding-left: 2px !important;
+        padding-right: 2px !important;
       }
+
       .reset-field .sub-panel-toggle {
         height: 34px !important;
         min-height: 34px !important;
@@ -903,38 +916,54 @@
         letter-spacing: 0 !important;
         line-height: 1.15 !important;
       }
+
       .reset-warning-label {
         color: #fca5a5 !important;
         text-shadow: 0 0 8px rgba(255, 51, 51, 0.95), 0 0 18px rgba(255, 51, 51, 0.5) !important;
       }
+
       .calendar-body { padding: 6px !important; overflow-x: visible !important; }
+
       .core-stats-grid {
         display: grid !important;
         grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
       }
+
       .core-stat-item {
         padding: 9px 4px !important;
         border-right: 1px solid rgba(0, 240, 255, 0.14) !important;
         border-bottom: none !important;
       }
+
       .core-stat-item:last-child { border-right: none !important; }
+
       .core-stat-label {
         font-size: 9px !important;
         letter-spacing: 0 !important;
         line-height: 1.2 !important;
         white-space: nowrap !important;
       }
+
       .core-stat-value { font-size: 16px !important; line-height: 1.15 !important; }
       .core-stat-value .stat-suffix,
       .stat-suffix { font-size: 9px !important; }
+
       .stats-grid-sub {
         display: grid !important;
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        grid-template-columns: minmax(0, 1.45fr) minmax(112px, .9fr) !important;
         gap: 10px !important;
       }
+
       .stats-grid-sub .stat-card:nth-child(3) { grid-column: 1 / -1 !important; }
+
+      .stats-grid-sub .stat-card:nth-child(2) .stat-value {
+        font-size: 18px !important;
+        white-space: nowrap !important;
+      }
+
       .holiday-benefit-grid { margin-top: 10px !important; }
       .benefit-combo { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+      .holiday-benefit-grid .benefit-value { font-size: 16px !important; }
     }
 
   </style>
@@ -953,18 +982,12 @@
         <div class="controls-grid">
           <label>
             <span class="field-label">班別</span>
-            <select id="shiftGroup" class="cyber-select">
+            <select id="shiftGroup" class="cyber-select shift-select-colorized">
               <option value="A">A 班</option>
               <option value="B">B 班</option>
               <option value="C">C 班</option>
               <option value="D" selected>D 班</option>
             </select>
-            <div id="mobileShiftChoices" class="mobile-shift-choices" aria-label="手機版班別選擇">
-              <button class="mobile-shift-choice shift-a" type="button" data-shift="A">A</button>
-              <button class="mobile-shift-choice shift-b" type="button" data-shift="B">B</button>
-              <button class="mobile-shift-choice shift-c" type="button" data-shift="C">C</button>
-              <button class="mobile-shift-choice shift-d" type="button" data-shift="D">D</button>
-            </div>
           </label>
 
           <label>
@@ -1091,9 +1114,7 @@
         <div class="holiday-benefit-grid">
           <div class="stat-card">
             <div class="stat-label">假日待遇</div>
-            <div id="holidayBenefitSummary" class="compact-summary">另計假日出勤 0 HR、得補假 0 HR</div>
-            <button id="holidayBenefitToggle" class="sub-panel-toggle" type="button">展開假日待遇</button>
-            <div id="holidayBenefitDetails" class="benefit-combo collapsed-detail">
+            <div class="benefit-combo">
               <div class="benefit-box">
                 <div class="benefit-label">另計假日出勤</div>
                 <div id="additionalHolidayWorkHours" class="benefit-value accent-amber">0 HR</div>
@@ -1137,7 +1158,7 @@
           <li>全日請假：D8 顯示假別、D9 空白、D10 為 0、D11 依特扣日規則計算。</li>
           <li>12切總工時依值班總工時、保養時數、國定時數與交接班時計算。</li>
           <li>當月資料會依班別、民國年、月份儲存在瀏覽器 localStorage，當月 RESET 會清除目前月份設定。</li>
-          <li>手機版班別改為霓虹按鈕，早餐、午晚餐已納入新年與開國紀念日判斷；假日待遇、餐費與其他獎金、倍率明細預設收合。</li>
+          <li>班別下拉選單依 A/B/C/D 顯示霓虹高亮；餐費與其他獎金、倍率明細預設收合。</li>
         </ul>
       </section>
 
@@ -1226,7 +1247,6 @@
     let calendarData = { workDict: {}, holidayMap: new Map() };
     let specialPanelOpen = false;
     let restSplitOpen = false;
-    let holidayBenefitOpen = false;
     let rewardPanelOpen = false;
     let activeStorageKey = "";
 
@@ -1257,7 +1277,6 @@
         manualRecords: JSON.parse(JSON.stringify(manualRecords)),
         specialDates: JSON.parse(JSON.stringify(specialDates)),
         restSplitOpen,
-        holidayBenefitOpen,
         rewardPanelOpen,
         savedAt: new Date().toISOString()
       };
@@ -1277,7 +1296,6 @@
       clearObject(manualRecords);
       resetSpecialDatesToDefault();
       restSplitOpen = false;
-      holidayBenefitOpen = false;
       rewardPanelOpen = false;
       try {
         const raw = localStorage.getItem(storageKey);
@@ -1289,7 +1307,6 @@
           specialDates.election = Array.isArray(data.specialDates.election) ? data.specialDates.election : specialDates.election;
         }
         restSplitOpen = Boolean(data.restSplitOpen);
-        holidayBenefitOpen = Boolean(data.holidayBenefitOpen);
         rewardPanelOpen = Boolean(data.rewardPanelOpen);
       } catch (err) { console.warn("無法讀取當月資料", err); }
     }
@@ -1300,7 +1317,6 @@
       clearObject(manualRecords);
       resetSpecialDatesToDefault();
       restSplitOpen = false;
-      holidayBenefitOpen = false;
       rewardPanelOpen = false;
       renderAll(false);
     }
@@ -1312,12 +1328,11 @@
       renderAll(needLoadCalendar);
     }
 
-    function updateShiftChoiceButtons() {
+    function updateShiftSelectStyle() {
       const shiftGroup = document.getElementById("shiftGroup");
       if (!shiftGroup) return;
-      document.querySelectorAll(".mobile-shift-choice").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.shift === shiftGroup.value);
-      });
+      shiftGroup.classList.remove("shift-active-A", "shift-active-B", "shift-active-C", "shift-active-D");
+      shiftGroup.classList.add(`shift-active-${shiftGroup.value}`);
     }
 
     function updateCollapsePanels() {
@@ -1326,12 +1341,6 @@
       if (restSplitDetails && restSplitToggle) {
         restSplitDetails.classList.toggle("collapsed-detail", !restSplitOpen);
         restSplitToggle.textContent = restSplitOpen ? "收合倍率明細" : "展開倍率明細";
-      }
-      const holidayBenefitDetails = document.getElementById("holidayBenefitDetails");
-      const holidayBenefitToggle = document.getElementById("holidayBenefitToggle");
-      if (holidayBenefitDetails && holidayBenefitToggle) {
-        holidayBenefitDetails.classList.toggle("collapsed-detail", !holidayBenefitOpen);
-        holidayBenefitToggle.textContent = holidayBenefitOpen ? "收合假日待遇" : "展開假日待遇";
       }
       const rewardDetails = document.getElementById("rewardDetails");
       const rewardToggle = document.getElementById("rewardToggle");
@@ -2243,14 +2252,9 @@
       const rawRestHours = diffHours >= 0 ? diffHours + handoverHours : handoverHours;
       const rawRestRemainder = ((rawRestHours % 1) + 1) % 1;
       const wholeHours = Math.floor(rawRestHours);
-      const restHours = rawRestRemainder === 0
-        ? wholeHours
-        : rawRestRemainder <= 0.5
-          ? wholeHours + 0.5
-          : wholeHours + 1;
+      const restHours = rawRestRemainder === 0 ? wholeHours : rawRestRemainder <= 0.5 ? wholeHours + 0.5 : wholeHours + 1;
       const apHours = Math.floor(restHours);
       const aqMinutes = Math.round((restHours - apHours) * 60);
-
       return { apHours, aqMinutes, restHours, handoverHours, handoverMinutes };
     }
 
@@ -2527,13 +2531,12 @@
       document.getElementById("nightFee").innerHTML = `${nightFee.toLocaleString()}<span class="stat-suffix">元</span>`;
       document.getElementById("additionalHolidayWorkHours").textContent = `${fmtHourText(additionalHolidayWorkHours)}`;
       document.getElementById("compLeaveHours").textContent = `${fmtHourText(compLeaveHours)}`;
-      document.getElementById("holidayBenefitSummary").textContent = `另計假日出勤 ${fmtHourText(additionalHolidayWorkHours)}、得補假 ${fmtHourText(compLeaveHours)}`;
       document.getElementById("breakfastCount").textContent = `${breakfastCount} 次`;
       document.getElementById("lunchDinnerCount").textContent = `${lunchDinnerCount} 次`;
       document.getElementById("lunarNewYearRedEnvelopeCount").textContent = `${lunarNewYearRedEnvelopeCount} 次`;
       document.getElementById("reunionDinnerCount").textContent = `${reunionDinnerCount} 次`;
       updateCollapsePanels();
-      updateShiftChoiceButtons();
+      updateShiftSelectStyle();
 
       const substituteInfoEl = document.getElementById("substituteInfo");
       substituteInfoEl.textContent = substitute.text;
@@ -2568,7 +2571,7 @@
       if (needLoadCalendar) await loadCalendar();
       renderSpecialDateControls();
       renderCalendar();
-      updateShiftChoiceButtons();
+      updateShiftSelectStyle();
     }
 
     function clearManualRecords() {
@@ -2596,6 +2599,7 @@
 
       activeStorageKey = getCurrentStorageKey();
       loadStateByKey(activeStorageKey);
+      updateShiftSelectStyle();
 
       document.getElementById("specialToggle").addEventListener("click", () => {
         specialPanelOpen = !specialPanelOpen;
@@ -2606,24 +2610,8 @@
         resetCurrentMonthState();
       });
 
-      document.querySelectorAll(".mobile-shift-choice").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const shiftGroup = document.getElementById("shiftGroup");
-          if (!shiftGroup || shiftGroup.value === btn.dataset.shift) return;
-          shiftGroup.value = btn.dataset.shift;
-          updateShiftChoiceButtons();
-          switchMonthState(false);
-        });
-      });
-
       document.getElementById("restSplitToggle").addEventListener("click", () => {
         restSplitOpen = !restSplitOpen;
-        saveCurrentMonthState();
-        updateCollapsePanels();
-      });
-
-      document.getElementById("holidayBenefitToggle").addEventListener("click", () => {
-        holidayBenefitOpen = !holidayBenefitOpen;
         saveCurrentMonthState();
         updateCollapsePanels();
       });
@@ -2635,6 +2623,7 @@
       });
 
       document.getElementById("shiftGroup").addEventListener("change", () => {
+        updateShiftSelectStyle();
         switchMonthState(false);
       });
 
