@@ -269,7 +269,8 @@
     .code-select,
     .hour-select,
     .special-date-select,
-    .special-type-select {
+    .special-type-select,
+    .special-hour-select {
       width: 112px;
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 7px;
@@ -602,7 +603,6 @@
       color: #6ee7b7;
     }
 
-
     .sub-panel-toggle {
       margin-top: 10px;
       width: 100%;
@@ -849,7 +849,8 @@
       .special-record { grid-template-columns: 1fr 1fr; gap: 6px; }
       .special-election-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
       .special-date-select,
-      .special-type-select { height: 30px; font-size: 12px; }
+      .special-type-select,
+      .special-hour-select { height: 30px; font-size: 12px; }
       .core-stats-panel { margin-top: 14px; }
       .core-stats-grid { grid-template-columns: 1fr; }
       .core-stat-item {
@@ -869,7 +870,6 @@
       .split-value { font-size: 14px; }
       .designer-name { font-size: 20px; }
     }
-
 
     @media (max-width: 760px) {
       .control-panel { padding: 12px !important; }
@@ -966,6 +966,73 @@
       .holiday-benefit-grid .benefit-value { font-size: 16px !important; }
     }
 
+
+    .batch-panel { margin-top: 16px; padding: 0; overflow: hidden; }
+    .batch-content { padding: 16px; }
+    .batch-row-list { display: grid; gap: 10px; }
+    .batch-row {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      align-items: end;
+      border: 1px solid rgba(0, 240, 255, 0.14);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.035);
+      padding: 12px;
+    }
+    .batch-field-title {
+      color: #94a3b8;
+      font-size: 10px;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+    .batch-select {
+      width: 100%;
+      height: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.46);
+      color: #e2e8f0;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 850;
+      outline: none;
+    }
+    .batch-action-btn {
+      width: 100%;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid rgba(52, 211, 153, 0.42);
+      background: rgba(16, 185, 129, 0.16);
+      color: #6ee7b7;
+      font-size: 11px;
+      font-weight: 950;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+    }
+    .batch-action-btn:hover { background: rgba(16, 185, 129, 0.26); box-shadow: 0 0 12px rgba(16, 185, 129, 0.22); }
+    .batch-clear-btn {
+      border-color: rgba(251, 113, 133, 0.42);
+      background: rgba(244, 63, 94, 0.14);
+      color: #fda4af;
+    }
+    .batch-clear-btn:hover { background: rgba(244, 63, 94, 0.24); box-shadow: 0 0 12px rgba(244, 63, 94, 0.22); }
+    .batch-note {
+      margin-top: 10px;
+      color: #94a3b8;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 760px) {
+      .batch-content { padding: 12px !important; }
+      .batch-row { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 6px !important; padding: 9px !important; }
+      .batch-field-title { font-size: 9px !important; letter-spacing: 0 !important; }
+      .batch-select, .batch-action-btn { height: 30px !important; font-size: 10px !important; }
+    }
+
   </style>
 </head>
 
@@ -1049,6 +1116,27 @@
               <div class="special-title">選舉日</div>
               <div id="electionRecordList" class="special-election-row"></div>
             </div>
+
+            <div class="special-card">
+              <div class="special-title">教育訓練</div>
+              <div id="trainingRecordList" class="special-record-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel batch-panel">
+        <button id="batchToggle" class="special-toggle" type="button">
+          <div>
+            <div>區間批次請假／受訓設定</div>
+            <div id="batchSummary" class="special-summary">可一次套用連續特休、受訓或其他假別</div>
+          </div>
+          <div id="batchToggleIcon">＋</div>
+        </button>
+        <div id="batchContent" class="batch-content special-content">
+          <div id="batchRangeList" class="batch-row-list"></div>
+          <div class="batch-note">
+            預設「只套用上班日」，原本空班不會被改掉；若要把空班也設為受訓，請將模式改為「包含空班」。受訓遇到六日或國定假日會依 D8 規則顯示週休或國定假日，D10 與 D11 均為 0。
           </div>
         </div>
       </section>
@@ -1159,6 +1247,8 @@
           <li>12切總工時依值班總工時、保養時數、國定時數與交接班時計算。</li>
           <li>當月資料會依班別、民國年、月份儲存在瀏覽器 localStorage，當月 RESET 會清除目前月份設定。</li>
           <li>班別下拉選單依 A/B/C/D 顯示霓虹高亮；餐費與其他獎金、倍率明細預設收合。</li>
+          <li>教育訓練可設定 3 筆日期與時數，時數以 0.5 HR 為單位並直接併入 D10 超時分鐘。</li>
+          <li>區間批次請假／受訓設定可一次套用連續特休、受訓或其他假別；受訓遇六日或國定假日會顯示週休或國定假日，D10 與 D11 均為 0。</li>
         </ul>
       </section>
 
@@ -1201,8 +1291,8 @@
       0: "空班", 1: "一值", 2: "二值", 3: "三值",
       4: "受訓", 4.1: "出差", 4.2: "公假", 4.3: "公出",
       5: "特休", 5.1: "特補", 5.2: "特事", 5.3: "特病", 5.4: "特停", 5.5: "特公",
-      6: "補假", 6.1: "補事", 6.2: "補病", 6.3: "補休", 6.4: "補公",
-      7: "病假", 7.1: "事病",
+      6: "補假", 6.1: "補事", 6.2: "補病", 6.3: "補休", 6.4: "補停", 6.5: "補公",
+      7: "病假", 7.1: "事病", 7.2: "病停", 7.3: "事停",
       8: "事假", 8.1: "喪假", 8.2: "婚假", 8.3: "陪產假", 8.4: "停止辦公日", 8.5: "家庭照顧假", 8.6: "身心調適假", 8.7: "身特", 8.8: "身補",
       9: "調整例假日",
       10: "調空", 11: "調一", 12: "調二", 13: "調三",
@@ -1213,8 +1303,8 @@
       0, 1, 2, 3,
       4, 4.1, 4.2, 4.3,
       5, 5.1, 5.2, 5.3, 5.4, 5.5,
-      6, 6.1, 6.2, 6.3, 6.4,
-      7, 7.1,
+      6, 6.1, 6.2, 6.3, 6.4, 6.5,
+      7, 7.1, 7.2, 7.3,
       8, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8,
       9, 10, 11, 12, 13, 21, 22, 23
     ];
@@ -1222,8 +1312,8 @@
     const LEAVE_CODES = new Set([
       4, 4.1, 4.2, 4.3,
       5, 5.1, 5.2, 5.3, 5.4, 5.5,
-      6, 6.1, 6.2, 6.3, 6.4,
-      7, 7.1,
+      6, 6.1, 6.2, 6.3, 6.4, 6.5,
+      7, 7.1, 7.2, 7.3,
       8, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8
     ]);
 
@@ -1233,6 +1323,9 @@
 
     const manualRecords = {};
 
+    const BATCH_RANGE_CODES = [4, 4.1, 4.2, 4.3, 5, 5.1, 5.2, 5.3, 5.4, 5.5, 6, 6.1, 6.2, 6.3, 6.4, 6.5, 7, 7.1, 7.2, 7.3, 8, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8];
+    const batchRangeRecords = [];
+
     const specialDates = {
       closure: [
         { day: 0, type: "full" },
@@ -1241,11 +1334,17 @@
         { day: 0, type: "full" },
         { day: 0, type: "full" }
       ],
-      election: [0, 0, 0]
+      election: [0, 0, 0],
+      training: [
+        { day: 0, hours: 3 },
+        { day: 0, hours: 3 },
+        { day: 0, hours: 3 }
+      ]
     };
 
     let calendarData = { workDict: {}, holidayMap: new Map() };
     let specialPanelOpen = false;
+    let batchPanelOpen = false;
     let restSplitOpen = false;
     let rewardPanelOpen = false;
     let activeStorageKey = "";
@@ -1270,12 +1369,33 @@
         { day: 0, type: "full" }
       ];
       specialDates.election = [0, 0, 0];
+      specialDates.training = [
+        { day: 0, hours: 3 },
+        { day: 0, hours: 3 },
+        { day: 0, hours: 3 }
+      ];
+    }
+
+
+    function resetBatchRangeRecordsToDefault() {
+      batchRangeRecords.length = 0;
+      for (let i = 0; i < 5; i++) {
+        batchRangeRecords.push({
+          startDay: 0,
+          endDay: 0,
+          code: 5,
+          leaveHours: 0,
+          mode: "workOnly"
+        });
+      }
     }
 
     function getStateSnapshot() {
       return {
         manualRecords: JSON.parse(JSON.stringify(manualRecords)),
         specialDates: JSON.parse(JSON.stringify(specialDates)),
+        batchRangeRecords: JSON.parse(JSON.stringify(batchRangeRecords)),
+        batchPanelOpen,
         restSplitOpen,
         rewardPanelOpen,
         savedAt: new Date().toISOString()
@@ -1295,6 +1415,8 @@
     function loadStateByKey(storageKey) {
       clearObject(manualRecords);
       resetSpecialDatesToDefault();
+      resetBatchRangeRecordsToDefault();
+      batchPanelOpen = false;
       restSplitOpen = false;
       rewardPanelOpen = false;
       try {
@@ -1305,7 +1427,20 @@
         if (data.specialDates && typeof data.specialDates === "object") {
           specialDates.closure = Array.isArray(data.specialDates.closure) ? data.specialDates.closure : specialDates.closure;
           specialDates.election = Array.isArray(data.specialDates.election) ? data.specialDates.election : specialDates.election;
+          specialDates.training = Array.isArray(data.specialDates.training) ? data.specialDates.training : specialDates.training;
         }
+        if (Array.isArray(data.batchRangeRecords)) {
+          batchRangeRecords.length = 0;
+          data.batchRangeRecords.slice(0, 5).forEach(item => batchRangeRecords.push({
+            startDay: Number(item.startDay || 0),
+            endDay: Number(item.endDay || 0),
+            code: Number(item.code || 5),
+            leaveHours: Number(item.leaveHours || 0),
+            mode: item.mode === "all" ? "all" : "workOnly"
+          }));
+          while (batchRangeRecords.length < 5) batchRangeRecords.push({ startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly" });
+        }
+        batchPanelOpen = Boolean(data.batchPanelOpen);
         restSplitOpen = Boolean(data.restSplitOpen);
         rewardPanelOpen = Boolean(data.rewardPanelOpen);
       } catch (err) { console.warn("無法讀取當月資料", err); }
@@ -1316,6 +1451,8 @@
       localStorage.removeItem(storageKey);
       clearObject(manualRecords);
       resetSpecialDatesToDefault();
+      resetBatchRangeRecordsToDefault();
+      batchPanelOpen = false;
       restSplitOpen = false;
       rewardPanelOpen = false;
       renderAll(false);
@@ -1586,6 +1723,14 @@
       return getClosureRecordsForDay(day).length > 0;
     }
 
+    function getTrainingRecordsForDay(day) {
+      return (specialDates.training || []).filter(item => Number(item.day) === Number(day) && Number(item.hours || 0) > 0);
+    }
+
+    function calcTrainingMinutes(day) {
+      return getTrainingRecordsForDay(day).reduce((sum, item) => sum + Math.round(Number(item.hours || 0) * 60), 0);
+    }
+
     function calcD7ActualCode(dayInfo) {
       return Number(dayInfo.actualCode);
     }
@@ -1621,6 +1766,9 @@
       const holidayType = getHolidayTypeName(dayInfo.holidayName);
 
       if (!isValidActualCode(dayInfo)) return "錯誤登錄";
+
+      if (code === 4 && dayInfo.holidayName) return "國定假日";
+      if (code === 4 && dayInfo.isWeekend) return "週休";
 
       if (code === 0) return "空班";
       if (code === 9) return "調整例假日";
@@ -1676,21 +1824,24 @@
     function calcD10OvertimeMinutes(dayInfo) {
       const code = Number(dayInfo.actualCode);
       const baseCode = Number(dayInfo.baseCode);
+      const trainingMinutes = calcTrainingMinutes(dayInfo.day);
 
       if (dayInfo.changeText === "錯誤登錄") return 0;
       if (dayInfo.noteText === "錯誤登錄") return 0;
       if (dayInfo.changeText === "違規") return 0;
+      if (code === 4 && isRestTextForD11(dayInfo.changeText)) return 0;
 
-      if (code === 0 || code === 9 || code === 10) return 0;
+      if (code === 0 || code === 9 || code === 10) return trainingMinutes;
 
       if (isLeaveCode(code)) {
-        if (isWorkCode(baseCode) && hasPartialLeaveHrText(dayInfo)) return 15;
-        return 0;
+        if (isWorkCode(baseCode) && hasPartialLeaveHrText(dayInfo)) return 15 + trainingMinutes;
+        return trainingMinutes;
       }
 
       let minutes = 0;
       if (isWorkCode(code)) minutes = 30;
       minutes += calcElectionD10AdjustmentMinutes(dayInfo);
+      minutes += trainingMinutes;
       return Math.max(0, minutes);
     }
 
@@ -1798,6 +1949,10 @@
         isRestTextForD11(dayInfo.changeText)
       ) {
         return 0;
+      }
+
+      if (code === 4 && baseCode === 0) {
+        return 8;
       }
 
       if (isLeaveCode(code) && baseCode !== 0) {
@@ -1948,6 +2103,7 @@
       const baseLabel = getBaseDisplayName(dayInfo);
 
       if (isLeaveCode(code)) {
+        if (isRestTextForD11(dayInfo.changeText)) return dayInfo.changeText;
         const leaveLabel = getLabel(code);
         if (hasPartialLeaveHrText(dayInfo)) {
           return `${leaveLabel}${fmtHourWithUnit(getEffectiveLeaveHours(dayInfo))}(${baseLabel})`;
@@ -2190,7 +2346,6 @@
       return typeof value === "number" ? Number(value || 0) : 0;
     }
 
-
     function isSpecialMealBenefitDay(dayInfo) {
       const holidayName = String(dayInfo.holidayName || "");
       const isSpringMealHoliday =
@@ -2326,13 +2481,164 @@
       }).join("");
     }
 
+    function buildTrainingHourOptions(selectedValue) {
+      let html = "";
+      for (let h = 0.5; h <= 5; h += 0.5) {
+        const value = Math.round(h * 10) / 10;
+        html += `<option value="${value}" ${Number(selectedValue) === value ? "selected" : ""}>${fmtHour(value)} HR</option>`;
+      }
+      return html;
+    }
+
+
+    function updateBatchSummary() {
+      const activeCount = batchRangeRecords.filter(item => Number(item.startDay) > 0 && Number(item.endDay) > 0).length;
+      const summary = activeCount > 0 ? `已設定 ${activeCount} 筆區間，可按套用寫入每日考勤` : "可一次套用連續特休、受訓或其他假別";
+      const batchSummary = document.getElementById("batchSummary");
+      const batchToggleIcon = document.getElementById("batchToggleIcon");
+      const batchContent = document.getElementById("batchContent");
+      if (batchSummary) batchSummary.textContent = summary;
+      if (batchToggleIcon) batchToggleIcon.textContent = batchPanelOpen ? "－" : "＋";
+      if (batchContent) batchContent.classList.toggle("open", batchPanelOpen);
+    }
+
+    function buildBatchCodeOptions(selectedCode) {
+      return BATCH_RANGE_CODES.map(code => {
+        return `<option value="${code}" ${Number(selectedCode) === Number(code) ? "selected" : ""}>${code} ${getLabel(code)}</option>`;
+      }).join("");
+    }
+
+    function buildBatchHourOptions(selectedValue) {
+      const values = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9];
+      return values.map(value => {
+        const label = value === 0 ? "全日" : fmtHourWithUnit(value);
+        return `<option value="${value}" ${Number(selectedValue) === Number(value) ? "selected" : ""}>${label}</option>`;
+      }).join("");
+    }
+
+    function normalizeBatchRangeRecord(record) {
+      const startDay = Number(record.startDay || 0);
+      const endDay = Number(record.endDay || 0);
+      return {
+        startDay: Math.min(startDay, endDay),
+        endDay: Math.max(startDay, endDay),
+        code: Number(record.code || 5),
+        leaveHours: Number(record.leaveHours || 0),
+        mode: record.mode === "all" ? "all" : "workOnly"
+      };
+    }
+
+    function applyBatchRangeRecord(index) {
+      const record = normalizeBatchRangeRecord(batchRangeRecords[index] || {});
+      if (record.startDay <= 0 || record.endDay <= 0) return;
+      const rocYear = Number(document.getElementById("rocYear").value);
+      const month = Number(document.getElementById("month").value);
+      const shiftGroup = document.getElementById("shiftGroup").value;
+      const year = rocYear + 1911;
+      const daysInMonth = new Date(year, month, 0).getDate();
+      const finalEnd = Math.min(record.endDay, daysInMonth);
+      for (let day = record.startDay; day <= finalEnd; day++) {
+        const base = calcBaseShift(year, month, day, shiftGroup);
+        if (record.mode === "workOnly" && Number(base.baseCode) === 0) continue;
+        manualRecords[day] = { code: record.code };
+        if (record.leaveHours > 0) manualRecords[day].leaveHours = record.leaveHours;
+      }
+      batchRangeRecords[index] = record;
+      saveCurrentMonthState();
+      renderAll(false);
+    }
+
+    function clearBatchRangeRecord(index) {
+      const record = normalizeBatchRangeRecord(batchRangeRecords[index] || {});
+      if (record.startDay > 0 && record.endDay > 0) {
+        for (let day = record.startDay; day <= record.endDay; day++) {
+          const current = manualRecords[day];
+          if (!current) continue;
+          const sameCode = Number(current.code) === Number(record.code);
+          const sameHours = Number(current.leaveHours || 0) === Number(record.leaveHours || 0);
+          if (sameCode && sameHours) delete manualRecords[day];
+        }
+      }
+      batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly" };
+      saveCurrentMonthState();
+      renderAll(false);
+    }
+
+    function renderBatchRangeControls() {
+      const rocYear = Number(document.getElementById("rocYear").value);
+      const month = Number(document.getElementById("month").value);
+      const year = rocYear + 1911;
+      const daysInMonth = new Date(year, month, 0).getDate();
+      const list = document.getElementById("batchRangeList");
+      if (!list) return;
+      list.innerHTML = batchRangeRecords.map((record, idx) => {
+        const safeRecord = normalizeBatchRangeRecord(record);
+        return `
+          <div class="batch-row">
+            <label>
+              <div class="batch-field-title">起日</div>
+              <select class="batch-select" data-batch-field="startDay" data-index="${idx}">${buildDateOptions(daysInMonth, safeRecord.startDay)}</select>
+            </label>
+            <label>
+              <div class="batch-field-title">迄日</div>
+              <select class="batch-select" data-batch-field="endDay" data-index="${idx}">${buildDateOptions(daysInMonth, safeRecord.endDay)}</select>
+            </label>
+            <label>
+              <div class="batch-field-title">假別</div>
+              <select class="batch-select" data-batch-field="code" data-index="${idx}">${buildBatchCodeOptions(safeRecord.code)}</select>
+            </label>
+            <label>
+              <div class="batch-field-title">時數</div>
+              <select class="batch-select" data-batch-field="leaveHours" data-index="${idx}">${buildBatchHourOptions(safeRecord.leaveHours)}</select>
+            </label>
+            <label>
+              <div class="batch-field-title">模式</div>
+              <select class="batch-select" data-batch-field="mode" data-index="${idx}">
+                <option value="workOnly" ${safeRecord.mode === "workOnly" ? "selected" : ""}>只套用上班日</option>
+                <option value="all" ${safeRecord.mode === "all" ? "selected" : ""}>包含空班</option>
+              </select>
+            </label>
+            <div>
+              <div class="batch-field-title">動作</div>
+              <button class="batch-action-btn" type="button" data-batch-action="apply" data-index="${idx}">套用</button>
+              <button class="batch-action-btn batch-clear-btn" type="button" data-batch-action="clear" data-index="${idx}" style="margin-top:6px;">清除</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+      list.querySelectorAll(".batch-select").forEach(sel => {
+        sel.addEventListener("change", function() {
+          const index = Number(this.dataset.index);
+          const field = this.dataset.batchField;
+          if (!batchRangeRecords[index]) batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly" };
+          if (["startDay", "endDay", "code", "leaveHours"].includes(field)) {
+            batchRangeRecords[index][field] = Number(this.value);
+          } else {
+            batchRangeRecords[index][field] = this.value;
+          }
+          saveCurrentMonthState();
+          updateBatchSummary();
+        });
+      });
+      list.querySelectorAll("button[data-batch-action]").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const index = Number(this.dataset.index);
+          if (this.dataset.batchAction === "apply") applyBatchRangeRecord(index);
+          if (this.dataset.batchAction === "clear") clearBatchRangeRecord(index);
+        });
+      });
+      updateBatchSummary();
+    }
+
     function updateSpecialSummary() {
       const closureCount = specialDates.closure.filter(item => item.day > 0 && item.type !== "none").length;
       const electionCount = specialDates.election.filter(day => Number(day) > 0).length;
+      const trainingCount = (specialDates.training || []).filter(item => Number(item.day) > 0).length;
       const summary = [];
 
       if (closureCount > 0) summary.push(`停止辦公 ${closureCount} 筆`);
       if (electionCount > 0) summary.push(`選舉日 ${electionCount} 筆`);
+      if (trainingCount > 0) summary.push(`教育訓練 ${trainingCount} 筆`);
 
       document.getElementById("specialSummary").textContent = summary.length ? summary.join("，") : "未啟用";
       document.getElementById("specialToggleIcon").textContent = specialPanelOpen ? "－" : "＋";
@@ -2362,7 +2668,20 @@
         return `<select class="special-date-select" data-group="election" data-index="${idx}">${buildDateOptions(daysInMonth, value)}</select>`;
       }).join("");
 
-      document.querySelectorAll(".special-date-select, .special-type-select").forEach(sel => {
+      document.getElementById("trainingRecordList").innerHTML = (specialDates.training || []).map((record, idx) => {
+        return `
+          <div class="special-record">
+            <select class="special-date-select" data-group="trainingDay" data-index="${idx}">
+              ${buildDateOptions(daysInMonth, record.day)}
+            </select>
+            <select class="special-hour-select" data-group="trainingHours" data-index="${idx}">
+              ${buildTrainingHourOptions(record.hours)}
+            </select>
+          </div>
+        `;
+      }).join("");
+
+      document.querySelectorAll(".special-date-select, .special-type-select, .special-hour-select").forEach(sel => {
         sel.addEventListener("change", function() {
           const group = this.dataset.group;
           const index = Number(this.dataset.index);
@@ -2375,6 +2694,9 @@
           }
 
           if (group === "election") specialDates.election[index] = Number(this.value);
+
+          if (group === "trainingDay") specialDates.training[index].day = Number(this.value);
+          if (group === "trainingHours") specialDates.training[index].hours = Number(this.value);
 
           saveCurrentMonthState();
           renderAll(false);
@@ -2435,6 +2757,10 @@
           return `<div class="special-badge">停止辦公${CLOSURE_TYPE_LABELS[record.type]}</div>`;
         }).join("");
 
+        const trainingHtml = getTrainingRecordsForDay(d.day).map(record => {
+          return `<div class="special-badge">教育訓練${fmtHour(record.hours)}HR</div>`;
+        }).join("");
+
         const electionHtml = isElectionDay(d.day) ? `<div class="special-badge election-badge">選舉日</div>` : "";
 
         const d11Text = d.isViolation || d.attendanceHours === "違規"
@@ -2464,7 +2790,7 @@
               </div>
             </div>
             <div class="card-center">
-              <div>${holidayHtml}${closureHtml}${electionHtml}</div>
+              <div>${holidayHtml}${closureHtml}${trainingHtml}${electionHtml}</div>
             </div>
             <div class="shift-pill ${pillClass}">${displayLabel}</div>
             ${detailHtml}
@@ -2588,6 +2914,7 @@
     async function renderAll(needLoadCalendar) {
       if (needLoadCalendar) await loadCalendar();
       renderSpecialDateControls();
+      renderBatchRangeControls();
       renderCalendar();
       updateShiftSelectStyle();
     }
@@ -2622,6 +2949,12 @@
       document.getElementById("specialToggle").addEventListener("click", () => {
         specialPanelOpen = !specialPanelOpen;
         updateSpecialSummary();
+      });
+
+      document.getElementById("batchToggle").addEventListener("click", () => {
+        batchPanelOpen = !batchPanelOpen;
+        saveCurrentMonthState();
+        updateBatchSummary();
       });
 
       document.getElementById("monthResetBtn").addEventListener("click", () => {
