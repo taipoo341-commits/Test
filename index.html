@@ -622,9 +622,7 @@
       box-shadow: 0 0 10px rgba(0, 240, 255, 0.18);
     }
 
-    .reset-field {
-      align-self: end;
-    }
+    .reset-field { align-self: end; }
 
     .reset-warning-label {
       color: #fca5a5;
@@ -643,9 +641,7 @@
       box-shadow: 0 0 16px rgba(255, 51, 51, 0.35);
     }
 
-    .collapsed-detail {
-      display: none !important;
-    }
+    .collapsed-detail { display: none !important; }
 
     .compact-summary {
       margin-top: 8px;
@@ -656,99 +652,29 @@
       letter-spacing: 0.04em;
     }
 
-    @media (max-width: 760px) {
-      .controls-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 6px;
-        align-items: end;
-      }
+    .mobile-shift-choices { display: none; }
 
-      .hint-box {
-        grid-column: 1 / -1;
-        padding: 10px;
-      }
-
-      .field-label {
-        font-size: 9px;
-        letter-spacing: 0.06em;
-        text-align: center;
-        margin-bottom: 5px;
-      }
-
-      .cyber-input,
-      .cyber-select {
-        height: 34px;
-        font-size: 13px;
-        border-radius: 9px;
-      }
-
-      .reset-field .sub-panel-toggle {
-        height: 34px;
-        margin-top: 0;
-        padding: 4px 3px;
-        border-radius: 9px;
-        font-size: 9px;
-        letter-spacing: 0;
-      }
-
-      .core-stats-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-
-      .core-stat-item {
-        padding: 9px 5px;
-        border-right: 1px solid rgba(0, 240, 255, 0.14);
-        border-bottom: none;
-      }
-
-      .core-stat-item:last-child {
-        border-right: none;
-      }
-
-      .core-stat-label {
-        font-size: 9px;
-        letter-spacing: 0.02em;
-        line-height: 1.25;
-      }
-
-      .core-stat-value {
-        font-size: 16px;
-      }
-
-      .core-stat-value .stat-suffix,
-      .stat-suffix {
-        font-size: 9px;
-      }
-
-      .stats-grid-sub {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-      }
-
-      .stats-grid-sub .stat-card:nth-child(3) {
-        grid-column: 1 / -1;
-      }
-
-      .stat-card {
-        padding: 12px;
-      }
-
-      .stat-label {
-        font-size: 11px;
-      }
-
-      .stat-value {
-        font-size: 21px;
-      }
-
-      .holiday-benefit-grid {
-        margin-top: 10px;
-      }
-
-      .benefit-combo {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+    .mobile-shift-choice {
+      border: 2px solid currentColor;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.28);
+      padding: 8px 0;
+      font-size: 16px;
+      font-weight: 950;
+      line-height: 1;
+      cursor: pointer;
+      letter-spacing: 0.08em;
     }
+
+    .mobile-shift-choice.shift-a { color: #00f0ff; text-shadow: 0 0 8px rgba(0, 240, 255, 0.95); }
+    .mobile-shift-choice.shift-b { color: #00ff66; text-shadow: 0 0 8px rgba(0, 255, 102, 0.95); }
+    .mobile-shift-choice.shift-c { color: #ff9d00; text-shadow: 0 0 8px rgba(255, 157, 0, 0.95); }
+    .mobile-shift-choice.shift-d { color: #ffee00; text-shadow: 0 0 8px rgba(255, 238, 0, 0.95); }
+
+    .mobile-shift-choice.active.shift-a { background: rgba(0, 240, 255, 0.13); box-shadow: 0 0 18px rgba(0, 240, 255, 0.65), inset 0 0 18px rgba(0, 240, 255, 0.16); }
+    .mobile-shift-choice.active.shift-b { background: rgba(0, 255, 102, 0.11); box-shadow: 0 0 18px rgba(0, 255, 102, 0.65), inset 0 0 18px rgba(0, 255, 102, 0.14); }
+    .mobile-shift-choice.active.shift-c { background: rgba(255, 157, 0, 0.11); box-shadow: 0 0 18px rgba(255, 157, 0, 0.65), inset 0 0 18px rgba(255, 157, 0, 0.14); }
+    .mobile-shift-choice.active.shift-d { background: rgba(255, 238, 0, 0.11); box-shadow: 0 0 18px rgba(255, 238, 0, 0.65), inset 0 0 18px rgba(255, 238, 0, 0.14); }
 
     .accent-cyan { color: #67e8f9; }
     .accent-sky { color: #7dd3fc; }
@@ -926,6 +852,91 @@
       .split-value { font-size: 14px; }
       .designer-name { font-size: 20px; }
     }
+
+
+    @media (max-width: 760px) {
+      .control-panel { padding: 12px !important; }
+      .controls-grid {
+        display: grid !important;
+        grid-template-columns: 1.15fr 1fr 1fr 1.25fr !important;
+        gap: 6px !important;
+        align-items: start !important;
+      }
+      .controls-grid > label,
+      .controls-grid > .reset-field { min-width: 0 !important; }
+      .controls-grid .hint-box { grid-column: 1 / -1 !important; }
+      #shiftGroup { display: none !important; }
+      .mobile-shift-choices {
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 4px !important;
+      }
+      .mobile-shift-choice {
+        height: 34px !important;
+        padding: 0 !important;
+        font-size: 15px !important;
+      }
+      .field-label {
+        display: block !important;
+        min-height: 24px !important;
+        margin-bottom: 5px !important;
+        font-size: 10px !important;
+        line-height: 1.15 !important;
+        text-align: center !important;
+        letter-spacing: 0.03em !important;
+        white-space: nowrap !important;
+      }
+      .cyber-input,
+      .cyber-select {
+        height: 34px !important;
+        min-height: 34px !important;
+        font-size: 13px !important;
+        border-radius: 9px !important;
+      }
+      .reset-field .sub-panel-toggle {
+        height: 34px !important;
+        min-height: 34px !important;
+        margin-top: 0 !important;
+        padding: 3px 2px !important;
+        border-radius: 9px !important;
+        font-size: 9px !important;
+        letter-spacing: 0 !important;
+        line-height: 1.15 !important;
+      }
+      .reset-warning-label {
+        color: #fca5a5 !important;
+        text-shadow: 0 0 8px rgba(255, 51, 51, 0.95), 0 0 18px rgba(255, 51, 51, 0.5) !important;
+      }
+      .calendar-body { padding: 6px !important; overflow-x: visible !important; }
+      .core-stats-grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      }
+      .core-stat-item {
+        padding: 9px 4px !important;
+        border-right: 1px solid rgba(0, 240, 255, 0.14) !important;
+        border-bottom: none !important;
+      }
+      .core-stat-item:last-child { border-right: none !important; }
+      .core-stat-label {
+        font-size: 9px !important;
+        letter-spacing: 0 !important;
+        line-height: 1.2 !important;
+        white-space: nowrap !important;
+      }
+      .core-stat-value { font-size: 16px !important; line-height: 1.15 !important; }
+      .core-stat-value .stat-suffix,
+      .stat-suffix { font-size: 9px !important; }
+      .stats-grid-sub {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+      }
+      .stats-grid-sub .stat-card:nth-child(3) { grid-column: 1 / -1 !important; }
+      .holiday-benefit-grid { margin-top: 10px !important; }
+      .benefit-combo { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    }
+
   </style>
 </head>
 
@@ -948,6 +959,12 @@
               <option value="C">C 班</option>
               <option value="D" selected>D 班</option>
             </select>
+            <div id="mobileShiftChoices" class="mobile-shift-choices" aria-label="手機版班別選擇">
+              <button class="mobile-shift-choice shift-a" type="button" data-shift="A">A</button>
+              <button class="mobile-shift-choice shift-b" type="button" data-shift="B">B</button>
+              <button class="mobile-shift-choice shift-c" type="button" data-shift="C">C</button>
+              <button class="mobile-shift-choice shift-d" type="button" data-shift="D">D</button>
+            </div>
           </label>
 
           <label>
@@ -1120,7 +1137,7 @@
           <li>全日請假：D8 顯示假別、D9 空白、D10 為 0、D11 依特扣日規則計算。</li>
           <li>12切總工時依值班總工時、保養時數、國定時數與交接班時計算。</li>
           <li>當月資料會依班別、民國年、月份儲存在瀏覽器 localStorage，當月 RESET 會清除目前月份設定。</li>
-          <li>早餐、午晚餐已納入新年與開國紀念日判斷；假日待遇、餐費與其他獎金、倍率明細預設收合。</li>
+          <li>手機版班別改為霓虹按鈕，早餐、午晚餐已納入新年與開國紀念日判斷；假日待遇、餐費與其他獎金、倍率明細預設收合。</li>
         </ul>
       </section>
 
@@ -1248,11 +1265,8 @@
 
     function saveStateByKey(storageKey) {
       if (!storageKey) return;
-      try {
-        localStorage.setItem(storageKey, JSON.stringify(getStateSnapshot()));
-      } catch (err) {
-        console.warn("無法儲存當月資料", err);
-      }
+      try { localStorage.setItem(storageKey, JSON.stringify(getStateSnapshot())); }
+      catch (err) { console.warn("無法儲存當月資料", err); }
     }
 
     function saveCurrentMonthState() {
@@ -1265,7 +1279,6 @@
       restSplitOpen = false;
       holidayBenefitOpen = false;
       rewardPanelOpen = false;
-
       try {
         const raw = localStorage.getItem(storageKey);
         if (!raw) return;
@@ -1278,9 +1291,7 @@
         restSplitOpen = Boolean(data.restSplitOpen);
         holidayBenefitOpen = Boolean(data.holidayBenefitOpen);
         rewardPanelOpen = Boolean(data.rewardPanelOpen);
-      } catch (err) {
-        console.warn("無法讀取當月資料", err);
-      }
+      } catch (err) { console.warn("無法讀取當月資料", err); }
     }
 
     function resetCurrentMonthState() {
@@ -1301,6 +1312,14 @@
       renderAll(needLoadCalendar);
     }
 
+    function updateShiftChoiceButtons() {
+      const shiftGroup = document.getElementById("shiftGroup");
+      if (!shiftGroup) return;
+      document.querySelectorAll(".mobile-shift-choice").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.shift === shiftGroup.value);
+      });
+    }
+
     function updateCollapsePanels() {
       const restSplitDetails = document.getElementById("restSplitDetails");
       const restSplitToggle = document.getElementById("restSplitToggle");
@@ -1308,14 +1327,12 @@
         restSplitDetails.classList.toggle("collapsed-detail", !restSplitOpen);
         restSplitToggle.textContent = restSplitOpen ? "收合倍率明細" : "展開倍率明細";
       }
-
       const holidayBenefitDetails = document.getElementById("holidayBenefitDetails");
       const holidayBenefitToggle = document.getElementById("holidayBenefitToggle");
       if (holidayBenefitDetails && holidayBenefitToggle) {
         holidayBenefitDetails.classList.toggle("collapsed-detail", !holidayBenefitOpen);
         holidayBenefitToggle.textContent = holidayBenefitOpen ? "收合假日待遇" : "展開假日待遇";
       }
-
       const rewardDetails = document.getElementById("rewardDetails");
       const rewardToggle = document.getElementById("rewardToggle");
       if (rewardDetails && rewardToggle) {
@@ -2161,12 +2178,7 @@
 
     function isSpecialMealBenefitDay(dayInfo) {
       const holidayName = String(dayInfo.holidayName || "");
-      const isSpringMealHoliday =
-        holidayName.includes("初一") ||
-        holidayName.includes("初二") ||
-        holidayName.includes("初三") ||
-        holidayName.includes("小年夜") ||
-        holidayName.includes("除夕");
+      const isSpringMealHoliday = holidayName.includes("初一") || holidayName.includes("初二") || holidayName.includes("初三") || holidayName.includes("小年夜") || holidayName.includes("除夕");
       const isNewYearMealHoliday = holidayName.includes("新年") || holidayName.includes("開國紀念日") || holidayName.includes("中華民國開國紀念日");
       return isSpringMealHoliday || isNewYearMealHoliday || hasClosure(dayInfo.day);
     }
@@ -2239,13 +2251,7 @@
       const apHours = Math.floor(restHours);
       const aqMinutes = Math.round((restHours - apHours) * 60);
 
-      return {
-        apHours,
-        aqMinutes,
-        restHours,
-        handoverHours,
-        handoverMinutes
-      };
+      return { apHours, aqMinutes, restHours, handoverHours, handoverMinutes };
     }
 
     function buildDays() {
@@ -2527,6 +2533,7 @@
       document.getElementById("lunarNewYearRedEnvelopeCount").textContent = `${lunarNewYearRedEnvelopeCount} 次`;
       document.getElementById("reunionDinnerCount").textContent = `${reunionDinnerCount} 次`;
       updateCollapsePanels();
+      updateShiftChoiceButtons();
 
       const substituteInfoEl = document.getElementById("substituteInfo");
       substituteInfoEl.textContent = substitute.text;
@@ -2561,6 +2568,7 @@
       if (needLoadCalendar) await loadCalendar();
       renderSpecialDateControls();
       renderCalendar();
+      updateShiftChoiceButtons();
     }
 
     function clearManualRecords() {
@@ -2596,6 +2604,16 @@
 
       document.getElementById("monthResetBtn").addEventListener("click", () => {
         resetCurrentMonthState();
+      });
+
+      document.querySelectorAll(".mobile-shift-choice").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const shiftGroup = document.getElementById("shiftGroup");
+          if (!shiftGroup || shiftGroup.value === btn.dataset.shift) return;
+          shiftGroup.value = btn.dataset.shift;
+          updateShiftChoiceButtons();
+          switchMonthState(false);
+        });
       });
 
       document.getElementById("restSplitToggle").addEventListener("click", () => {
