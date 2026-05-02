@@ -201,6 +201,24 @@
       letter-spacing: 0.20em;
     }
 
+    .week-cell.weekday-cell {
+      border: 1px solid rgba(204, 204, 255, 0.36);
+      background: rgba(204, 204, 255, 0.12);
+      color: #dfe3ff;
+    }
+
+    .week-cell.saturday-cell {
+      border: 1px solid rgba(78, 203, 113, 0.42);
+      background: rgba(78, 203, 113, 0.14);
+      color: #b9f6ca;
+    }
+
+    .week-cell.sunday-cell {
+      border: 1px solid rgba(255, 179, 171, 0.46);
+      background: rgba(255, 179, 171, 0.16);
+      color: #ffd6d1;
+    }
+
     .day-card,
     .empty-card {
       min-height: 176px;
@@ -228,15 +246,40 @@
       box-shadow: 0 0 24px rgba(0, 240, 255, 0.18);
     }
 
+    .day-card.weekday-card {
+      border-color: rgba(204, 204, 255, 0.30);
+    }
+
+    .day-card.saturday-card {
+      border-color: rgba(78, 203, 113, 0.48);
+      background: rgba(78, 203, 113, 0.08);
+    }
+
+    .day-card.sunday-card {
+      border-color: rgba(255, 179, 171, 0.52);
+      background: rgba(255, 179, 171, 0.10);
+    }
+
     .day-card.weekend {
       border-color: rgba(255, 51, 51, 0.35);
       background: rgba(255, 51, 51, 0.07);
+    }
+
+    .day-card.saturday-card,
+    .day-card.sunday-card {
+      box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.015);
     }
 
     .day-card.holiday {
       border-color: rgba(251, 113, 133, 0.78);
       background: rgba(255, 51, 51, 0.12);
       box-shadow: 0 0 18px rgba(255, 51, 51, 0.16);
+    }
+
+    .day-card.today-card {
+      outline: 2px solid rgba(0, 173, 239, 0.95);
+      outline-offset: -3px;
+      box-shadow: 0 0 0 1px rgba(0, 173, 239, 0.28), 0 0 24px rgba(0, 173, 239, 0.34);
     }
 
     .day-card.violation {
@@ -1230,7 +1273,6 @@
       <header class="top-header">
         <div class="eyebrow">Personal Overtime Core Prototype</div>
         <h1 class="title">個人版加班待遇計算</h1>
-        <div class="subtitle">手動輸入版：D7 實錄、D8 異動、D9 註、D10 超時、D11 出勤判斷</div>
       </header>
 
       <section class="panel control-panel">
@@ -1859,7 +1901,7 @@
     function getBaseDisplayName(dayInfo) {
       const baseCode = Number(dayInfo.baseCode);
       const cycleIndex = Number(dayInfo.cycleIndex);
-      if (baseCode === 3 && cycleIndex === 8) return "三值第一天";
+      if (baseCode === 3 && cycleIndex === 8) return "三值";
       if (baseCode === 2 && cycleIndex === 2) return "二連一";
       return getLabel(baseCode);
     }
@@ -2082,6 +2124,11 @@
       return isLeaveCode(dayInfo.actualCode) && record.leaveHours !== undefined && Number(record.leaveHours) > 0;
     }
 
+    function isWeekendTrainingClass(dayInfo) {
+      const record = manualRecords[dayInfo.day] || {};
+      return Number(dayInfo.actualCode) === 4 && Boolean(dayInfo.isWeekend) && record.trainingMode === "class";
+    }
+
     function getEffectiveLeaveHours(dayInfo) {
       const code = Number(dayInfo.actualCode);
       if (!isLeaveCode(code)) return 0;
@@ -2104,6 +2151,7 @@
 
       if (!isValidActualCode(dayInfo)) return "錯誤登錄";
 
+      if (isWeekendTrainingClass(dayInfo)) return "受訓(上課)";
       if (code === 4 && dayInfo.holidayName) return "國定假日";
       if (code === 4 && dayInfo.isWeekend) return "週休";
 
@@ -2170,6 +2218,7 @@
       if (dayInfo.changeText === "錯誤登錄") return 0;
       if (dayInfo.noteText === "錯誤登錄") return 0;
       if (dayInfo.changeText === "違規") return 0;
+      if (isWeekendTrainingClass(dayInfo)) return 0;
       if (code === 4 && isRestTextForD11(dayInfo.changeText)) return 0;
 
       if (isSubstituteCode(code)) return 30 + trainingMinutes;
@@ -2286,6 +2335,7 @@
       if (isD11Error(dayInfo)) return "錯誤登錄";
       if (!isValidActualCode(dayInfo)) return "錯誤登錄";
       if (baseCode !== 0 && code === 35) return 0;
+      if (isWeekendTrainingClass(dayInfo)) return 8;
 
       if (
         code === 0 ||
@@ -2450,6 +2500,7 @@
       const baseLabel = getBaseDisplayName(dayInfo);
 
       if (isLeaveCode(code)) {
+        if (isWeekendTrainingClass(dayInfo)) return "受訓(上課)";
         if (isRestTextForD11(dayInfo.changeText)) return dayInfo.changeText;
         const leaveLabel = getLabel(code);
         if (hasPartialLeaveHrText(dayInfo)) {
@@ -3214,7 +3265,10 @@
       const shiftGroup = document.getElementById("shiftGroup").value;
 
       document.getElementById("calendarTitle").textContent = `班別：${shiftGroup}　民國 ${rocYear} 年　${month} 月`;
-      document.getElementById("weekGrid").innerHTML = WEEK_LABELS.map(x => `<div class="week-cell">${x}</div>`).join("");
+      document.getElementById("weekGrid").innerHTML = WEEK_LABELS.map((x, index) => {
+        const weekClass = index < 5 ? "weekday-cell" : (index === 5 ? "saturday-cell" : "sunday-cell");
+        return `<div class="week-cell ${weekClass}">${x}</div>`;
+      }).join("");
 
       const days = buildDays();
       const firstOffset = days[0] ? days[0].weekIndex : 0;
@@ -3231,7 +3285,10 @@
         }
 
         const d = days[dayIndex];
-        const cardClass = `day-card ${d.isWeekend ? "weekend" : ""} ${d.holidayName ? "holiday" : ""} ${d.isViolation ? "violation" : ""}`;
+        const today = new Date();
+        const isToday = today.getFullYear() === (rocYear + 1911) && today.getMonth() + 1 === month && today.getDate() === d.day;
+        const weekdayColorClass = d.weekIndex < 5 ? "weekday-card" : (d.weekIndex === 5 ? "saturday-card" : "sunday-card");
+        const cardClass = `day-card ${weekdayColorClass} ${d.isWeekend ? "weekend" : ""} ${d.holidayName ? "holiday" : ""} ${d.isViolation ? "violation" : ""} ${isToday ? "today-card" : ""}`;
         const pillClass = d.changeText === "錯誤登錄" || d.noteText === "錯誤登錄" || d.attendanceHours === "錯誤登錄" || d.changeText === "違規" ? "pill-alert" : getPillClass(d.actualCode);
         const displayLabel = getDisplayLabel(d);
 
@@ -3240,10 +3297,16 @@
         }).join("");
 
         const hourDisabled = isLeaveCode(d.actualCode) ? "" : "disabled";
-
-        const hourOptions = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9].map(h => {
-          return `<option value="${h}" ${Number(h) === Number(d.leaveHours) ? "selected" : ""}>${h === 0 ? "全日" : fmtHourWithUnit(h)}</option>`;
+        const allowWeekendTrainingClass = Number(d.actualCode) === 4 && Boolean(d.isWeekend);
+        const currentRecord = manualRecords[d.day] || {};
+        const trainingClassSelected = currentRecord.trainingMode === "class";
+        const baseHourOptions = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9].map(h => {
+          return `<option value="${h}" ${!trainingClassSelected && Number(h) === Number(d.leaveHours) ? "selected" : ""}>${h === 0 ? "全日" : fmtHourWithUnit(h)}</option>`;
         }).join("");
+        const trainingClassOption = allowWeekendTrainingClass
+          ? `<option value="class" ${trainingClassSelected ? "selected" : ""}>上課</option>`
+          : "";
+        const hourOptions = baseHourOptions + trainingClassOption;
 
         const holidayLabel = getPrimaryHolidayBadge(d);
         const holidayHtml = holidayLabel ? `<div class="holiday-badge">${holidayLabel}</div>` : "";
@@ -3310,8 +3373,15 @@
           if (type === "code") {
             manualRecords[day].code = Number(this.value);
             if (!isLeaveCode(Number(this.value))) delete manualRecords[day].leaveHours;
+            if (Number(this.value) !== 4) delete manualRecords[day].trainingMode;
           } else {
-            manualRecords[day].leaveHours = Number(this.value);
+            if (this.value === "class") {
+              manualRecords[day].trainingMode = "class";
+              delete manualRecords[day].leaveHours;
+            } else {
+              manualRecords[day].leaveHours = Number(this.value);
+              delete manualRecords[day].trainingMode;
+            }
           }
 
           saveCurrentMonthState();
