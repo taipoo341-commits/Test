@@ -1321,6 +1321,102 @@
       .salary-sub-value { font-size: 14px !important; }
     }
 
+
+    details.salary-panel {
+      margin-top: 16px;
+      padding: 0;
+      overflow: hidden;
+    }
+    details.salary-panel > summary { list-style: none; }
+    details.salary-panel > summary::-webkit-details-marker { display: none; }
+    .salary-content { padding: 16px; }
+    .salary-list {
+      margin: 0;
+      padding-left: 28px;
+      display: grid;
+      gap: 10px;
+    }
+    .salary-list > li::marker {
+      color: #67e8f9;
+      font-weight: 950;
+    }
+    .salary-row {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.18);
+      padding: 12px;
+    }
+    .salary-row-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(150px, auto);
+      gap: 12px;
+      align-items: center;
+    }
+    .salary-formula {
+      margin-top: 4px;
+      color: #64748b;
+      font-size: 10px;
+      line-height: 1.45;
+      letter-spacing: 0.03em;
+    }
+    .salary-input-inline {
+      width: 220px;
+      max-width: 100%;
+      height: 40px;
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      border-radius: 10px;
+      background: #12161c;
+      color: #fff;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 900;
+      outline: none;
+    }
+    .salary-input-inline:focus {
+      border-color: rgba(0, 240, 255, 0.85);
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.26);
+    }
+    .salary-extra-area {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .salary-total-row {
+      margin-top: 14px;
+      border: 1px solid rgba(52, 211, 153, 0.36);
+      border-radius: 14px;
+      background: rgba(16, 185, 129, 0.12);
+      padding: 14px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(150px, auto);
+      gap: 12px;
+      align-items: center;
+    }
+    .salary-total-label {
+      color: #a7f3d0;
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+    }
+    .salary-total-value {
+      color: #6ee7b7;
+      font-size: 25px;
+      font-weight: 950;
+      white-space: nowrap;
+      text-align: right;
+    }
+    details.salary-panel .salary-value { text-align: right; }
+    @media (max-width: 760px) {
+      .salary-content { padding: 12px !important; }
+      .salary-list { padding-left: 22px !important; gap: 8px !important; }
+      .salary-row { padding: 10px !important; }
+      .salary-row-main,
+      .salary-total-row { grid-template-columns: 1fr !important; gap: 8px !important; }
+      details.salary-panel .salary-value,
+      .salary-total-value { text-align: left !important; font-size: 17px !important; }
+      .salary-input-inline { width: 100% !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -1550,63 +1646,106 @@
           </div>
         </div>
       </section>
-      <section class="panel salary-panel">
-        <div class="salary-header-row">
+      <details class="panel salary-panel">
+        <summary class="section-header-toggle">
           <div>
-            <div class="salary-title">薪水明細</div>
-            <div class="special-summary">薪水採手動輸入，不匯入薪資表；金額以會計格式顯示。</div>
+            <div>加班費明細</div>
+            <div class="special-summary">點此展開加班費明細；薪水採手動輸入，不匯入薪資表。</div>
           </div>
-          <label class="salary-input-wrap">
-            <span class="field-label">基本薪給</span>
-            <input id="salaryBasePay" class="cyber-input" type="text" inputmode="numeric" placeholder="請輸入薪水" />
-          </label>
-        </div>
-        <div class="salary-grid">
-          <div class="salary-box">
-            <div class="salary-label">基本薪給</div>
-            <div id="salaryBasicAmount" class="salary-value accent-cyan">NT$ 0</div>
-          </div>
-          <div id="salaryHolidayBox" class="salary-box salary-hidden">
-            <div class="salary-label">假日出勤</div>
-            <div id="salaryHolidayWorkAmount" class="salary-value accent-amber">NT$ 0</div>
-          </div>
-          <div id="salaryMealBox" class="salary-box salary-hidden">
-            <div class="salary-label">誤餐費</div>
-            <div id="salaryMealAmount" class="salary-value accent-sky">NT$ 0</div>
-          </div>
-          <div class="salary-box">
-            <div class="salary-label">值班超時夜點費</div>
-            <div id="salaryOvertimeAmount" class="salary-value accent-violet">NT$ 0</div>
-            <button id="salaryOvertimeToggle" class="sub-panel-toggle" type="button">展開明細</button>
-            <div id="salaryOvertimeDetails" class="salary-sub-grid collapsed-detail">
-              <div class="salary-sub-box">
-                <div class="salary-sub-label">1.33倍金額</div>
-                <div id="salaryCode7Amount" class="salary-sub-value">NT$ 0</div>
+          <div class="details-icon">＋</div>
+        </summary>
+        <div class="salary-content">
+          <ol class="salary-list">
+            <li class="salary-row">
+              <div class="salary-row-main">
+                <div>
+                  <div class="salary-label">基本薪給（手動輸入欄位）</div>
+                  <div class="salary-formula">請手動輸入薪水，避免讀取或匯入機密薪資表。</div>
+                </div>
+                <input id="salaryBasePay" class="salary-input-inline" type="text" inputmode="numeric" placeholder="請輸入薪水" />
               </div>
-              <div class="salary-sub-box">
-                <div class="salary-sub-label">1.67倍金額</div>
-                <div id="salaryCode8Amount" class="salary-sub-value">NT$ 0</div>
+            </li>
+            <li id="salaryHolidayBox" class="salary-row salary-hidden">
+              <div class="salary-row-main">
+                <div>
+                  <div class="salary-label">假日出勤</div>
+                  <div class="salary-formula">基本薪給 ÷ 240 ×（國定時數＋另計假日出勤）</div>
+                </div>
+                <div id="salaryHolidayWorkAmount" class="salary-value accent-amber">NT$ 0</div>
               </div>
-              <div class="salary-sub-box">
-                <div class="salary-sub-label">2.66倍金額</div>
-                <div id="salaryCode6Amount" class="salary-sub-value">NT$ 0</div>
+            </li>
+            <li id="salaryMealBox" class="salary-row salary-hidden">
+              <div class="salary-row-main">
+                <div>
+                  <div class="salary-label">誤餐費</div>
+                  <div class="salary-formula">早餐次數 × 75 ＋ 午晚餐次數 × 150</div>
+                </div>
+                <div id="salaryMealAmount" class="salary-value accent-sky">NT$ 0</div>
+              </div>
+            </li>
+            <li class="salary-row">
+              <div class="salary-row-main">
+                <div>
+                  <div class="salary-label">值班超時工作報酬</div>
+                  <div class="salary-formula">1.33倍金額＋1.67倍金額＋2.66倍金額</div>
+                </div>
+                <div id="salaryOvertimeAmount" class="salary-value accent-violet">NT$ 0</div>
+              </div>
+              <button id="salaryOvertimeToggle" class="sub-panel-toggle" type="button">展開明細</button>
+              <div id="salaryOvertimeDetails" class="salary-sub-grid collapsed-detail">
+                <div class="salary-sub-box">
+                  <div class="salary-sub-label">1.33倍金額</div>
+                  <div id="salaryCode7Amount" class="salary-sub-value">NT$ 0</div>
+                </div>
+                <div class="salary-sub-box">
+                  <div class="salary-sub-label">1.67倍金額</div>
+                  <div id="salaryCode8Amount" class="salary-sub-value">NT$ 0</div>
+                </div>
+                <div class="salary-sub-box">
+                  <div class="salary-sub-label">2.66倍金額</div>
+                  <div id="salaryCode6Amount" class="salary-sub-value">NT$ 0</div>
+                </div>
+              </div>
+            </li>
+            <li class="salary-row">
+              <div class="salary-row-main">
+                <div>
+                  <div class="salary-label">夜點費</div>
+                  <div class="salary-formula">引用原本夜點費欄位的數字</div>
+                </div>
+                <div id="salaryNightFeeAmount" class="salary-value accent-rose">NT$ 0</div>
+              </div>
+            </li>
+            <li class="salary-row">
+              <div class="salary-row-main">
+                <div>
+                  <div class="salary-label">闢地津貼</div>
+                  <div class="salary-formula">固定值 2000</div>
+                </div>
+                <div id="salaryRemoteAllowanceAmount" class="salary-value accent-emerald">NT$ 2,000</div>
+              </div>
+            </li>
+          </ol>
+          <div class="salary-extra-area">
+            <div id="salaryOtherBonusBox" class="salary-row salary-hidden">
+              <div class="salary-row-main">
+                <div>
+                  <div class="salary-label">其他獎金</div>
+                  <div class="salary-formula">初一紅包次數 × 600 ＋ 年夜飯次數 × 800</div>
+                </div>
+                <div id="salaryOtherBonusAmount" class="salary-value accent-amber">NT$ 0</div>
               </div>
             </div>
           </div>
-          <div class="salary-box">
-            <div class="salary-label">夜點費</div>
-            <div id="salaryNightFeeAmount" class="salary-value accent-rose">NT$ 0</div>
-          </div>
-          <div class="salary-box">
-            <div class="salary-label">闢地津貼</div>
-            <div id="salaryRemoteAllowanceAmount" class="salary-value accent-emerald">NT$ 2,000</div>
-          </div>
-          <div id="salaryOtherBonusBox" class="salary-box salary-hidden">
-            <div class="salary-label">其他獎金</div>
-            <div id="salaryOtherBonusAmount" class="salary-value accent-amber">NT$ 0</div>
+          <div class="salary-total-row">
+            <div>
+              <div class="salary-total-label">應發合計</div>
+              <div class="salary-formula">基本薪給＋假日出勤＋誤餐費＋值班超時工作報酬＋夜點費＋闢地津貼</div>
+            </div>
+            <div id="salaryTotalPayAmount" class="salary-total-value">NT$ 0</div>
           </div>
         </div>
-      </section>
+      </details>
       <details class="panel version-info-panel special-panel">
         <summary class="section-header-toggle">
           <div><div>目前版本資訊</div><div id="versionInfoSummary" class="special-summary">點此查看目前版本狀態</div></div>
@@ -1631,6 +1770,7 @@
           <li>修正停止辦公日餐費判斷：改採曆日制，依停止辦公曆日內實際出勤片段是否橫跨 7、12、18 時判斷。</li>
           <li>修正另計出勤待遇：停止辦公日改採曆日制，納入同一曆日內 00:00～24:00 的所有實際出勤片段。</li>
                     <li>新增薪水明細：基本薪給手動輸入，依國定時數、另計假日出勤、誤餐費、12切倍率、夜點費、闢地津貼與其他獎金計算金額。</li>
+                      <li>調整薪水明細：改為預設收合、公司表格條列式排列，值班超時工作報酬可展開明細，並新增應發合計。</li>
           </ul>
       </section>
         </div>
@@ -3508,7 +3648,7 @@
       const overtimeAmount = code7Amount + code8Amount + code6Amount;
       const remoteAllowanceAmount = 2000;
       const otherBonusAmount = lunarNewYearRedEnvelopeCount * 600 + reunionDinnerCount * 800;
-      setSalaryAmountText("salaryBasicAmount", basePay);
+      const totalPayAmount = basePay + holidayWorkAmount + mealAmount + overtimeAmount + nightFee + remoteAllowanceAmount;
       setSalaryAmountText("salaryHolidayWorkAmount", holidayWorkAmount);
       setSalaryAmountText("salaryMealAmount", mealAmount);
       setSalaryAmountText("salaryOvertimeAmount", overtimeAmount);
@@ -3518,6 +3658,7 @@
       setSalaryAmountText("salaryNightFeeAmount", nightFee);
       setSalaryAmountText("salaryRemoteAllowanceAmount", remoteAllowanceAmount);
       setSalaryAmountText("salaryOtherBonusAmount", otherBonusAmount);
+      setSalaryAmountText("salaryTotalPayAmount", totalPayAmount);
       const holidayBox = document.getElementById("salaryHolidayBox");
       const mealBox = document.getElementById("salaryMealBox");
       const otherBox = document.getElementById("salaryOtherBonusBox");
