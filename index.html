@@ -74,7 +74,7 @@
     }
     .controls-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(160px, 1fr)) minmax(330px, auto);
+      grid-template-columns: repeat(3, minmax(160px, 1fr)) repeat(2, minmax(140px, auto));
       gap: 16px;
       align-items: end;
     }
@@ -135,7 +135,7 @@
     .calendar-title-row {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
     }
     .calendar-title {
@@ -145,7 +145,8 @@
       font-weight: 950;
       letter-spacing: 0.10em;
     }
-    .week-start-toggle {
+    .week-start-toggle,
+    .calc-info-toggle {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -161,12 +162,20 @@
       user-select: none;
       box-shadow: 0 0 14px rgba(255, 51, 51, 0.18);
     }
-    .week-start-toggle input {
+    .calc-info-toggle {
+      border-color: rgba(103, 232, 249, 0.34);
+      background: rgba(14, 165, 233, 0.12);
+      color: #bae6fd;
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.14);
+    }
+    .week-start-toggle input,
+    .calc-info-toggle input {
       position: absolute;
       opacity: 0;
       pointer-events: none;
     }
-    .week-start-switch {
+    .week-start-switch,
+    .calc-info-switch {
       position: relative;
       width: 38px;
       height: 20px;
@@ -175,7 +184,11 @@
       border: 1px solid rgba(253, 164, 175, 0.55);
       flex: 0 0 auto;
     }
-    .week-start-switch::after {
+    .calc-info-switch {
+      border-color: rgba(125, 211, 252, 0.55);
+    }
+    .week-start-switch::after,
+    .calc-info-switch::after {
       content: "";
       position: absolute;
       top: 2px;
@@ -185,14 +198,20 @@
       border-radius: 50%;
       background: #fda4af;
       box-shadow: 0 0 10px rgba(253, 164, 175, 0.88);
-      transition: transform .18s ease;
+      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
     }
-    .week-start-toggle input:checked + .week-start-switch::after {
+    .calc-info-switch::after {
+      background: #7dd3fc;
+      box-shadow: 0 0 10px rgba(125, 211, 252, 0.75);
+    }
+    .week-start-toggle input:checked + .week-start-switch::after,
+    .calc-info-toggle input:checked + .calc-info-switch::after {
       transform: translateX(18px);
       background: #67e8f9;
       box-shadow: 0 0 10px rgba(103, 232, 249, 0.9);
     }
-    .week-start-text { white-space: nowrap; }
+    .week-start-text,
+    .calc-info-text { white-space: nowrap; }
     .calendar-note {
       margin-top: 5px;
       color: #64748b;
@@ -804,7 +823,7 @@
       .calendar-head { display: block; padding: 14px; }
       .calendar-title-row { gap: 8px; }
       .calendar-title { font-size: 20px; letter-spacing: 0.05em; }
-      .week-start-toggle { padding: 5px 7px; font-size: 9px; letter-spacing: 0; }
+      .week-start-toggle, .calc-info-toggle { padding: 5px 7px; font-size: 9px; letter-spacing: 0; }
       .substitute-top-panel { padding: 11px 12px; align-items: flex-start; flex-direction: column; }
       .substitute-top-value { text-align: left; font-size: 20px; }
       .sync-message { text-align: left; margin-top: 10px; white-space: normal; font-size: 12px; }
@@ -880,7 +899,7 @@
       .control-panel { padding: 12px !important; }
       .controls-grid {
         display: grid !important;
-        grid-template-columns: 1.05fr 1fr 1fr 1.25fr !important;
+        grid-template-columns: 1.05fr 1fr 1fr .95fr .95fr !important;
         gap: 6px !important;
         align-items: start !important;
       }
@@ -1221,12 +1240,10 @@
             <span class="field-label reset-warning-label">⚠ 當月RESET</span>
             <button id="monthResetBtn" class="sub-panel-toggle reset-danger" type="button">當月 RESET</button>
           </label>
-          <div class="hint-box">
-            <div class="hint-title">計算說明</div>
-            <div class="hint-text">
-              部分請假：D9 顯示 HR、D10 為 15、D11 不扣請假時數；全日請假：D9 空白、D10 為 0。
-            </div>
-          </div>
+          <label class="reset-field">
+            <span class="field-label reset-warning-label">⚠ 當年RESET</span>
+            <button id="yearResetBtn" class="sub-panel-toggle reset-danger" type="button" onclick="resetCurrentYearState()">當年 RESET</button>
+          </label>
         </div>
       </section>
       <section class="panel substitute-top-panel">
@@ -1242,6 +1259,11 @@
                 <input id="weekStartToggle" type="checkbox" />
                 <span class="week-start-switch"></span>
                 <span id="weekStartToggleText" class="week-start-text">週一開始</span>
+              </label>
+              <label class="calc-info-toggle" title="顯示或隱藏每日計算資訊">
+                <input id="calcInfoToggle" type="checkbox" />
+                <span class="calc-info-switch"></span>
+                <span id="calcInfoToggleText" class="calc-info-text">計算資訊關</span>
               </label>
             </div>
             <div id="calendarNote" class="calendar-note">週一至週日排列；每日可手動選擇實錄代碼，RESET 可回復原班別</div>
@@ -1281,7 +1303,7 @@
       <section class="panel batch-panel">
         <button id="batchToggle" class="special-toggle" type="button">
           <div>
-            <div>區間批次請假／受訓設定</div>
+            <div>請假／受訓批次設定</div>
             <div id="batchSummary" class="special-summary">可一次套用連續特休、受訓或常用假別</div>
           </div>
           <div id="batchToggleIcon">＋</div>
@@ -1296,7 +1318,7 @@
       <section class="panel overhaul-panel">
         <button id="overhaulToggle" class="special-toggle" type="button">
           <div>
-            <div>機組大修待遇設定</div>
+            <div>大修日期設定</div>
             <div id="overhaulSummary" class="special-summary">未啟用</div>
           </div>
           <div id="overhaulToggleIcon">＋</div>
@@ -1419,10 +1441,10 @@
           <li>當月資料會依班別、民國年、月份儲存在瀏覽器 localStorage，當月 RESET 會清除目前月份設定。</li>
           <li>班別下拉選單依 A/B/C/D 顯示霓虹高亮；餐費與其他獎金、倍率明細預設收合。</li>
           <li>教育訓練可設定 2 筆日期與時數，時數以 0.5 HR 為單位並直接併入 D10 超時分鐘。</li>
-          <li>區間批次請假／受訓設定提供 3 列，假別順序為 5、4、7、8.1、8.2、8.5、8.6；受訓會自動以包含空班模式套用。</li>
-          <li>機組大修待遇設定可指定大修起訖日，主月曆會顯示「大修中」，代理小月曆設定 15 或 30 分後會改顯示「大修代理15分」或「大修代理30分」；代理小月曆只有大修區間內且非空班日期可選，代班 D10 優先於大修規則。</li>
+          <li>請假／受訓批次設定提供 3 列，假別順序為 5、4、7、8.1、8.2、8.5、8.6；受訓會自動以包含空班模式套用。</li>
+          <li>大修日期設定可指定大修起訖日，主月曆會顯示「大修」，代理小月曆設定 15 或 30 分後會改顯示「大修代理15分」或「大修代理30分」；代理小月曆只有大修區間內且非空班日期可選，代班 D10 優先於大修規則。</li>
       <li>假日待遇、餐費與其他獎金卡片改為條件式顯示；只有遇到新年、春節、停止辦公日或選舉日設定時才顯示，明細仍維持手動展開。</li>
-      <li>區間批次請假／受訓設定已修正起訖日正規化邏輯；只有起日與訖日都有值時才自動排序，避免手機先選起日後被移到訖日。</li>
+      <li>請假／受訓批次設定已修正起訖日正規化邏輯；只有起日與訖日都有值時才自動排序，避免手機先選起日後被移到訖日。</li>
           <li>公司新年判斷已納入 D8：1/1 的一、二、三值與 12/31 一般出勤日的三值，會顯示為新年出勤。</li>
         </ul>
       </section>
@@ -1456,6 +1478,7 @@
     const WEEK_LABELS = ["一", "二", "三", "四", "五", "六", "日"];
     const SUNDAY_WEEK_LABELS = ["日", "一", "二", "三", "四", "五", "六"];
     let weekStartMode = "monday";
+    let calculationInfoVisible = false;
     const PREVIOUS_MONTH_WORK_CARRY = [0, 1, 2, 3, 4, 5, 6, 0, 0, 1, 2, 3];
     const CLOSURE_TYPE_LABELS = {
       none: "－",
@@ -1670,6 +1693,37 @@
       rewardPanelOpen = false;
       renderAll(false);
     }
+    function resetCurrentYearState() {
+      const rocYear = Number(document.getElementById("rocYear").value);
+      const shiftGroup = document.getElementById("shiftGroup").value;
+      const confirmed = window.confirm(`確定要將 ${shiftGroup} 班民國 ${rocYear} 年 1～12 月全部回復到初始狀態嗎？
+
+此動作會清除該年度所有月份的手動代碼、特殊日、批次設定與大修設定。`);
+      if (!confirmed) return;
+      for (let m = 1; m <= 12; m++) {
+        localStorage.removeItem(`personalOvertimeState:${shiftGroup}:${rocYear}:${m}`);
+      }
+      clearObject(manualRecords);
+      resetSpecialDatesToDefault();
+      resetBatchRangeRecordsToDefault();
+      resetOverhaulSettingsToDefault();
+      batchPanelOpen = false;
+      overhaulPanelOpen = false;
+      restSplitOpen = false;
+      rewardPanelOpen = false;
+      try {
+        const savedWeekStartMode = localStorage.getItem("personalOvertimeWeekStartMode");
+        weekStartMode = savedWeekStartMode === "sunday" ? "sunday" : "monday";
+      } catch (err) {
+        weekStartMode = "monday";
+      }
+      calculationInfoVisible = false;
+      updateWeekStartToggleUI();
+      updateCalculationInfoToggleUI();
+      activeStorageKey = getCurrentStorageKey();
+      renderAll(false);
+    }
+    window.resetCurrentYearState = resetCurrentYearState;
     function switchMonthState(needLoadCalendar) {
       saveCurrentMonthState();
       try {
@@ -1678,7 +1732,9 @@
       } catch (err) {
         weekStartMode = "monday";
       }
+      calculationInfoVisible = false;
       updateWeekStartToggleUI();
+      updateCalculationInfoToggleUI();
       activeStorageKey = getCurrentStorageKey();
       loadStateByKey(activeStorageKey);
       renderAll(needLoadCalendar);
@@ -1728,6 +1784,12 @@
       if (note) note.textContent = weekStartMode === "sunday"
         ? "週日至週六排列；每日可手動選擇實錄代碼，RESET 可回復原班別"
         : "週一至週日排列；每日可手動選擇實錄代碼，RESET 可回復原班別";
+    }
+    function updateCalculationInfoToggleUI() {
+      const toggle = document.getElementById("calcInfoToggle");
+      const textEl = document.getElementById("calcInfoToggleText");
+      if (toggle) toggle.checked = calculationInfoVisible;
+      if (textEl) textEl.textContent = calculationInfoVisible ? "計算資訊開" : "計算資訊關";
     }
     function keyOf(value) {
       return String(Number(value));
@@ -2271,6 +2333,35 @@
         };
       });
     }
+
+    function applySubstituteDeficitDeduction(days) {
+      const month = Number(document.getElementById("month").value);
+      const maintenanceHours = (calendarData.workDict[month] || 0) * 8;
+      const daysBeforeSubstitute = days.map(dayInfo => {
+        if (isSubstituteCode(dayInfo.actualCode)) {
+          return { ...dayInfo, attendanceHours: 0 };
+        }
+        return dayInfo;
+      });
+      const totalHoursBeforeSubstitute = daysBeforeSubstitute.reduce((sum, dayInfo) => {
+        return sum + safeHours(dayInfo.attendanceHours);
+      }, 0);
+      const nationalHolidayHoursBeforeSubstitute = calcNationalHolidayHours(daysBeforeSubstitute);
+      let remainingDeficit = Math.max(0, maintenanceHours + nationalHolidayHoursBeforeSubstitute - totalHoursBeforeSubstitute);
+      if (remainingDeficit <= 0) return days;
+      return days.map(dayInfo => {
+        if (remainingDeficit <= 0 || !isSubstituteCode(dayInfo.actualCode) || typeof dayInfo.attendanceHours !== "number") {
+          return dayInfo;
+        }
+        const deduction = Math.min(remainingDeficit, Math.max(0, Number(dayInfo.attendanceHours) || 0));
+        remainingDeficit -= deduction;
+        return {
+          ...dayInfo,
+          attendanceHours: Math.max(0, Number(dayInfo.attendanceHours) - deduction),
+          substituteDeficitDeducted: deduction
+        };
+      });
+    }
     function shouldUseShortShiftLabel(dayInfo) {
       return Boolean(dayInfo.holidayName) || isElectionDay(dayInfo.day) || hasClosure(dayInfo.day);
     }
@@ -2592,7 +2683,7 @@
         };
         days.push(enrichDayInfo(rawDayInfo));
       }
-      return applySevenDayViolation(days);
+      return applySubstituteDeficitDeduction(applySevenDayViolation(days));
     }
     function buildDateOptions(maxDay, selectedValue) {
       let html = `<option value="0">－</option>`;
@@ -2802,7 +2893,7 @@
       const weekGrid = document.getElementById("overhaulWeekGrid");
       const grid = document.getElementById("overhaulCalendarGrid");
       if (!weekGrid || !grid) return;
-      weekGrid.innerHTML = WEEK_LABELS.map(label => `<div class="overhaul-week-cell">${label}</div>`).join("");
+      weekGrid.innerHTML = getCalendarWeekLabels().map(label => `<div class="overhaul-week-cell">${label}</div>`).join("");
       const totalCells = Math.ceil((firstOffset + daysInMonth) / 7) * 7;
       let html = "";
       for (let i = 0; i < totalCells; i++) {
@@ -2834,7 +2925,7 @@
       const year = rocYear + 1911;
       const shiftGroup = document.getElementById("shiftGroup").value;
       const daysInMonth = new Date(year, month, 0).getDate();
-      const firstOffset = getMondayFirstIndex(new Date(year, month - 1, 1));
+      const firstOffset = getDisplayWeekIndex(new Date(year, month - 1, 1));
       const startSelect = document.getElementById("overhaulStartDay");
       const endSelect = document.getElementById("overhaulEndDay");
       if (!startSelect || !endSelect) return;
@@ -2942,6 +3033,7 @@
       const shiftGroup = document.getElementById("shiftGroup").value;
       document.getElementById("calendarTitle").textContent = `班別：${shiftGroup}　民國 ${rocYear} 年　${month} 月`;
       updateWeekStartToggleUI();
+      updateCalculationInfoToggleUI();
       document.getElementById("weekGrid").innerHTML = getCalendarWeekLabels().map((x, index) => {
         const weekClass = weekStartMode === "sunday"
           ? (index === 0 ? "sunday-cell" : (index === 6 ? "saturday-cell" : "weekday-cell"))
@@ -2994,18 +3086,19 @@
         const overhaulActive = isOverhaulActiveDay(d.day);
         const overhaulMainHtml = proxyMinutes !== null
           ? `<div class="proxy-badge">大修代理${proxyMinutes}分</div>`
-          : (overhaulActive ? `<div class="overhaul-main-badge">大修中</div>` : "");
+          : (overhaulActive ? `<div class="overhaul-main-badge">大修</div>` : "");
         const d11Text = d.isViolation || d.attendanceHours === "違規"
           ? `<span class="violation-text">違規</span>`
           : d.attendanceHours === "錯誤登錄"
             ? `<span class="error-text">錯誤登錄</span>`
             : `${fmtHourWithUnit(d.attendanceHours)}`;
         const detailHtml = `
-          <div class="daily-detail">
+          <div class="daily-detail ${calculationInfoVisible ? "" : "collapsed-detail"}">
             <div>D8：${d.changeText || "-"}</div>
             <div>D9：${d.noteText || "-"}</div>
             <div>D10：${d.overtimeMinutes || 0}分</div>
             <div>D11：${d11Text}</div>
+            ${d.substituteDeficitDeducted ? `<div>補缺：-${fmtHourWithUnit(d.substituteDeficitDeducted)}</div>` : ""}
             <div>連作：${d.continuousWorkDays || 0}日</div>
           </div>
         `;
@@ -3165,7 +3258,9 @@
       } catch (err) {
         weekStartMode = "monday";
       }
+      calculationInfoVisible = false;
       updateWeekStartToggleUI();
+      updateCalculationInfoToggleUI();
       activeStorageKey = getCurrentStorageKey();
       loadStateByKey(activeStorageKey);
       updateShiftSelectStyle();
@@ -3223,6 +3318,13 @@
         weekStartToggle.addEventListener("change", () => {
           weekStartMode = weekStartToggle.checked ? "sunday" : "monday";
           try { localStorage.setItem("personalOvertimeWeekStartMode", weekStartMode); } catch (err) { console.warn("無法儲存日期排列設定", err); }
+          renderAll(false);
+        });
+      }
+      const calcInfoToggle = document.getElementById("calcInfoToggle");
+      if (calcInfoToggle) {
+        calcInfoToggle.addEventListener("change", () => {
+          calculationInfoVisible = calcInfoToggle.checked;
           renderAll(false);
         });
       }
