@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>待遇計算</title>
+  <title>加班費計算</title>
   <style>
     @font-face {
       font-family: "RemachineScript";
@@ -122,7 +122,7 @@
       color: rgba(255, 237, 213, 0.82);
       margin-top: 3px;
     }
-    .calendar-panel { overflow: hidden; }
+    .calendar-panel { overflow: visible; }
     .calendar-head {
       display: flex;
       justify-content: space-between;
@@ -225,7 +225,7 @@
       text-align: right;
       white-space: nowrap;
     }
-    .calendar-body { padding: 14px; }
+    .calendar-body { padding: 14px; overflow: visible; }
     .week-grid,
     .day-grid {
       display: grid;
@@ -269,6 +269,7 @@
     }
     .day-card {
       position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
       padding: 9px;
@@ -280,6 +281,12 @@
       transform: translateY(-2px);
       border-color: rgba(0, 240, 255, 0.62);
       box-shadow: 0 0 24px rgba(0, 240, 255, 0.18);
+    }
+    .day-card.code-picker-card-open {
+      z-index: 10000;
+    }
+    .code-picker.open {
+      z-index: 10001;
     }
     .day-card.weekday-card {
       border-color: rgba(204, 204, 255, 0.30);
@@ -347,6 +354,113 @@
       font-size: 11px;
       font-weight: 800;
       outline: none;
+    }
+    .code-picker {
+      position: relative;
+      width: 112px;
+      z-index: 20;
+    }
+    .code-picker-button {
+      width: 112px;
+      height: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 7px;
+      background: rgba(0, 0, 0, 0.46);
+      color: #e2e8f0;
+      padding: 4px 22px 4px 6px;
+      font-size: 11px;
+      font-weight: 900;
+      outline: none;
+      cursor: pointer;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      position: relative;
+    }
+    .code-picker-button::after {
+      content: "▾";
+      position: absolute;
+      right: 7px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #cbd5e1;
+      font-size: 10px;
+    }
+    .code-picker-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 31px;
+      width: 166px;
+      max-height: 268px;
+      overflow-y: auto;
+      border: 1px solid rgba(103, 232, 249, 0.34);
+      border-radius: 10px;
+      background: #0b1220;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.48), 0 0 18px rgba(0, 240, 255, 0.16);
+      padding: 6px;
+      z-index: 10002;
+    }
+    .code-picker.open .code-picker-menu { display: block; }
+    .code-all-toggle {
+      width: 100%;
+      border: 1px solid rgba(103, 232, 249, 0.26);
+      border-radius: 8px;
+      background: rgba(14, 165, 233, 0.12);
+      color: #bae6fd;
+      padding: 6px 7px;
+      font-size: 11px;
+      font-weight: 950;
+      cursor: pointer;
+      text-align: left;
+      margin-bottom: 5px;
+    }
+    .code-all-toggle:hover { background: rgba(14, 165, 233, 0.22); }
+    .code-picker-favorites,
+    .code-picker-all { display: grid; gap: 2px; }
+    .code-picker-all.collapsed-detail { display: none !important; }
+    .code-option-row {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      align-items: center;
+      gap: 2px;
+      border-radius: 7px;
+    }
+    .code-option-row:hover { background: rgba(255,255,255,0.06); }
+    .code-star-btn {
+      width: 24px;
+      height: 28px;
+      border: none;
+      background: transparent;
+      color: #facc15;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      padding: 0;
+    }
+    .code-option-btn {
+      min-width: 0;
+      height: 28px;
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      cursor: pointer;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 850;
+      padding: 0 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .code-option-row.selected { background: rgba(37, 99, 235, 0.68); }
+    .code-option-row.selected .code-option-btn { color: #fff; }
+    .code-empty-favorite {
+      color: #64748b;
+      font-size: 10px;
+      line-height: 1.45;
+      padding: 5px 6px 7px;
     }
     .hour-select { width: 78px; }
     .hour-select:disabled { opacity: 0.35; }
@@ -827,7 +941,7 @@
       .substitute-top-panel { padding: 11px 12px; align-items: flex-start; flex-direction: column; }
       .substitute-top-value { text-align: left; font-size: 20px; }
       .sync-message { text-align: left; margin-top: 10px; white-space: normal; font-size: 12px; }
-      .calendar-body { padding: 6px; overflow-x: visible; }
+      .calendar-body { padding: 6px; overflow: visible; }
       .week-grid,
       .day-grid {
         grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -849,6 +963,20 @@
         font-size: 9px;
         padding: 2px;
         height: 23px;
+      }
+      .code-picker,
+      .code-picker-button {
+        width: 100%;
+      }
+      .code-picker-button {
+        height: 23px;
+        font-size: 9px;
+        padding: 2px 18px 2px 4px;
+      }
+      .code-picker-menu {
+        width: min(168px, 78vw);
+        max-height: 260px;
+        top: 25px;
       }
       .card-center { padding: 3px 0; }
       .holiday-badge,
@@ -939,7 +1067,7 @@
         color: #fca5a5 !important;
         text-shadow: 0 0 8px rgba(255, 51, 51, 0.95), 0 0 18px rgba(255, 51, 51, 0.5) !important;
       }
-      .calendar-body { padding: 6px !important; overflow-x: visible !important; }
+      .calendar-body { padding: 6px !important; overflow: visible !important; }
       .core-stats-grid {
         display: grid !important;
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -1322,6 +1450,24 @@
     }
 
 
+    .title {
+      font-family: "Segoe UI Variable Display", "Segoe UI", "Microsoft JhengHei", sans-serif;
+      letter-spacing: 0.18em;
+      background: linear-gradient(90deg, #67e8f9, #38bdf8, #a78bfa, #67e8f9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 12px rgba(103, 232, 249, 0.78), 0 0 32px rgba(56, 189, 248, 0.38);
+    }
+    .stats-panel > .stats-grid-sub .stat-card .stat-label,
+    .holiday-benefit-grid .stat-card > .stat-label {
+      color: #7dd3fc;
+      font-size: 15px;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      text-shadow: 0 0 10px rgba(125, 211, 252, 0.34);
+      white-space: nowrap;
+    }
     details.salary-panel {
       margin-top: 16px;
       padding: 0;
@@ -1337,8 +1483,9 @@
       gap: 10px;
     }
     .salary-list > li::marker {
-      color: #67e8f9;
+      color: #a7f3d0;
       font-weight: 950;
+      font-size: 16px;
     }
     .salary-row {
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1352,18 +1499,36 @@
       gap: 12px;
       align-items: center;
     }
+    details.salary-panel .salary-label {
+      color: #a7f3d0;
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      overflow-wrap: normal;
+      word-break: keep-all;
+    }
+    details.salary-panel .salary-value {
+      color: #f6c453;
+      font-size: 23px;
+      font-weight: 950;
+      white-space: nowrap;
+      text-align: right;
+      text-shadow: 0 0 10px rgba(246, 196, 83, 0.24);
+    }
     .salary-formula {
       margin-top: 4px;
       color: #64748b;
-      font-size: 10px;
+      font-size: 11px;
       line-height: 1.45;
       letter-spacing: 0.03em;
+      white-space: nowrap;
     }
     .salary-input-inline {
       width: 220px;
       max-width: 100%;
       height: 40px;
-      border: 1px solid rgba(0, 240, 255, 0.22);
+      border: 2px solid #0f52ba;
       border-radius: 10px;
       background: #12161c;
       color: #fff;
@@ -1371,50 +1536,55 @@
       font-size: 18px;
       font-weight: 900;
       outline: none;
+      box-shadow: 0 0 16px rgba(15, 82, 186, 0.34), inset 0 0 12px rgba(15, 82, 186, 0.10);
     }
     .salary-input-inline:focus {
-      border-color: rgba(0, 240, 255, 0.85);
-      box-shadow: 0 0 16px rgba(0, 240, 255, 0.26);
+      border-color: #38bdf8;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.45), inset 0 0 14px rgba(15, 82, 186, 0.16);
     }
-    .salary-extra-area {
-      margin-top: 12px;
+    .salary-sub-grid {
+      margin-top: 10px;
       display: grid;
-      gap: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
     }
-    .salary-total-row {
-      margin-top: 14px;
-      border: 1px solid rgba(52, 211, 153, 0.36);
-      border-radius: 14px;
-      background: rgba(16, 185, 129, 0.12);
-      padding: 14px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(150px, auto);
-      gap: 12px;
-      align-items: center;
+    .salary-sub-box {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.035);
+      padding: 9px;
     }
-    .salary-total-label {
+    .salary-sub-label {
       color: #a7f3d0;
-      font-size: 13px;
-      font-weight: 950;
-      letter-spacing: 0.12em;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
     }
-    .salary-total-value {
-      color: #6ee7b7;
-      font-size: 25px;
+    .salary-sub-value {
+      margin-top: 5px;
+      color: #f6c453;
+      font-size: 16px;
       font-weight: 950;
       white-space: nowrap;
-      text-align: right;
     }
-    details.salary-panel .salary-value { text-align: right; }
+    .salary-hidden { display: none !important; }
+    .date-picker-inline { width: 100%; }
     @media (max-width: 760px) {
+      .stats-panel > .stats-grid-sub .stat-card .stat-label,
+      .holiday-benefit-grid .stat-card > .stat-label {
+        font-size: 12px !important;
+        letter-spacing: 0.02em !important;
+      }
       .salary-content { padding: 12px !important; }
       .salary-list { padding-left: 22px !important; gap: 8px !important; }
       .salary-row { padding: 10px !important; }
-      .salary-row-main,
-      .salary-total-row { grid-template-columns: 1fr !important; gap: 8px !important; }
-      details.salary-panel .salary-value,
-      .salary-total-value { text-align: left !important; font-size: 17px !important; }
+      .salary-row-main { grid-template-columns: 1fr !important; gap: 8px !important; }
+      details.salary-panel .salary-label { font-size: 14px !important; letter-spacing: 0 !important; white-space: nowrap !important; }
+      details.salary-panel .salary-value { text-align: left !important; font-size: 18px !important; }
+      .salary-formula { font-size: 10px !important; white-space: nowrap !important; }
       .salary-input-inline { width: 100% !important; }
+      .salary-sub-grid { grid-template-columns: 1fr !important; }
     }
 
   </style>
@@ -1423,7 +1593,7 @@
   <div class="app">
     <div class="container">
       <header class="top-header">
-        <h1 class="title">待遇計算</h1>
+        <h1 class="title">加班費計算</h1>
       </header>
       <section class="panel control-panel">
         <div class="controls-grid">
@@ -1535,11 +1705,11 @@
           <div class="overhaul-range-row">
             <label>
               <div class="overhaul-field-title">大修起日</div>
-              <select id="overhaulStartDay" class="overhaul-select"></select>
+              <div id="overhaulStartDay" class="date-picker-inline"></div>
             </label>
             <label>
               <div class="overhaul-field-title">大修訖日</div>
-              <select id="overhaulEndDay" class="overhaul-select"></select>
+              <div id="overhaulEndDay" class="date-picker-inline"></div>
             </label>
             <div>
               <div class="overhaul-field-title">狀態</div>
@@ -1649,8 +1819,8 @@
       <details class="panel salary-panel">
         <summary class="section-header-toggle">
           <div>
-            <div>加班費明細</div>
-            <div class="special-summary">點此展開加班費明細；薪水採手動輸入，不匯入薪資表。</div>
+            <div id="salaryTrialTitle">當月加班費試算區</div>
+            <div class="special-summary">點此展開加班費試算，薪水請手動輸入。</div>
           </div>
           <div class="details-icon">＋</div>
         </summary>
@@ -1658,37 +1828,25 @@
           <ol class="salary-list">
             <li class="salary-row">
               <div class="salary-row-main">
-                <div>
-                  <div class="salary-label">基本薪給（手動輸入欄位）</div>
-                  <div class="salary-formula">請手動輸入薪水，避免讀取或匯入機密薪資表。</div>
-                </div>
+                <div class="salary-label">基本薪給（手動輸入欄位）</div>
                 <input id="salaryBasePay" class="salary-input-inline" type="text" inputmode="numeric" placeholder="請輸入薪水" />
               </div>
             </li>
             <li id="salaryHolidayBox" class="salary-row salary-hidden">
               <div class="salary-row-main">
-                <div>
-                  <div class="salary-label">假日出勤</div>
-                  <div class="salary-formula">基本薪給 ÷ 240 ×（國定時數＋另計假日出勤）</div>
-                </div>
+                <div class="salary-label">假日出勤</div>
                 <div id="salaryHolidayWorkAmount" class="salary-value accent-amber">NT$ 0</div>
               </div>
             </li>
             <li id="salaryMealBox" class="salary-row salary-hidden">
               <div class="salary-row-main">
-                <div>
-                  <div class="salary-label">誤餐費</div>
-                  <div class="salary-formula">早餐次數 × 75 ＋ 午晚餐次數 × 150</div>
-                </div>
+                <div class="salary-label">誤餐費</div>
                 <div id="salaryMealAmount" class="salary-value accent-sky">NT$ 0</div>
               </div>
             </li>
             <li class="salary-row">
               <div class="salary-row-main">
-                <div>
-                  <div class="salary-label">值班超時工作報酬</div>
-                  <div class="salary-formula">1.33倍金額＋1.67倍金額＋2.66倍金額</div>
-                </div>
+                <div class="salary-label">值班超時工作報酬</div>
                 <div id="salaryOvertimeAmount" class="salary-value accent-violet">NT$ 0</div>
               </div>
               <button id="salaryOvertimeToggle" class="sub-panel-toggle" type="button">展開明細</button>
@@ -1709,70 +1867,26 @@
             </li>
             <li class="salary-row">
               <div class="salary-row-main">
-                <div>
-                  <div class="salary-label">夜點費</div>
-                  <div class="salary-formula">引用原本夜點費欄位的數字</div>
-                </div>
+                <div class="salary-label">夜點費</div>
                 <div id="salaryNightFeeAmount" class="salary-value accent-rose">NT$ 0</div>
               </div>
             </li>
             <li class="salary-row">
               <div class="salary-row-main">
-                <div>
-                  <div class="salary-label">闢地津貼</div>
-                  <div class="salary-formula">固定值 2000</div>
-                </div>
+                <div class="salary-label">闢地津貼</div>
                 <div id="salaryRemoteAllowanceAmount" class="salary-value accent-emerald">NT$ 2,000</div>
               </div>
             </li>
-          </ol>
-          <div class="salary-extra-area">
-            <div id="salaryOtherBonusBox" class="salary-row salary-hidden">
+            <li id="salaryOtherBonusBox" class="salary-row salary-hidden">
               <div class="salary-row-main">
                 <div>
                   <div class="salary-label">其他獎金</div>
-                  <div class="salary-formula">初一紅包次數 × 600 ＋ 年夜飯次數 × 800</div>
+                  <div class="salary-formula">初一紅包＋年夜飯費</div>
                 </div>
                 <div id="salaryOtherBonusAmount" class="salary-value accent-amber">NT$ 0</div>
               </div>
-            </div>
-          </div>
-          <div class="salary-total-row">
-            <div>
-              <div class="salary-total-label">應發合計</div>
-              <div class="salary-formula">基本薪給＋假日出勤＋誤餐費＋值班超時工作報酬＋夜點費＋闢地津貼</div>
-            </div>
-            <div id="salaryTotalPayAmount" class="salary-total-value">NT$ 0</div>
-          </div>
-        </div>
-      </details>
-      <details class="panel version-info-panel special-panel">
-        <summary class="section-header-toggle">
-          <div><div>目前版本資訊</div><div id="versionInfoSummary" class="special-summary">點此查看目前版本狀態</div></div>
-          <div class="details-icon">＋</div>
-        </summary>
-        <div id="versionInfoContent" class="version-info-content">
-      <section class="limit-box">
-        <div class="limit-title">目前版本狀態</div>
-        <ul>
-          <li>部分請假：D8 顯示假別加 HR、D9 顯示 HR、D10 為 15、D11 不扣請假時數。</li>
-          <li>全日請假：D8 顯示假別、D9 空白、D10 為 0、D11 依特扣日規則計算。</li>
-          <li>12切總工時依值班總工時、保養時數、國定時數與交接班時計算。</li>
-          <li>當月資料會依班別、民國年、月份儲存在瀏覽器 localStorage，當月 RESET 會清除目前月份設定。</li>
-          <li>班別下拉選單依 A/B/C/D 顯示霓虹高亮；餐費與其他獎金、倍率明細預設收合。</li>
-          <li>教育訓練可設定 2 筆日期與時數，時數以 0.5 HR 為單位並直接併入 D10 超時分鐘。</li>
-          <li>請假／受訓批次設定提供 3 列，假別順序為 5、4、7、8.1、8.2、8.5、8.6；受訓會自動以包含空班模式套用。</li>
-          <li>大修日期設定可指定大修起訖日，主月曆會顯示「大修」，代理小月曆設定 15 或 30 分後會改顯示「大修代理15分」或「大修代理30分」；代理小月曆只有大修區間內且非空班日期可選，代班 D10 優先於大修規則。</li>
-      <li>假日待遇、餐費與其他獎金卡片改為條件式顯示；只有遇到新年、春節、停止辦公日或選舉日設定時才顯示，明細仍維持手動展開。</li>
-      <li>請假／受訓批次設定已修正起訖日正規化邏輯；只有起日與訖日都有值時才自動排序，避免手機先選起日後被移到訖日。</li>
-          <li>公司新年判斷已納入 D8：1/1 的一、二、三值與 12/31 一般出勤日的三值，會顯示為新年出勤。</li>
-          <li>修正代班 D11 計算：代班出勤時數不再被保養基準缺額抵扣。</li>
-          <li>修正停止辦公日餐費判斷：改採曆日制，依停止辦公曆日內實際出勤片段是否橫跨 7、12、18 時判斷。</li>
-          <li>修正另計出勤待遇：停止辦公日改採曆日制，納入同一曆日內 00:00～24:00 的所有實際出勤片段。</li>
-                    <li>新增薪水明細：基本薪給手動輸入，依國定時數、另計假日出勤、誤餐費、12切倍率、夜點費、闢地津貼與其他獎金計算金額。</li>
-                      <li>調整薪水明細：改為預設收合、公司表格條列式排列，值班超時工作報酬可展開明細，並新增應發合計。</li>
-          </ul>
-      </section>
+            </li>
+          </ol>
         </div>
       </details>
       <footer class="designer-footer">
@@ -1904,6 +2018,10 @@
     let overhaulPanelOpen = false;
     let restSplitOpen = false;
     let rewardPanelOpen = false;
+    let salaryOvertimeDetailOpen = false;
+    let salaryBasePaySource = "carry";
+    const CODE_FAVORITES_STORAGE_KEY = "personalOvertimeCodeFavorites";
+    let codeFavoriteSet = new Set();
     let activeStorageKey = "";
     function getCurrentStorageKey() {
       const rocYear = document.getElementById("rocYear") ? Number(document.getElementById("rocYear").value) : toRocYear(new Date());
@@ -1958,6 +2076,7 @@
         rewardPanelOpen,
         salaryOvertimeDetailOpen,
         salaryBasePay: getSalaryBasePay(),
+        salaryBasePaySource,
         savedAt: new Date().toISOString()
       };
     }
@@ -1980,9 +2099,10 @@
       rewardPanelOpen = false;
       salaryOvertimeDetailOpen = false;
       setSalaryBasePayInput(0);
+      salaryBasePaySource = "carry";
       try {
         const raw = localStorage.getItem(storageKey);
-        if (!raw) return;
+        if (!raw) { salaryBasePaySource = "carry"; setSalaryBasePayInput(getSalaryCarryForwardBasePay()); return; }
         const data = JSON.parse(raw);
         if (data.manualRecords && typeof data.manualRecords === "object") Object.assign(manualRecords, data.manualRecords);
         if (data.specialDates && typeof data.specialDates === "object") {
@@ -2026,10 +2146,13 @@
         restSplitOpen = Boolean(data.restSplitOpen);
         rewardPanelOpen = Boolean(data.rewardPanelOpen);
         salaryOvertimeDetailOpen = Boolean(data.salaryOvertimeDetailOpen);
-        setSalaryBasePayInput(Number(data.salaryBasePay || 0));
+        applySalaryBasePayFromState(data);
       } catch (err) { console.warn("無法讀取當月資料", err); }
     }
     function resetCurrentMonthState() {
+      const month = Number(document.getElementById("month").value);
+      const confirmed = window.confirm(`確定要將${month}月的資料全部清除嗎？`);
+      if (!confirmed) return;
       const storageKey = activeStorageKey || getCurrentStorageKey();
       localStorage.removeItem(storageKey);
       clearObject(manualRecords);
@@ -2042,14 +2165,13 @@
       rewardPanelOpen = false;
       salaryOvertimeDetailOpen = false;
       setSalaryBasePayInput(0);
+      salaryBasePaySource = "manual";
       renderAll(false);
     }
     function resetCurrentYearState() {
       const rocYear = Number(document.getElementById("rocYear").value);
       const shiftGroup = document.getElementById("shiftGroup").value;
-      const confirmed = window.confirm(`確定要將 ${shiftGroup} 班民國 ${rocYear} 年 1～12 月全部回復到初始狀態嗎？
-
-此動作會清除該年度所有月份的手動代碼、特殊日、批次設定與大修設定。`);
+      const confirmed = window.confirm(`確定要將${rocYear}年1~12月的資料全部清除嗎？`);
       if (!confirmed) return;
       for (let m = 1; m <= 12; m++) {
         localStorage.removeItem(`personalOvertimeState:${shiftGroup}:${rocYear}:${m}`);
@@ -2064,6 +2186,7 @@
       rewardPanelOpen = false;
       salaryOvertimeDetailOpen = false;
       setSalaryBasePayInput(0);
+      salaryBasePaySource = "manual";
       try {
         const savedWeekStartMode = localStorage.getItem("personalOvertimeWeekStartMode");
         weekStartMode = savedWeekStartMode === "sunday" ? "sunday" : "monday";
@@ -2071,6 +2194,7 @@
         weekStartMode = "monday";
       }
       calculationInfoVisible = false;
+      loadCodeFavorites();
       updateWeekStartToggleUI();
       updateCalculationInfoToggleUI();
       activeStorageKey = getCurrentStorageKey();
@@ -2156,6 +2280,118 @@
     }
     function getLabel(code) {
       return CODE_LABELS[keyOf(code)] || `代碼${code}`;
+    }
+    function loadCodeFavorites() {
+      try {
+        const raw = localStorage.getItem(CODE_FAVORITES_STORAGE_KEY);
+        const arr = raw ? JSON.parse(raw) : [];
+        codeFavoriteSet = new Set((Array.isArray(arr) ? arr : []).map(value => keyOf(value)).filter(value => CODE_OPTIONS.some(code => keyOf(code) === value)));
+      } catch (err) {
+        codeFavoriteSet = new Set();
+        console.warn("無法讀取我的最愛假別", err);
+      }
+    }
+    function saveCodeFavorites() {
+      try {
+        localStorage.setItem(CODE_FAVORITES_STORAGE_KEY, JSON.stringify(Array.from(codeFavoriteSet)));
+      } catch (err) {
+        console.warn("無法儲存我的最愛假別", err);
+      }
+    }
+    function isCodeFavorite(code) {
+      return codeFavoriteSet.has(keyOf(code));
+    }
+    function toggleCodeFavorite(code) {
+      const codeKey = keyOf(code);
+      if (codeFavoriteSet.has(codeKey)) {
+        codeFavoriteSet.delete(codeKey);
+      } else {
+        codeFavoriteSet.add(codeKey);
+      }
+      saveCodeFavorites();
+    }
+    function getFavoriteCodeOptions() {
+      return CODE_OPTIONS.filter(code => isCodeFavorite(code));
+    }
+    function buildCodeOptionRow(code, selectedCode, favoriteOnly) {
+      const favorite = isCodeFavorite(code);
+      const selected = Number(code) === Number(selectedCode);
+      return `
+        <div class="code-option-row ${selected ? "selected" : ""}" data-code-row="${code}">
+          <button class="code-star-btn" type="button" data-code-star="${code}" title="${favorite ? "取消我的最愛" : "加入我的最愛"}">${favorite ? "★" : "☆"}</button>
+          <button class="code-option-btn" type="button" data-code-option="${code}">${favoriteOnly ? "★" : ""}${code} ${getLabel(code)}</button>
+        </div>
+      `;
+    }
+    function buildCodePickerHtml(day, selectedCode) {
+      const favoriteOptions = getFavoriteCodeOptions();
+      const favoriteHtml = favoriteOptions.length
+        ? favoriteOptions.map(code => buildCodeOptionRow(code, selectedCode, true)).join("")
+        : `<div class="code-empty-favorite">尚未設定我的最愛，請展開全部假別後點 ☆。</div>`;
+      const allHtml = CODE_OPTIONS.map(code => buildCodeOptionRow(code, selectedCode, false)).join("");
+      return `
+        <div class="code-picker" data-code-picker="${day}">
+          <button class="code-picker-button" type="button" data-code-picker-button="${day}">${selectedCode} ${getLabel(selectedCode)}</button>
+          <div class="code-picker-menu">
+            <button class="code-all-toggle" type="button" data-code-all-toggle="${day}">全部假別</button>
+            <div class="code-picker-favorites">${favoriteHtml}</div>
+            <div class="code-picker-all collapsed-detail" data-code-all-list="${day}">${allHtml}</div>
+          </div>
+        </div>
+      `;
+    }
+    function closeAllCodePickers(exceptPicker) {
+      document.querySelectorAll(".code-picker.open").forEach(picker => {
+        if (picker !== exceptPicker) {
+          picker.classList.remove("open");
+          const card = picker.closest(".day-card");
+          if (card) card.classList.remove("code-picker-card-open");
+        }
+      });
+    }
+    function selectActualCodeForDay(day, code) {
+      closeAllCodePickers(null);
+      if (!manualRecords[day]) manualRecords[day] = {};
+      manualRecords[day].code = Number(code);
+      if (!isLeaveCode(Number(code))) delete manualRecords[day].leaveHours;
+      if (Number(code) !== 4) delete manualRecords[day].trainingMode;
+      saveCurrentMonthState();
+      renderAll(false);
+    }
+    function bindCodePickerEvents(container) {
+      container.querySelectorAll(".code-picker-button").forEach(btn => {
+        btn.addEventListener("click", event => {
+          event.stopPropagation();
+          const picker = btn.closest(".code-picker");
+          if (!picker) return;
+          const isOpen = picker.classList.contains("open");
+          closeAllCodePickers(picker);
+          picker.classList.toggle("open", !isOpen);
+          const card = picker.closest(".day-card");
+          if (card) card.classList.toggle("code-picker-card-open", !isOpen);
+        });
+      });
+      container.querySelectorAll(".code-all-toggle").forEach(btn => {
+        btn.addEventListener("click", event => {
+          event.stopPropagation();
+          const picker = btn.closest(".code-picker");
+          const allList = picker ? picker.querySelector(".code-picker-all") : null;
+          if (allList) allList.classList.toggle("collapsed-detail");
+        });
+      });
+      container.querySelectorAll(".code-star-btn").forEach(btn => {
+        btn.addEventListener("click", event => {
+          event.stopPropagation();
+          toggleCodeFavorite(btn.dataset.codeStar);
+          renderAll(false);
+        });
+      });
+      container.querySelectorAll(".code-option-btn").forEach(btn => {
+        btn.addEventListener("click", event => {
+          event.stopPropagation();
+          selectActualCodeForDay(Number(btn.closest(".code-picker").dataset.codePicker), Number(btn.dataset.codeOption));
+        });
+      });
     }
     function isLeaveCode(code) {
       return LEAVE_CODES.has(Number(code));
@@ -3078,6 +3314,26 @@
       const aqMinutes = Math.round((restHours - apHours) * 60);
       return { apHours, aqMinutes, restHours, handoverHours, handoverMinutes };
     }
+
+    function getMaxPartialLeaveHours(dayInfo) {
+      const hours = safeHours(dayInfo.attendanceHours);
+      if (hours <= 0) return 0;
+      return Math.max(0, hours - 0.5);
+    }
+    function buildLeaveHourOptionsForDay(dayInfo, trainingClassSelected) {
+      const maxPartialHours = getMaxPartialLeaveHours(dayInfo);
+      const values = [0];
+      for (let h = 0.5; h <= maxPartialHours + 0.0001; h += 0.5) {
+        values.push(Math.round(h * 10) / 10);
+      }
+      let options = values.map(h => {
+        return `<option value="${h}" ${!trainingClassSelected && Number(h) === Number(dayInfo.leaveHours) ? "selected" : ""}>${h === 0 ? "全日" : fmtHourWithUnit(h)}</option>`;
+      }).join("");
+      if (Number(dayInfo.actualCode) === 4 && Boolean(dayInfo.isWeekend)) {
+        options += `<option value="class" ${trainingClassSelected ? "selected" : ""}>上課</option>`;
+      }
+      return options;
+    }
     function buildDays() {
       const rocYear = Number(document.getElementById("rocYear").value);
       const month = Number(document.getElementById("month").value);
@@ -3210,14 +3466,14 @@
         const safeRecord = normalizeBatchRangeRecord(record);
         return `
           <div class="batch-row">
-            <label>
+            <div>
               <div class="batch-field-title">起日</div>
-              <select class="batch-select" data-batch-field="startDay" data-index="${idx}">${buildDateOptions(daysInMonth, safeRecord.startDay)}</select>
-            </label>
-            <label>
+              ${buildSpecialDateButton("batchStart", idx, safeRecord.startDay)}
+            </div>
+            <div>
               <div class="batch-field-title">迄日</div>
-              <select class="batch-select" data-batch-field="endDay" data-index="${idx}">${buildDateOptions(daysInMonth, safeRecord.endDay)}</select>
-            </label>
+              ${buildSpecialDateButton("batchEnd", idx, safeRecord.endDay)}
+            </div>
             <label>
               <div class="batch-field-title">假別</div>
               <select class="batch-select" data-batch-field="code" data-index="${idx}">${buildBatchCodeOptions(safeRecord.code)}</select>
@@ -3263,6 +3519,7 @@
           if (this.dataset.batchAction === "clear") clearBatchRangeRecord(index);
         });
       });
+      bindSpecialDateButtonEvents(list);
       updateBatchSummary();
     }
     function updateOverhaulSummary() {
@@ -3353,24 +3610,13 @@
       const startSelect = document.getElementById("overhaulStartDay");
       const endSelect = document.getElementById("overhaulEndDay");
       if (!startSelect || !endSelect) return;
-      startSelect.innerHTML = buildDateOptions(daysInMonth, overhaulSettings.startDay);
-      endSelect.innerHTML = buildDateOptions(daysInMonth, overhaulSettings.endDay);
-      startSelect.onchange = function() {
-        overhaulSettings.startDay = Number(this.value);
-        Object.keys(overhaulSettings.overrides || {}).forEach(day => {
-          if (!isOverhaulProxySelectableDay(Number(day), year, month, shiftGroup)) delete overhaulSettings.overrides[day];
-        });
-        saveCurrentMonthState();
-        renderAll(false);
-      };
-      endSelect.onchange = function() {
-        overhaulSettings.endDay = Number(this.value);
-        Object.keys(overhaulSettings.overrides || {}).forEach(day => {
-          if (!isOverhaulProxySelectableDay(Number(day), year, month, shiftGroup)) delete overhaulSettings.overrides[day];
-        });
-        saveCurrentMonthState();
-        renderAll(false);
-      };
+      startSelect.innerHTML = buildSpecialDateButton("overhaulStart", 0, overhaulSettings.startDay);
+      endSelect.innerHTML = buildSpecialDateButton("overhaulEnd", 0, overhaulSettings.endDay);
+      bindSpecialDateButtonEvents(startSelect);
+      bindSpecialDateButtonEvents(endSelect);
+      Object.keys(overhaulSettings.overrides || {}).forEach(day => {
+        if (!isOverhaulProxySelectableDay(Number(day), year, month, shiftGroup)) delete overhaulSettings.overrides[day];
+      });
       const clearBtn = document.getElementById("overhaulClearBtn");
       if (clearBtn) {
         clearBtn.onclick = function() {
@@ -3396,6 +3642,15 @@
       document.getElementById("specialContent").classList.toggle("open", specialPanelOpen);
     }
 
+
+    function bindSpecialDateButtonEvents(container = document) {
+      container.querySelectorAll(".special-date-btn").forEach(btn => {
+        btn.onclick = function() { openSpecialDatePicker(this.dataset.specialDateGroup, Number(this.dataset.index)); };
+      });
+      container.querySelectorAll(".special-date-reset-btn").forEach(btn => {
+        btn.onclick = function() { setSpecialDateValue(this.dataset.specialResetGroup, Number(this.dataset.index), 0); };
+      });
+    }
     function getSpecialDateLabel(day) { return Number(day) > 0 ? `${Number(day)} 日` : "選擇日期"; }
     function buildSpecialDateButton(group, index, day) { return `<div class="special-date-row"><button class="special-date-btn" type="button" data-special-date-group="${group}" data-index="${index}">${getSpecialDateLabel(day)}</button><button class="special-date-reset-btn" type="button" data-special-reset-group="${group}" data-index="${index}">RESET</button></div>`; }
     function setSpecialDateValue(group, index, value) {
@@ -3403,13 +3658,23 @@
       if (group === "closure") specialDates.closure[index].day = day;
       if (group === "election") specialDates.election[index] = day;
       if (group === "training") specialDates.training[index].day = day;
+      if (group === "batchStart") {
+        if (!batchRangeRecords[index]) batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly" };
+        batchRangeRecords[index].startDay = day;
+      }
+      if (group === "batchEnd") {
+        if (!batchRangeRecords[index]) batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly" };
+        batchRangeRecords[index].endDay = day;
+      }
+      if (group === "overhaulStart") overhaulSettings.startDay = day;
+      if (group === "overhaulEnd") overhaulSettings.endDay = day;
       saveCurrentMonthState(); renderAll(false);
     }
     function openSpecialDatePicker(group, index) {
       activeSpecialDateTarget = { group, index: Number(index) };
       const modal = document.getElementById("specialDateModal");
       const title = document.getElementById("specialDateTitle");
-      const titleMap = { closure: "停止辦公日期", election: "選舉日日期", training: "教育訓練日期" };
+      const titleMap = { closure: "停止辦公日期", election: "選舉日日期", training: "教育訓練日期", batchStart: "批次起日", batchEnd: "批次迄日", overhaulStart: "大修起日", overhaulEnd: "大修訖日" };
       if (title) title.textContent = titleMap[group] || "選擇日期";
       renderSpecialDatePickerCalendar();
       if (modal) { modal.classList.add("open"); modal.setAttribute("aria-hidden", "false"); }
@@ -3426,6 +3691,10 @@
       if (group === "closure") return Number((specialDates.closure[index] || {}).day || 0);
       if (group === "election") return Number(specialDates.election[index] || 0);
       if (group === "training") return Number((specialDates.training[index] || {}).day || 0);
+      if (group === "batchStart") return Number((batchRangeRecords[index] || {}).startDay || 0);
+      if (group === "batchEnd") return Number((batchRangeRecords[index] || {}).endDay || 0);
+      if (group === "overhaulStart") return Number(overhaulSettings.startDay || 0);
+      if (group === "overhaulEnd") return Number(overhaulSettings.endDay || 0);
       return 0;
     }
     function renderSpecialDatePickerCalendar() {
@@ -3464,8 +3733,7 @@
           ${buildSpecialDateButton("training", idx, record.day)}
           <select class="special-hour-select" data-group="trainingHours" data-index="${idx}">${buildTrainingHourOptions(record.hours)}</select>
         </div>`).join("");
-      document.querySelectorAll(".special-date-btn").forEach(btn => btn.addEventListener("click", function() { openSpecialDatePicker(this.dataset.specialDateGroup, Number(this.dataset.index)); }));
-      document.querySelectorAll(".special-date-reset-btn").forEach(btn => btn.addEventListener("click", function() { setSpecialDateValue(this.dataset.specialResetGroup, Number(this.dataset.index), 0); }));
+      bindSpecialDateButtonEvents(document);
       document.querySelectorAll(".special-type-select, .special-hour-select").forEach(sel => {
         sel.addEventListener("change", function() {
           const group = this.dataset.group;
@@ -3488,6 +3756,8 @@
       const month = Number(document.getElementById("month").value);
       const shiftGroup = document.getElementById("shiftGroup").value;
       document.getElementById("calendarTitle").textContent = `班別：${shiftGroup}　民國 ${rocYear} 年　${month} 月`;
+      const salaryTrialTitle = document.getElementById("salaryTrialTitle");
+      if (salaryTrialTitle) salaryTrialTitle.textContent = `${month}月加班費試算區`;
       updateWeekStartToggleUI();
       updateCalculationInfoToggleUI();
       document.getElementById("weekGrid").innerHTML = getCalendarWeekLabels().map((x, index) => {
@@ -3515,20 +3785,12 @@
         const cardClass = `day-card ${weekdayColorClass} ${d.isWeekend ? "weekend" : ""} ${d.holidayName ? "holiday" : ""} ${d.isViolation ? "violation" : ""} ${isToday ? "today-card" : ""}`;
         const pillClass = d.changeText === "錯誤登錄" || d.noteText === "錯誤登錄" || d.attendanceHours === "錯誤登錄" || d.changeText === "違規" ? "pill-alert" : getPillClass(d.actualCode);
         const displayLabel = getDisplayLabel(d);
-        const codeOptions = CODE_OPTIONS.map(code => {
-          return `<option value="${code}" ${Number(code) === Number(d.actualCode) ? "selected" : ""}>${code} ${getLabel(code)}</option>`;
-        }).join("");
+        const codePickerHtml = buildCodePickerHtml(d.day, d.actualCode);
         const hourDisabled = isLeaveCode(d.actualCode) ? "" : "disabled";
         const allowWeekendTrainingClass = Number(d.actualCode) === 4 && Boolean(d.isWeekend);
         const currentRecord = manualRecords[d.day] || {};
         const trainingClassSelected = currentRecord.trainingMode === "class";
-        const baseHourOptions = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9].map(h => {
-          return `<option value="${h}" ${!trainingClassSelected && Number(h) === Number(d.leaveHours) ? "selected" : ""}>${h === 0 ? "全日" : fmtHourWithUnit(h)}</option>`;
-        }).join("");
-        const trainingClassOption = allowWeekendTrainingClass
-          ? `<option value="class" ${trainingClassSelected ? "selected" : ""}>上課</option>`
-          : "";
-        const hourOptions = baseHourOptions + trainingClassOption;
+        const hourOptions = buildLeaveHourOptionsForDay(d, trainingClassSelected);
         const holidayLabel = getPrimaryHolidayBadge(d);
         const holidayHtml = holidayLabel ? `<div class="holiday-badge">${holidayLabel}</div>` : "";
         const closureHtml = getClosureRecordsForDay(d.day).map(record => {
@@ -3563,7 +3825,7 @@
             <div class="day-top">
               <div class="day-number">${d.day}</div>
               <div class="select-stack">
-                <select class="code-select" data-day="${d.day}" data-type="code">${codeOptions}</select>
+                ${codePickerHtml}
                 <select class="hour-select" data-day="${d.day}" data-type="hour" ${hourDisabled}>${hourOptions}</select>
                 <button class="reset-btn" type="button" data-day="${d.day}">RESET</button>
               </div>
@@ -3577,23 +3839,17 @@
         `;
       }
       dayGrid.innerHTML = html;
-      dayGrid.querySelectorAll("select").forEach(sel => {
+      bindCodePickerEvents(dayGrid);
+      dayGrid.querySelectorAll(".hour-select").forEach(sel => {
         sel.addEventListener("change", function() {
           const day = Number(this.dataset.day);
-          const type = this.dataset.type;
           if (!manualRecords[day]) manualRecords[day] = {};
-          if (type === "code") {
-            manualRecords[day].code = Number(this.value);
-            if (!isLeaveCode(Number(this.value))) delete manualRecords[day].leaveHours;
-            if (Number(this.value) !== 4) delete manualRecords[day].trainingMode;
+          if (this.value === "class") {
+            manualRecords[day].trainingMode = "class";
+            delete manualRecords[day].leaveHours;
           } else {
-            if (this.value === "class") {
-              manualRecords[day].trainingMode = "class";
-              delete manualRecords[day].leaveHours;
-            } else {
-              manualRecords[day].leaveHours = Number(this.value);
-              delete manualRecords[day].trainingMode;
-            }
+            manualRecords[day].leaveHours = Number(this.value);
+            delete manualRecords[day].trainingMode;
           }
           saveCurrentMonthState();
           renderAll(false);
@@ -3616,11 +3872,50 @@
       const value = String(input.value || "").replace(/[^0-9]/g, "");
       return Number(value || 0);
     }
+    function fmtInputAccountingMoney(value) {
+      const amount = Number(value || 0);
+      return amount > 0 ? `$${amount.toLocaleString("zh-TW")}` : "";
+    }
     function setSalaryBasePayInput(value) {
       const input = document.getElementById("salaryBasePay");
       if (!input) return;
-      const amount = Number(value || 0);
-      input.value = amount > 0 ? String(amount) : "";
+      input.value = fmtInputAccountingMoney(value);
+    }
+
+    function getSalaryCarryForwardBasePay() {
+      const rocYear = Number(document.getElementById("rocYear") ? document.getElementById("rocYear").value : toRocYear(new Date()));
+      const month = Number(document.getElementById("month") ? document.getElementById("month").value : new Date().getMonth() + 1);
+      const shiftGroup = document.getElementById("shiftGroup") ? document.getElementById("shiftGroup").value : "D";
+      for (let m = month - 1; m >= 1; m--) {
+        try {
+          const raw = localStorage.getItem(`personalOvertimeState:${shiftGroup}:${rocYear}:${m}`);
+          if (!raw) continue;
+          const data = JSON.parse(raw);
+          const amount = Number(data.salaryBasePay || 0);
+          const source = data.salaryBasePaySource || "legacy";
+          if (amount > 0 && source !== "carry") return amount;
+          if (amount > 0 && source === "carry" && m === month - 1) continue;
+        } catch (err) {
+          console.warn("無法讀取前月薪水資料", err);
+        }
+      }
+      return 0;
+    }
+    function applySalaryBasePayFromState(data) {
+      const hasSalary = Object.prototype.hasOwnProperty.call(data, "salaryBasePay");
+      const savedSource = data.salaryBasePaySource || "carry";
+      if (hasSalary && savedSource === "manual") {
+        salaryBasePaySource = "manual";
+        setSalaryBasePayInput(Number(data.salaryBasePay || 0));
+        return;
+      }
+      const carryAmount = getSalaryCarryForwardBasePay();
+      salaryBasePaySource = "carry";
+      if (carryAmount > 0) {
+        setSalaryBasePayInput(carryAmount);
+      } else {
+        setSalaryBasePayInput(hasSalary ? Number(data.salaryBasePay || 0) : 0);
+      }
     }
     function fmtAccountingMoney(value) {
       const amount = Math.ceil(Number(value) || 0);
@@ -3648,7 +3943,6 @@
       const overtimeAmount = code7Amount + code8Amount + code6Amount;
       const remoteAllowanceAmount = 2000;
       const otherBonusAmount = lunarNewYearRedEnvelopeCount * 600 + reunionDinnerCount * 800;
-      const totalPayAmount = basePay + holidayWorkAmount + mealAmount + overtimeAmount + nightFee + remoteAllowanceAmount;
       setSalaryAmountText("salaryHolidayWorkAmount", holidayWorkAmount);
       setSalaryAmountText("salaryMealAmount", mealAmount);
       setSalaryAmountText("salaryOvertimeAmount", overtimeAmount);
@@ -3658,7 +3952,6 @@
       setSalaryAmountText("salaryNightFeeAmount", nightFee);
       setSalaryAmountText("salaryRemoteAllowanceAmount", remoteAllowanceAmount);
       setSalaryAmountText("salaryOtherBonusAmount", otherBonusAmount);
-      setSalaryAmountText("salaryTotalPayAmount", totalPayAmount);
       const holidayBox = document.getElementById("salaryHolidayBox");
       const mealBox = document.getElementById("salaryMealBox");
       const otherBox = document.getElementById("salaryOtherBonusBox");
@@ -3844,7 +4137,12 @@
 
       const salaryBasePayInput = document.getElementById("salaryBasePay");
       if (salaryBasePayInput) {
-        salaryBasePayInput.addEventListener("input", () => {
+        salaryBasePayInput.addEventListener("focus", function() { this.select(); });
+        salaryBasePayInput.addEventListener("click", function() { this.select(); });
+        salaryBasePayInput.addEventListener("input", function() {
+          const digits = String(this.value || "").replace(/[^0-9]/g, "");
+          this.value = fmtInputAccountingMoney(Number(digits || 0));
+          salaryBasePaySource = "manual";
           saveCurrentMonthState();
           renderAll(false);
         });
@@ -3884,6 +4182,9 @@
         rocYearInput.value = String(rocYearInput.value || "").replace(/\D/g, "").slice(0, 3);
         if (rocYearInput.value === "") rocYearInput.value = toRocYear(new Date());
         switchMonthState(true);
+      });
+      document.addEventListener("click", event => {
+        if (!event.target.closest(".code-picker")) closeAllCodePickers(null);
       });
       window.addEventListener("beforeunload", () => {
         saveCurrentMonthState();
