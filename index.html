@@ -1238,6 +1238,89 @@
     .core-stat-label,.core-stat-value,.stat-label,.stat-value,.benefit-label,.benefit-value,.split-label,.split-value{white-space:nowrap;overflow-wrap:normal;word-break:keep-all;}
     @media(max-width:760px){.section-header-toggle{padding:12px!important}.core-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.core-stat-item{min-width:0!important}.core-stat-label{font-size:clamp(8px,2.55vw,11px)!important;letter-spacing:0!important}.core-stat-value{font-size:clamp(15px,5.2vw,23px)!important;white-space:nowrap!important;word-break:keep-all!important}.core-stat-value .stat-suffix,.stat-suffix{font-size:clamp(8px,2.4vw,10px)!important;white-space:nowrap!important}.stat-label{font-size:clamp(10px,3.2vw,12px)!important;white-space:nowrap!important}.stat-value{font-size:clamp(20px,7vw,26px)!important;white-space:nowrap!important;word-break:keep-all!important}.special-date-row{grid-template-columns:minmax(0,1fr) 52px!important;gap:5px!important}.special-date-btn,.special-date-reset-btn{height:30px!important;font-size:10px!important;letter-spacing:0!important}.special-date-day-btn,.special-date-empty-cell{min-height:34px!important}.special-date-week-grid,.special-date-calendar-grid{gap:4px!important}}
 
+
+    .salary-panel {
+      margin-top: 16px;
+      padding: 16px;
+    }
+    .salary-header-row {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .salary-title {
+      color: #cbd5e1;
+      font-size: 14px;
+      font-weight: 950;
+      letter-spacing: 0.16em;
+    }
+    .salary-input-wrap {
+      width: min(260px, 100%);
+    }
+    .salary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .salary-box {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.18);
+      padding: 12px;
+    }
+    .salary-label {
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+    .salary-value {
+      margin-top: 6px;
+      font-size: 22px;
+      font-weight: 950;
+      color: #67e8f9;
+      white-space: nowrap;
+    }
+    .salary-sub-grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .salary-sub-box {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.035);
+      padding: 9px;
+    }
+    .salary-sub-label {
+      color: #94a3b8;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .salary-sub-value {
+      margin-top: 5px;
+      color: #6ee7b7;
+      font-size: 15px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+    .salary-hidden { display: none !important; }
+    @media (max-width: 760px) {
+      .salary-panel { padding: 12px !important; }
+      .salary-header-row { display: block !important; }
+      .salary-input-wrap { width: 100% !important; margin-top: 10px !important; }
+      .salary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; }
+      .salary-value { font-size: 16px !important; }
+      .salary-sub-grid { grid-template-columns: 1fr !important; }
+      .salary-sub-value { font-size: 14px !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -1467,6 +1550,63 @@
           </div>
         </div>
       </section>
+      <section class="panel salary-panel">
+        <div class="salary-header-row">
+          <div>
+            <div class="salary-title">薪水明細</div>
+            <div class="special-summary">薪水採手動輸入，不匯入薪資表；金額以會計格式顯示。</div>
+          </div>
+          <label class="salary-input-wrap">
+            <span class="field-label">基本薪給</span>
+            <input id="salaryBasePay" class="cyber-input" type="text" inputmode="numeric" placeholder="請輸入薪水" />
+          </label>
+        </div>
+        <div class="salary-grid">
+          <div class="salary-box">
+            <div class="salary-label">基本薪給</div>
+            <div id="salaryBasicAmount" class="salary-value accent-cyan">NT$ 0</div>
+          </div>
+          <div id="salaryHolidayBox" class="salary-box salary-hidden">
+            <div class="salary-label">假日出勤</div>
+            <div id="salaryHolidayWorkAmount" class="salary-value accent-amber">NT$ 0</div>
+          </div>
+          <div id="salaryMealBox" class="salary-box salary-hidden">
+            <div class="salary-label">誤餐費</div>
+            <div id="salaryMealAmount" class="salary-value accent-sky">NT$ 0</div>
+          </div>
+          <div class="salary-box">
+            <div class="salary-label">值班超時夜點費</div>
+            <div id="salaryOvertimeAmount" class="salary-value accent-violet">NT$ 0</div>
+            <button id="salaryOvertimeToggle" class="sub-panel-toggle" type="button">展開明細</button>
+            <div id="salaryOvertimeDetails" class="salary-sub-grid collapsed-detail">
+              <div class="salary-sub-box">
+                <div class="salary-sub-label">1.33倍金額</div>
+                <div id="salaryCode7Amount" class="salary-sub-value">NT$ 0</div>
+              </div>
+              <div class="salary-sub-box">
+                <div class="salary-sub-label">1.67倍金額</div>
+                <div id="salaryCode8Amount" class="salary-sub-value">NT$ 0</div>
+              </div>
+              <div class="salary-sub-box">
+                <div class="salary-sub-label">2.66倍金額</div>
+                <div id="salaryCode6Amount" class="salary-sub-value">NT$ 0</div>
+              </div>
+            </div>
+          </div>
+          <div class="salary-box">
+            <div class="salary-label">夜點費</div>
+            <div id="salaryNightFeeAmount" class="salary-value accent-rose">NT$ 0</div>
+          </div>
+          <div class="salary-box">
+            <div class="salary-label">闢地津貼</div>
+            <div id="salaryRemoteAllowanceAmount" class="salary-value accent-emerald">NT$ 2,000</div>
+          </div>
+          <div id="salaryOtherBonusBox" class="salary-box salary-hidden">
+            <div class="salary-label">其他獎金</div>
+            <div id="salaryOtherBonusAmount" class="salary-value accent-amber">NT$ 0</div>
+          </div>
+        </div>
+      </section>
       <details class="panel version-info-panel special-panel">
         <summary class="section-header-toggle">
           <div><div>目前版本資訊</div><div id="versionInfoSummary" class="special-summary">點此查看目前版本狀態</div></div>
@@ -1490,7 +1630,7 @@
           <li>修正代班 D11 計算：代班出勤時數不再被保養基準缺額抵扣。</li>
           <li>修正停止辦公日餐費判斷：改採曆日制，依停止辦公曆日內實際出勤片段是否橫跨 7、12、18 時判斷。</li>
           <li>修正另計出勤待遇：停止辦公日改採曆日制，納入同一曆日內 00:00～24:00 的所有實際出勤片段。</li>
-                    <li>停止辦公新增「全日(當日4時30分前)」選項，區間為 8～24；「全日(前日22時前)」區間維持 0～24。</li>
+                    <li>新增薪水明細：基本薪給手動輸入，依國定時數、另計假日出勤、誤餐費、12切倍率、夜點費、闢地津貼與其他獎金計算金額。</li>
           </ul>
       </section>
         </div>
@@ -1676,6 +1816,8 @@
         overhaulSettings: JSON.parse(JSON.stringify(overhaulSettings)),
         restSplitOpen,
         rewardPanelOpen,
+        salaryOvertimeDetailOpen,
+        salaryBasePay: getSalaryBasePay(),
         savedAt: new Date().toISOString()
       };
     }
@@ -1696,6 +1838,8 @@
       overhaulPanelOpen = false;
       restSplitOpen = false;
       rewardPanelOpen = false;
+      salaryOvertimeDetailOpen = false;
+      setSalaryBasePayInput(0);
       try {
         const raw = localStorage.getItem(storageKey);
         if (!raw) return;
@@ -1741,6 +1885,8 @@
         overhaulPanelOpen = Boolean(data.overhaulPanelOpen);
         restSplitOpen = Boolean(data.restSplitOpen);
         rewardPanelOpen = Boolean(data.rewardPanelOpen);
+        salaryOvertimeDetailOpen = Boolean(data.salaryOvertimeDetailOpen);
+        setSalaryBasePayInput(Number(data.salaryBasePay || 0));
       } catch (err) { console.warn("無法讀取當月資料", err); }
     }
     function resetCurrentMonthState() {
@@ -1754,6 +1900,8 @@
       overhaulPanelOpen = false;
       restSplitOpen = false;
       rewardPanelOpen = false;
+      salaryOvertimeDetailOpen = false;
+      setSalaryBasePayInput(0);
       renderAll(false);
     }
     function resetCurrentYearState() {
@@ -1774,6 +1922,8 @@
       overhaulPanelOpen = false;
       restSplitOpen = false;
       rewardPanelOpen = false;
+      salaryOvertimeDetailOpen = false;
+      setSalaryBasePayInput(0);
       try {
         const savedWeekStartMode = localStorage.getItem("personalOvertimeWeekStartMode");
         weekStartMode = savedWeekStartMode === "sunday" ? "sunday" : "monday";
@@ -1820,6 +1970,13 @@
       if (rewardDetails && rewardToggle) {
         rewardDetails.classList.toggle("collapsed-detail", !rewardPanelOpen);
         rewardToggle.textContent = rewardPanelOpen ? "收合明細" : "展開明細";
+      }
+
+      const salaryOvertimeDetails = document.getElementById("salaryOvertimeDetails");
+      const salaryOvertimeToggle = document.getElementById("salaryOvertimeToggle");
+      if (salaryOvertimeDetails && salaryOvertimeToggle) {
+        salaryOvertimeDetails.classList.toggle("collapsed-detail", !salaryOvertimeDetailOpen);
+        salaryOvertimeToggle.textContent = salaryOvertimeDetailOpen ? "收合明細" : "展開明細";
       }
     }
     function toRocYear(date = new Date()) {
@@ -3312,6 +3469,62 @@
       });
       renderSummary(days);
     }
+
+    function getSalaryBasePay() {
+      const input = document.getElementById("salaryBasePay");
+      if (!input) return 0;
+      const value = String(input.value || "").replace(/[^0-9]/g, "");
+      return Number(value || 0);
+    }
+    function setSalaryBasePayInput(value) {
+      const input = document.getElementById("salaryBasePay");
+      if (!input) return;
+      const amount = Number(value || 0);
+      input.value = amount > 0 ? String(amount) : "";
+    }
+    function fmtAccountingMoney(value) {
+      const amount = Math.ceil(Number(value) || 0);
+      return `NT$ ${amount.toLocaleString("zh-TW")}`;
+    }
+    function setSalaryAmountText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = fmtAccountingMoney(value);
+    }
+    function updateSalaryDetails(metrics) {
+      const basePay = getSalaryBasePay();
+      const nationalHolidayHours = Number(metrics.nationalHolidayHours || 0);
+      const additionalHolidayWorkHours = Number(metrics.additionalHolidayWorkHours || 0);
+      const breakfastCount = Number(metrics.breakfastCount || 0);
+      const lunchDinnerCount = Number(metrics.lunchDinnerCount || 0);
+      const lunarNewYearRedEnvelopeCount = Number(metrics.lunarNewYearRedEnvelopeCount || 0);
+      const reunionDinnerCount = Number(metrics.reunionDinnerCount || 0);
+      const split = metrics.split || { code7: 0, code8: 0, code6: 0 };
+      const nightFee = Number(metrics.nightFee || 0);
+      const holidayWorkAmount = Math.ceil(basePay / 240 * (nationalHolidayHours + additionalHolidayWorkHours));
+      const mealAmount = breakfastCount * 75 + lunchDinnerCount * 150;
+      const code7Amount = Math.ceil(basePay / 240 * Number(split.code7 || 0) * 4 / 3);
+      const code8Amount = Math.ceil(basePay / 240 * Number(split.code8 || 0) * 5 / 3);
+      const code6Amount = Math.ceil(basePay / 240 * Number(split.code6 || 0) * 8 / 3);
+      const overtimeAmount = code7Amount + code8Amount + code6Amount;
+      const remoteAllowanceAmount = 2000;
+      const otherBonusAmount = lunarNewYearRedEnvelopeCount * 600 + reunionDinnerCount * 800;
+      setSalaryAmountText("salaryBasicAmount", basePay);
+      setSalaryAmountText("salaryHolidayWorkAmount", holidayWorkAmount);
+      setSalaryAmountText("salaryMealAmount", mealAmount);
+      setSalaryAmountText("salaryOvertimeAmount", overtimeAmount);
+      setSalaryAmountText("salaryCode7Amount", code7Amount);
+      setSalaryAmountText("salaryCode8Amount", code8Amount);
+      setSalaryAmountText("salaryCode6Amount", code6Amount);
+      setSalaryAmountText("salaryNightFeeAmount", nightFee);
+      setSalaryAmountText("salaryRemoteAllowanceAmount", remoteAllowanceAmount);
+      setSalaryAmountText("salaryOtherBonusAmount", otherBonusAmount);
+      const holidayBox = document.getElementById("salaryHolidayBox");
+      const mealBox = document.getElementById("salaryMealBox");
+      const otherBox = document.getElementById("salaryOtherBonusBox");
+      if (holidayBox) holidayBox.classList.toggle("salary-hidden", (nationalHolidayHours + additionalHolidayWorkHours) <= 0);
+      if (mealBox) mealBox.classList.toggle("salary-hidden", (breakfastCount + lunchDinnerCount) <= 0);
+      if (otherBox) otherBox.classList.toggle("salary-hidden", (lunarNewYearRedEnvelopeCount + reunionDinnerCount) <= 0);
+    }
     function renderSummary(days) {
       const month = Number(document.getElementById("month").value);
       const totalHours = days.reduce((sum, dayInfo) => {
@@ -3352,6 +3565,17 @@
       document.getElementById("lunchDinnerCount").textContent = `${lunchDinnerCount} 次`;
       document.getElementById("lunarNewYearRedEnvelopeCount").textContent = `${lunarNewYearRedEnvelopeCount} 次`;
       document.getElementById("reunionDinnerCount").textContent = `${reunionDinnerCount} 次`;
+
+      updateSalaryDetails({
+        nationalHolidayHours,
+        additionalHolidayWorkHours,
+        breakfastCount,
+        lunchDinnerCount,
+        lunarNewYearRedEnvelopeCount,
+        reunionDinnerCount,
+        split,
+        nightFee
+      });
       updateCollapsePanels();
       updateShiftSelectStyle();
       const substituteTargets = [
@@ -3476,6 +3700,22 @@
       document.getElementById("specialDateCancelBtn").addEventListener("click", () => { closeSpecialDatePicker(); });
       document.getElementById("specialDateClearBtn").addEventListener("click", () => { clearActiveSpecialDatePickerValue(); });
       document.getElementById("specialDateModal").addEventListener("click", event => { if (event.target && event.target.id === "specialDateModal") closeSpecialDatePicker(); });
+
+      const salaryBasePayInput = document.getElementById("salaryBasePay");
+      if (salaryBasePayInput) {
+        salaryBasePayInput.addEventListener("input", () => {
+          saveCurrentMonthState();
+          renderAll(false);
+        });
+      }
+      const salaryOvertimeToggle = document.getElementById("salaryOvertimeToggle");
+      if (salaryOvertimeToggle) {
+        salaryOvertimeToggle.addEventListener("click", () => {
+          salaryOvertimeDetailOpen = !salaryOvertimeDetailOpen;
+          saveCurrentMonthState();
+          updateCollapsePanels();
+        });
+      }
       const weekStartToggle = document.getElementById("weekStartToggle");
       if (weekStartToggle) {
         weekStartToggle.addEventListener("change", () => {
