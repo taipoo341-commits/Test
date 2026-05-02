@@ -1210,127 +1210,33 @@
       .overhaul-calendar-grid { gap: 4px !important; }
     }
 
-    details.core-stats-panel,
-    details.version-info-panel {
-      margin-top: 16px;
-      padding: 0;
-      overflow: hidden;
-    }
-    details.core-stats-panel > summary,
-    details.version-info-panel > summary {
-      list-style: none;
-    }
-    details.core-stats-panel > summary::-webkit-details-marker,
-    details.version-info-panel > summary::-webkit-details-marker {
-      display: none;
-    }
-    .section-header-toggle {
-      width: 100%;
-      border: none;
-      background: rgba(17, 23, 34, 0.96);
-      color: #67e8f9;
-      padding: 15px 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 950;
-      letter-spacing: 0.12em;
-      border-bottom: 1px solid rgba(0, 240, 255, 0.12);
-      text-align: left;
-    }
-    .section-header-toggle:hover { background: rgba(14, 165, 233, 0.12); }
-    .details-icon { color: #67e8f9; font-size: 22px; line-height: 1; }
-    details[open] > summary .details-icon { transform: rotate(45deg); }
-    .core-stats-content,
-    .version-info-content { padding: 0; }
-    .special-date-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 64px;
-      gap: 6px;
-      align-items: center;
-    }
-    .special-date-btn,
-    .special-date-reset-btn {
-      width: 100%;
-      height: 34px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 950;
-      cursor: pointer;
-      letter-spacing: 0.04em;
-    }
-    .special-date-btn {
-      border: 1px solid rgba(103, 232, 249, 0.30);
-      background: rgba(14, 165, 233, 0.10);
-      color: #bae6fd;
-      text-align: center;
-    }
-    .special-date-btn:hover { background: rgba(14, 165, 233, 0.22); box-shadow: 0 0 10px rgba(0, 240, 255, 0.18); }
-    .special-date-reset-btn {
-      border: 1px solid rgba(251, 113, 133, 0.46);
-      background: rgba(244, 63, 94, 0.14);
-      color: #fda4af;
-    }
-    .special-date-reset-btn:hover { background: rgba(244, 63, 94, 0.24); box-shadow: 0 0 12px rgba(244, 63, 94, 0.22); }
-    .special-date-modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.62);
-      z-index: 9998;
-      padding: 18px;
-    }
-    .special-date-modal.open { display: flex; }
-    .special-date-card {
-      width: min(430px, 100%);
-      border: 1px solid rgba(0, 240, 255, 0.32);
-      border-radius: 18px;
-      background: #101722;
-      box-shadow: 0 0 28px rgba(0, 240, 255, 0.18);
-      padding: 18px;
-    }
-    .special-date-title { color: #e5e7eb; font-size: 16px; font-weight: 950; text-align: center; letter-spacing: 0.08em; margin-bottom: 12px; }
-    .special-date-week-grid,
-    .special-date-calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
-    .special-date-week-cell { border-radius: 8px; background: rgba(255, 255, 255, 0.035); color: #94a3b8; text-align: center; padding: 6px 0; font-size: 11px; font-weight: 950; }
-    .special-date-day-btn,
-    .special-date-empty-cell { min-height: 42px; border-radius: 9px; }
-    .special-date-empty-cell { background: rgba(255, 255, 255, 0.012); border: 1px solid rgba(255, 255, 255, 0.04); }
-    .special-date-day-btn { border: 1px solid rgba(103, 232, 249, 0.22); background: rgba(0, 0, 0, 0.30); color: #e5e7eb; cursor: pointer; font-size: 13px; font-weight: 950; }
-    .special-date-day-btn:hover,
-    .special-date-day-btn.selected { border-color: rgba(52, 211, 153, 0.72); background: rgba(16, 185, 129, 0.18); color: #a7f3d0; box-shadow: 0 0 14px rgba(16, 185, 129, 0.18); }
-    .special-date-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
-    .special-date-action-btn { height: 38px; border-radius: 10px; border: 1px solid rgba(148, 163, 184, 0.22); background: rgba(148, 163, 184, 0.08); color: #cbd5e1; font-weight: 900; cursor: pointer; }
-    .special-date-action-btn.clear-choice { border-color: rgba(251, 113, 133, 0.48); background: rgba(244, 63, 94, 0.14); color: #fda4af; }
-    .core-stat-label,
-    .core-stat-value,
-    .stat-label,
-    .stat-value,
-    .benefit-label,
-    .benefit-value,
-    .split-label,
-    .split-value { white-space: nowrap; overflow-wrap: normal; word-break: keep-all; }
-    @media (max-width: 760px) {
-      .section-header-toggle { padding: 12px !important; }
-      .core-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-      .core-stat-item { min-width: 0 !important; }
-      .core-stat-label { font-size: clamp(8px, 2.55vw, 11px) !important; letter-spacing: 0 !important; }
-      .core-stat-value { font-size: clamp(15px, 5.2vw, 23px) !important; white-space: nowrap !important; word-break: keep-all !important; }
-      .core-stat-value .stat-suffix,
-      .stat-suffix { font-size: clamp(8px, 2.4vw, 10px) !important; white-space: nowrap !important; }
-      .stat-label { font-size: clamp(10px, 3.2vw, 12px) !important; white-space: nowrap !important; }
-      .stat-value { font-size: clamp(20px, 7vw, 26px) !important; white-space: nowrap !important; word-break: keep-all !important; }
-      .special-date-row { grid-template-columns: minmax(0, 1fr) 52px !important; gap: 5px !important; }
-      .special-date-btn,
-      .special-date-reset-btn { height: 30px !important; font-size: 10px !important; letter-spacing: 0 !important; }
-      .special-date-day-btn,
-      .special-date-empty-cell { min-height: 34px !important; }
-      .special-date-week-grid,
-      .special-date-calendar-grid { gap: 4px !important; }
-    }
+    details.core-stats-panel, details.version-info-panel { margin-top:16px; padding:0; overflow:hidden; }
+    details.core-stats-panel > summary, details.version-info-panel > summary { list-style:none; }
+    details.core-stats-panel > summary::-webkit-details-marker, details.version-info-panel > summary::-webkit-details-marker { display:none; }
+    .section-header-toggle { width:100%; border:none; background:rgba(17,23,34,.96); color:#67e8f9; padding:15px 18px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; font-weight:950; letter-spacing:.12em; border-bottom:1px solid rgba(0,240,255,.12); text-align:left; }
+    .section-header-toggle:hover { background:rgba(14,165,233,.12); }
+    .details-icon { color:#67e8f9; font-size:22px; line-height:1; }
+    details[open] > summary .details-icon { transform:rotate(45deg); }
+    .core-stats-content,.version-info-content { padding:0; }
+    .special-date-row{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:6px;align-items:center;}
+    .special-date-btn,.special-date-reset-btn{width:100%;height:34px;border-radius:8px;font-size:12px;font-weight:950;cursor:pointer;letter-spacing:.04em;}
+    .special-date-btn{border:1px solid rgba(103,232,249,.30);background:rgba(14,165,233,.10);color:#bae6fd;text-align:center;}
+    .special-date-reset-btn{border:1px solid rgba(251,113,133,.46);background:rgba(244,63,94,.14);color:#fda4af;}
+    .special-date-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.62);z-index:9998;padding:18px;}
+    .special-date-modal.open{display:flex;}
+    .special-date-card{width:min(430px,100%);border:1px solid rgba(0,240,255,.32);border-radius:18px;background:#101722;box-shadow:0 0 28px rgba(0,240,255,.18);padding:18px;}
+    .special-date-title{color:#e5e7eb;font-size:16px;font-weight:950;text-align:center;letter-spacing:.08em;margin-bottom:12px;}
+    .special-date-week-grid,.special-date-calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;}
+    .special-date-week-cell{border-radius:8px;background:rgba(255,255,255,.035);color:#94a3b8;text-align:center;padding:6px 0;font-size:11px;font-weight:950;}
+    .special-date-day-btn,.special-date-empty-cell{min-height:42px;border-radius:9px;}
+    .special-date-empty-cell{background:rgba(255,255,255,.012);border:1px solid rgba(255,255,255,.04);}
+    .special-date-day-btn{border:1px solid rgba(103,232,249,.22);background:rgba(0,0,0,.30);color:#e5e7eb;cursor:pointer;font-size:13px;font-weight:950;}
+    .special-date-day-btn:hover,.special-date-day-btn.selected{border-color:rgba(52,211,153,.72);background:rgba(16,185,129,.18);color:#a7f3d0;box-shadow:0 0 14px rgba(16,185,129,.18);}
+    .special-date-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+    .special-date-action-btn{height:38px;border-radius:10px;border:1px solid rgba(148,163,184,.22);background:rgba(148,163,184,.08);color:#cbd5e1;font-weight:900;cursor:pointer;}
+    .special-date-action-btn.clear-choice{border-color:rgba(251,113,133,.48);background:rgba(244,63,94,.14);color:#fda4af;}
+    .core-stat-label,.core-stat-value,.stat-label,.stat-value,.benefit-label,.benefit-value,.split-label,.split-value{white-space:nowrap;overflow-wrap:normal;word-break:keep-all;}
+    @media(max-width:760px){.section-header-toggle{padding:12px!important}.core-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.core-stat-item{min-width:0!important}.core-stat-label{font-size:clamp(8px,2.55vw,11px)!important;letter-spacing:0!important}.core-stat-value{font-size:clamp(15px,5.2vw,23px)!important;white-space:nowrap!important;word-break:keep-all!important}.core-stat-value .stat-suffix,.stat-suffix{font-size:clamp(8px,2.4vw,10px)!important;white-space:nowrap!important}.stat-label{font-size:clamp(10px,3.2vw,12px)!important;white-space:nowrap!important}.stat-value{font-size:clamp(20px,7vw,26px)!important;white-space:nowrap!important;word-break:keep-all!important}.special-date-row{grid-template-columns:minmax(0,1fr) 52px!important;gap:5px!important}.special-date-btn,.special-date-reset-btn{height:30px!important;font-size:10px!important;letter-spacing:0!important}.special-date-day-btn,.special-date-empty-cell{min-height:34px!important}.special-date-week-grid,.special-date-calendar-grid{gap:4px!important}}
 
   </style>
 </head>
@@ -1473,10 +1379,7 @@
       </section>
       <details class="panel core-stats-panel">
         <summary class="section-header-toggle">
-          <div>
-            <div>各時數資訊</div>
-            <div id="coreStatsSummary" class="special-summary">點此展開值班總工時、交接班時數、國定時數、保養時數</div>
-          </div>
+          <div><div>各時數資訊</div><div id="coreStatsSummary" class="special-summary">點此展開值班總工時、交接班時數、國定時數、保養時數</div></div>
           <div class="details-icon">＋</div>
         </summary>
         <div id="coreStatsContent" class="core-stats-content">
@@ -1566,10 +1469,7 @@
       </section>
       <details class="panel version-info-panel special-panel">
         <summary class="section-header-toggle">
-          <div>
-            <div>目前版本資訊</div>
-            <div id="versionInfoSummary" class="special-summary">點此查看目前版本狀態</div>
-          </div>
+          <div><div>目前版本資訊</div><div id="versionInfoSummary" class="special-summary">點此查看目前版本狀態</div></div>
           <div class="details-icon">＋</div>
         </summary>
         <div id="versionInfoContent" class="version-info-content">
@@ -1587,7 +1487,11 @@
       <li>假日待遇、餐費與其他獎金卡片改為條件式顯示；只有遇到新年、春節、停止辦公日或選舉日設定時才顯示，明細仍維持手動展開。</li>
       <li>請假／受訓批次設定已修正起訖日正規化邏輯；只有起日與訖日都有值時才自動排序，避免手機先選起日後被移到訖日。</li>
           <li>公司新年判斷已納入 D8：1/1 的一、二、三值與 12/31 一般出勤日的三值，會顯示為新年出勤。</li>
-        </ul>
+          <li>修正代班 D11 計算：代班出勤時數不再被保養基準缺額抵扣。</li>
+          <li>修正停止辦公日餐費判斷：改採曆日制，依停止辦公曆日內實際出勤片段是否橫跨 7、12、18 時判斷。</li>
+          <li>修正另計出勤待遇：停止辦公日改採曆日制，納入同一曆日內 00:00～24:00 的所有實際出勤片段。</li>
+                    <li>停止辦公新增「全日(當日4時30分前)」選項，區間為 8～24；「全日(前日22時前)」區間維持 0～24。</li>
+          </ul>
       </section>
         </div>
       </details>
@@ -1636,14 +1540,18 @@
     const PREVIOUS_MONTH_WORK_CARRY = [0, 1, 2, 3, 4, 5, 6, 0, 0, 1, 2, 3];
     const CLOSURE_TYPE_LABELS = {
       none: "－",
-      full: "全日",
-      morning: "上午",
+      full: "全日(前日22時前)",
+      fullSameDay: "全日(當日4時30分前)",
+      morning: "上午(前日22時前)",
+      morningSameDay: "上午(當日4時30分前)",
       afternoon: "下午",
       night: "晚上"
     };
     const CLOSURE_INTERVALS = {
       full: [0, 24],
+      fullSameDay: [8, 24],
       morning: [0, 12],
+      morningSameDay: [8, 12],
       afternoon: [13.5, 24],
       night: [18, 24]
     };
@@ -2543,6 +2451,49 @@
       }
       return dayInfo.changeText || getLabel(code);
     }
+
+    function getNextDayInfoForCalendarClosure(dayInfo, allDays) {
+      if (!Array.isArray(allDays)) return null;
+      return allDays.find(item => Number(item.day) === Number(dayInfo.day) + 1) || null;
+    }
+    function canUseDayInfoForCalendarClosure(dayInfo) {
+      if (!dayInfo) return false;
+      if (dayInfo.isViolation) return false;
+      if (dayInfo.changeText === "錯誤登錄" || dayInfo.noteText === "錯誤登錄") return false;
+      if (!isValidActualCode(dayInfo)) return false;
+      if (isLeaveCode(dayInfo.actualCode) && isFullDayLeave(dayInfo)) return false;
+      const code = Number(dayInfo.actualCode);
+      if (code === 0 || code === 9 || code === 10) return false;
+      if (isRestTextForD11(dayInfo.changeText)) return false;
+      return true;
+    }
+    function getEffectiveValueForCalendarClosure(dayInfo) {
+      if (!canUseDayInfoForCalendarClosure(dayInfo)) return 0;
+      const code = Number(dayInfo.actualCode);
+      if (isLeaveCode(code)) return Number(dayInfo.baseCode || 0);
+      return getCodeValue(code);
+    }
+    function getOwnCalendarClosureIntervals(dayInfo) {
+      const value = getEffectiveValueForCalendarClosure(dayInfo);
+      const code = Number(dayInfo.actualCode);
+      const cycleIndex = Number(dayInfo.cycleIndex);
+      if (value === 1) return [[0, 7.75]];
+      if (value === 2) {
+        if (!isLeaveCode(code) && Number(code) === Number(dayInfo.baseCode) && cycleIndex === 2) return [[7.75, 14.25]];
+        return [[7.75, 15.75]];
+      }
+      if (value === 3) {
+        if (!isLeaveCode(code) && Number(code) === Number(dayInfo.baseCode) && cycleIndex === 8) return [[14.25, 22.75]];
+        return [[15.75, 22.75]];
+      }
+      return [];
+    }
+    function getCalendarDayClosureIntervals(dayInfo, allDays) {
+      const intervals = getOwnCalendarClosureIntervals(dayInfo).slice();
+      const nextDayInfo = getNextDayInfoForCalendarClosure(dayInfo, allDays);
+      if (getEffectiveValueForCalendarClosure(nextDayInfo) === 1) intervals.push([22.75, 24]);
+      return intervals;
+    }
     function getShiftIntervalsForClosure(dayInfo) {
       const code = Number(dayInfo.actualCode);
       const baseCode = Number(dayInfo.baseCode);
@@ -2571,15 +2522,11 @@
     function overlapHours(aStart, aEnd, bStart, bEnd) {
       return Math.max(0, Math.min(aEnd, bEnd) - Math.max(aStart, bStart));
     }
-    function calcClosureOverlapHours(dayInfo) {
+    function calcClosureOverlapHours(dayInfo, allDays) {
       const records = getClosureRecordsForDay(dayInfo.day);
       if (!records.length) return 0;
-      if (dayInfo.changeText === "錯誤登錄" || dayInfo.noteText === "錯誤登錄") return 0;
-      const actualCode = Number(dayInfo.actualCode);
-      if (isLeaveCode(actualCode) && isFullDayLeave(dayInfo)) {
-        return 0;
-      }
-      const intervals = getShiftIntervalsForClosure(dayInfo);
+      if (dayInfo.changeText === "錯誤登錄" || dayInfo.noteText === "錯誤登錄" || dayInfo.isViolation) return 0;
+      const intervals = getCalendarDayClosureIntervals(dayInfo, allDays);
       if (!intervals.length) return 0;
       let total = 0;
       records.forEach(record => {
@@ -2589,9 +2536,8 @@
           total += overlapHours(workInterval[0], workInterval[1], closureInterval[0], closureInterval[1]);
         });
       });
-      if (isLeaveCode(actualCode) && hasPartialLeaveHrText(dayInfo)) {
-        total -= getEffectiveLeaveHours(dayInfo);
-      }
+      const actualCode = Number(dayInfo.actualCode);
+      if (isLeaveCode(actualCode) && hasPartialLeaveHrText(dayInfo)) total -= getEffectiveLeaveHours(dayInfo);
       return Math.max(0, total);
     }
     function splitTwelve(hours) {
@@ -2668,7 +2614,7 @@
       return days.reduce((sum, dayInfo) => {
         if (dayInfo.isViolation) return sum;
         if (dayInfo.changeText === "錯誤登錄" || dayInfo.noteText === "錯誤登錄") return sum;
-        const closureHours = calcClosureOverlapHours(dayInfo);
+        const closureHours = calcClosureOverlapHours(dayInfo, days);
         if (closureHours > 0) return sum + closureHours;
         if (isElectionDay(dayInfo.day) && isWorkCode(dayInfo.actualCode)) {
           return sum + calcElectionAdditionalHours(dayInfo);
@@ -2689,7 +2635,7 @@
       const rawCompHours = days.reduce((sum, dayInfo) => {
         if (dayInfo.isViolation) return sum;
         if (dayInfo.changeText === "錯誤登錄" || dayInfo.noteText === "錯誤登錄") return sum;
-        const closureHours = calcClosureOverlapHours(dayInfo);
+        const closureHours = calcClosureOverlapHours(dayInfo, days);
         if (closureHours > 0) return sum + closureHours;
         if (isElectionDay(dayInfo.day) && isWorkCode(dayInfo.actualCode)) {
           return sum + calcElectionAdditionalHours(dayInfo);
@@ -2738,24 +2684,50 @@
       const leaveHours = hasPartialLeaveHrText(dayInfo) ? getEffectiveLeaveHours(dayInfo) : 0;
       return Math.max(0, attendanceHours - leaveHours);
     }
-    function shouldCountMealBenefit(dayInfo, validCodes) {
+
+    function getMealHourForShiftValue(value) {
+      const v = Number(value);
+      if (v === 1) return 7;
+      if (v === 2) return 12;
+      if (v === 3) return 18;
+      return null;
+    }
+    function isClosureMealTimeCovered(dayInfo, mealHour, allDays) {
+      if (mealHour === null || mealHour === undefined) return false;
+      const records = getClosureRecordsForDay(dayInfo.day);
+      if (!records.length) return false;
+      const intervals = getCalendarDayClosureIntervals(dayInfo, allDays);
+      if (!intervals.length) return false;
+      return records.some(record => {
+        const closureInterval = CLOSURE_INTERVALS[record.type];
+        if (!closureInterval) return false;
+        return intervals.some(workInterval => {
+          const overlapStart = Math.max(workInterval[0], closureInterval[0]);
+          const overlapEnd = Math.min(workInterval[1], closureInterval[1]);
+          return overlapStart <= mealHour && mealHour <= overlapEnd;
+        });
+      });
+    }
+    function shouldCountMealBenefit(dayInfo, validCodes, allDays) {
       if (dayInfo.isViolation) return false;
       if (dayInfo.changeText === "錯誤登錄" || dayInfo.noteText === "錯誤登錄") return false;
+      const mealCode = isLeaveCode(dayInfo.actualCode) && hasPartialLeaveHrText(dayInfo) ? Number(dayInfo.baseCode) : Number(dayInfo.actualCode);
+      if (!validCodes.includes(mealCode)) return false;
+      if (hasClosure(dayInfo.day)) {
+        const mealHour = getMealHourForShiftValue(getCodeValue(mealCode));
+        return isClosureMealTimeCovered(dayInfo, mealHour, allDays);
+      }
       if (!isSpecialMealBenefitDay(dayInfo)) return false;
       if (isLeaveCode(dayInfo.actualCode) && isFullDayLeave(dayInfo)) return false;
-      const mealCode = isLeaveCode(dayInfo.actualCode) && hasPartialLeaveHrText(dayInfo)
-        ? Number(dayInfo.baseCode)
-        : Number(dayInfo.actualCode);
-      if (!validCodes.includes(mealCode)) return false;
       const leaveHours = hasPartialLeaveHrText(dayInfo) ? getEffectiveLeaveHours(dayInfo) : 0;
       if (leaveHours === 0) return true;
       return getMealActualWorkHours(dayInfo) >= 2;
     }
     function calcBreakfastCount(days) {
-      return days.reduce((sum, dayInfo) => sum + (shouldCountMealBenefit(dayInfo, [1, 21]) ? 1 : 0), 0);
+      return days.reduce((sum, dayInfo) => sum + (shouldCountMealBenefit(dayInfo, [1, 21], days) ? 1 : 0), 0);
     }
     function calcLunchDinnerCount(days) {
-      return days.reduce((sum, dayInfo) => sum + (shouldCountMealBenefit(dayInfo, [2, 3, 22, 23]) ? 1 : 0), 0);
+      return days.reduce((sum, dayInfo) => sum + (shouldCountMealBenefit(dayInfo, [2, 3, 22, 23], days) ? 1 : 0), 0);
     }
     function calcLunarNewYearRedEnvelopeCount(days) {
       const targetDay = days.find(dayInfo => String(dayInfo.holidayName || "").includes("初一"));
@@ -2838,7 +2810,7 @@
         };
         days.push(enrichDayInfo(rawDayInfo));
       }
-      return applySubstituteDeficitDeduction(applySevenDayViolation(days));
+      return applySevenDayViolation(days);
     }
     function buildDateOptions(maxDay, selectedValue) {
       let html = `<option value="0">－</option>`;
@@ -3127,19 +3099,14 @@
       document.getElementById("specialContent").classList.toggle("open", specialPanelOpen);
     }
 
-    function getSpecialDateLabel(day) {
-      return Number(day) > 0 ? `${Number(day)} 日` : "選擇日期";
-    }
-    function buildSpecialDateButton(group, index, day) {
-      return `<div class="special-date-row"><button class="special-date-btn" type="button" data-special-date-group="${group}" data-index="${index}">${getSpecialDateLabel(day)}</button><button class="special-date-reset-btn" type="button" data-special-reset-group="${group}" data-index="${index}">RESET</button></div>`;
-    }
+    function getSpecialDateLabel(day) { return Number(day) > 0 ? `${Number(day)} 日` : "選擇日期"; }
+    function buildSpecialDateButton(group, index, day) { return `<div class="special-date-row"><button class="special-date-btn" type="button" data-special-date-group="${group}" data-index="${index}">${getSpecialDateLabel(day)}</button><button class="special-date-reset-btn" type="button" data-special-reset-group="${group}" data-index="${index}">RESET</button></div>`; }
     function setSpecialDateValue(group, index, value) {
       const day = Number(value) || 0;
       if (group === "closure") specialDates.closure[index].day = day;
       if (group === "election") specialDates.election[index] = day;
       if (group === "training") specialDates.training[index].day = day;
-      saveCurrentMonthState();
-      renderAll(false);
+      saveCurrentMonthState(); renderAll(false);
     }
     function openSpecialDatePicker(group, index) {
       activeSpecialDateTarget = { group, index: Number(index) };
@@ -3148,17 +3115,11 @@
       const titleMap = { closure: "停止辦公日期", election: "選舉日日期", training: "教育訓練日期" };
       if (title) title.textContent = titleMap[group] || "選擇日期";
       renderSpecialDatePickerCalendar();
-      if (modal) {
-        modal.classList.add("open");
-        modal.setAttribute("aria-hidden", "false");
-      }
+      if (modal) { modal.classList.add("open"); modal.setAttribute("aria-hidden", "false"); }
     }
     function closeSpecialDatePicker() {
       const modal = document.getElementById("specialDateModal");
-      if (modal) {
-        modal.classList.remove("open");
-        modal.setAttribute("aria-hidden", "true");
-      }
+      if (modal) { modal.classList.remove("open"); modal.setAttribute("aria-hidden", "true"); }
       activeSpecialDateTarget = null;
     }
     function getActiveSpecialDateValue() {
@@ -3185,71 +3146,36 @@
       let pickerHtml = "";
       for (let i = 0; i < totalCells; i++) {
         const day = i - firstOffset + 1;
-        if (day < 1 || day > daysInMonth) {
-          pickerHtml += `<div class="special-date-empty-cell"></div>`;
-          continue;
-        }
+        if (day < 1 || day > daysInMonth) { pickerHtml += `<div class="special-date-empty-cell"></div>`; continue; }
         pickerHtml += `<button class="special-date-day-btn ${selectedDay === day ? "selected" : ""}" type="button" data-special-picker-day="${day}">${day}</button>`;
       }
       calendarGrid.innerHTML = pickerHtml;
       calendarGrid.querySelectorAll("button[data-special-picker-day]").forEach(btn => {
-        btn.addEventListener("click", function() {
-          if (!activeSpecialDateTarget) return;
-          setSpecialDateValue(activeSpecialDateTarget.group, activeSpecialDateTarget.index, Number(this.dataset.specialPickerDay));
-          closeSpecialDatePicker();
-        });
+        btn.addEventListener("click", function() { if (!activeSpecialDateTarget) return; setSpecialDateValue(activeSpecialDateTarget.group, activeSpecialDateTarget.index, Number(this.dataset.specialPickerDay)); closeSpecialDatePicker(); });
       });
     }
-    function clearActiveSpecialDatePickerValue() {
-      if (!activeSpecialDateTarget) return;
-      setSpecialDateValue(activeSpecialDateTarget.group, activeSpecialDateTarget.index, 0);
-      closeSpecialDatePicker();
-    }
+    function clearActiveSpecialDatePickerValue() { if (!activeSpecialDateTarget) return; setSpecialDateValue(activeSpecialDateTarget.group, activeSpecialDateTarget.index, 0); closeSpecialDatePicker(); }
     function renderSpecialDateControls() {
-      document.getElementById("closureRecordList").innerHTML = specialDates.closure.map((record, idx) => {
-        return `
-          <div class="special-record">
-            ${buildSpecialDateButton("closure", idx, record.day)}
-            <select class="special-type-select" data-group="closureType" data-index="${idx}">
-              ${buildClosureTypeOptions(record.type)}
-            </select>
-          </div>
-        `;
-      }).join("");
-      document.getElementById("electionRecordList").innerHTML = specialDates.election.map((value, idx) => {
-        return buildSpecialDateButton("election", idx, value);
-      }).join("");
-      document.getElementById("trainingRecordList").innerHTML = (specialDates.training || []).map((record, idx) => {
-        return `
-          <div class="special-record">
-            ${buildSpecialDateButton("training", idx, record.day)}
-            <select class="special-hour-select" data-group="trainingHours" data-index="${idx}">
-              ${buildTrainingHourOptions(record.hours)}
-            </select>
-          </div>
-        `;
-      }).join("");
-      document.querySelectorAll(".special-date-btn").forEach(btn => {
-        btn.addEventListener("click", function() {
-          openSpecialDatePicker(this.dataset.specialDateGroup, Number(this.dataset.index));
-        });
-      });
-      document.querySelectorAll(".special-date-reset-btn").forEach(btn => {
-        btn.addEventListener("click", function() {
-          setSpecialDateValue(this.dataset.specialResetGroup, Number(this.dataset.index), 0);
-        });
-      });
+      document.getElementById("closureRecordList").innerHTML = specialDates.closure.map((record, idx) => `
+        <div class="special-record">
+          ${buildSpecialDateButton("closure", idx, record.day)}
+          <select class="special-type-select" data-group="closureType" data-index="${idx}">${buildClosureTypeOptions(record.type)}</select>
+        </div>`).join("");
+      document.getElementById("electionRecordList").innerHTML = specialDates.election.map((value, idx) => buildSpecialDateButton("election", idx, value)).join("");
+      document.getElementById("trainingRecordList").innerHTML = (specialDates.training || []).map((record, idx) => `
+        <div class="special-record">
+          ${buildSpecialDateButton("training", idx, record.day)}
+          <select class="special-hour-select" data-group="trainingHours" data-index="${idx}">${buildTrainingHourOptions(record.hours)}</select>
+        </div>`).join("");
+      document.querySelectorAll(".special-date-btn").forEach(btn => btn.addEventListener("click", function() { openSpecialDatePicker(this.dataset.specialDateGroup, Number(this.dataset.index)); }));
+      document.querySelectorAll(".special-date-reset-btn").forEach(btn => btn.addEventListener("click", function() { setSpecialDateValue(this.dataset.specialResetGroup, Number(this.dataset.index), 0); }));
       document.querySelectorAll(".special-type-select, .special-hour-select").forEach(sel => {
         sel.addEventListener("change", function() {
           const group = this.dataset.group;
           const index = Number(this.dataset.index);
-          if (group === "closureType") {
-            specialDates.closure[index].type = this.value;
-            if (this.value === "none") specialDates.closure[index].day = 0;
-          }
+          if (group === "closureType") { specialDates.closure[index].type = this.value; if (this.value === "none") specialDates.closure[index].day = 0; }
           if (group === "trainingHours") specialDates.training[index].hours = Number(this.value);
-          saveCurrentMonthState();
-          renderAll(false);
+          saveCurrentMonthState(); renderAll(false);
         });
       });
       updateSpecialSummary();
@@ -3547,15 +3473,9 @@
         updateCollapsePanels();
       });
 
-      document.getElementById("specialDateCancelBtn").addEventListener("click", () => {
-        closeSpecialDatePicker();
-      });
-      document.getElementById("specialDateClearBtn").addEventListener("click", () => {
-        clearActiveSpecialDatePickerValue();
-      });
-      document.getElementById("specialDateModal").addEventListener("click", event => {
-        if (event.target && event.target.id === "specialDateModal") closeSpecialDatePicker();
-      });
+      document.getElementById("specialDateCancelBtn").addEventListener("click", () => { closeSpecialDatePicker(); });
+      document.getElementById("specialDateClearBtn").addEventListener("click", () => { clearActiveSpecialDatePickerValue(); });
+      document.getElementById("specialDateModal").addEventListener("click", event => { if (event.target && event.target.id === "specialDateModal") closeSpecialDatePicker(); });
       const weekStartToggle = document.getElementById("weekStartToggle");
       if (weekStartToggle) {
         weekStartToggle.addEventListener("change", () => {
