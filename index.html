@@ -1209,6 +1209,129 @@
       .overhaul-week-grid,
       .overhaul-calendar-grid { gap: 4px !important; }
     }
+
+    details.core-stats-panel,
+    details.version-info-panel {
+      margin-top: 16px;
+      padding: 0;
+      overflow: hidden;
+    }
+    details.core-stats-panel > summary,
+    details.version-info-panel > summary {
+      list-style: none;
+    }
+    details.core-stats-panel > summary::-webkit-details-marker,
+    details.version-info-panel > summary::-webkit-details-marker {
+      display: none;
+    }
+    .section-header-toggle {
+      width: 100%;
+      border: none;
+      background: rgba(17, 23, 34, 0.96);
+      color: #67e8f9;
+      padding: 15px 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.12);
+      text-align: left;
+    }
+    .section-header-toggle:hover { background: rgba(14, 165, 233, 0.12); }
+    .details-icon { color: #67e8f9; font-size: 22px; line-height: 1; }
+    details[open] > summary .details-icon { transform: rotate(45deg); }
+    .core-stats-content,
+    .version-info-content { padding: 0; }
+    .special-date-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 64px;
+      gap: 6px;
+      align-items: center;
+    }
+    .special-date-btn,
+    .special-date-reset-btn {
+      width: 100%;
+      height: 34px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 950;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+    }
+    .special-date-btn {
+      border: 1px solid rgba(103, 232, 249, 0.30);
+      background: rgba(14, 165, 233, 0.10);
+      color: #bae6fd;
+      text-align: center;
+    }
+    .special-date-btn:hover { background: rgba(14, 165, 233, 0.22); box-shadow: 0 0 10px rgba(0, 240, 255, 0.18); }
+    .special-date-reset-btn {
+      border: 1px solid rgba(251, 113, 133, 0.46);
+      background: rgba(244, 63, 94, 0.14);
+      color: #fda4af;
+    }
+    .special-date-reset-btn:hover { background: rgba(244, 63, 94, 0.24); box-shadow: 0 0 12px rgba(244, 63, 94, 0.22); }
+    .special-date-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.62);
+      z-index: 9998;
+      padding: 18px;
+    }
+    .special-date-modal.open { display: flex; }
+    .special-date-card {
+      width: min(430px, 100%);
+      border: 1px solid rgba(0, 240, 255, 0.32);
+      border-radius: 18px;
+      background: #101722;
+      box-shadow: 0 0 28px rgba(0, 240, 255, 0.18);
+      padding: 18px;
+    }
+    .special-date-title { color: #e5e7eb; font-size: 16px; font-weight: 950; text-align: center; letter-spacing: 0.08em; margin-bottom: 12px; }
+    .special-date-week-grid,
+    .special-date-calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+    .special-date-week-cell { border-radius: 8px; background: rgba(255, 255, 255, 0.035); color: #94a3b8; text-align: center; padding: 6px 0; font-size: 11px; font-weight: 950; }
+    .special-date-day-btn,
+    .special-date-empty-cell { min-height: 42px; border-radius: 9px; }
+    .special-date-empty-cell { background: rgba(255, 255, 255, 0.012); border: 1px solid rgba(255, 255, 255, 0.04); }
+    .special-date-day-btn { border: 1px solid rgba(103, 232, 249, 0.22); background: rgba(0, 0, 0, 0.30); color: #e5e7eb; cursor: pointer; font-size: 13px; font-weight: 950; }
+    .special-date-day-btn:hover,
+    .special-date-day-btn.selected { border-color: rgba(52, 211, 153, 0.72); background: rgba(16, 185, 129, 0.18); color: #a7f3d0; box-shadow: 0 0 14px rgba(16, 185, 129, 0.18); }
+    .special-date-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .special-date-action-btn { height: 38px; border-radius: 10px; border: 1px solid rgba(148, 163, 184, 0.22); background: rgba(148, 163, 184, 0.08); color: #cbd5e1; font-weight: 900; cursor: pointer; }
+    .special-date-action-btn.clear-choice { border-color: rgba(251, 113, 133, 0.48); background: rgba(244, 63, 94, 0.14); color: #fda4af; }
+    .core-stat-label,
+    .core-stat-value,
+    .stat-label,
+    .stat-value,
+    .benefit-label,
+    .benefit-value,
+    .split-label,
+    .split-value { white-space: nowrap; overflow-wrap: normal; word-break: keep-all; }
+    @media (max-width: 760px) {
+      .section-header-toggle { padding: 12px !important; }
+      .core-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+      .core-stat-item { min-width: 0 !important; }
+      .core-stat-label { font-size: clamp(8px, 2.55vw, 11px) !important; letter-spacing: 0 !important; }
+      .core-stat-value { font-size: clamp(15px, 5.2vw, 23px) !important; white-space: nowrap !important; word-break: keep-all !important; }
+      .core-stat-value .stat-suffix,
+      .stat-suffix { font-size: clamp(8px, 2.4vw, 10px) !important; white-space: nowrap !important; }
+      .stat-label { font-size: clamp(10px, 3.2vw, 12px) !important; white-space: nowrap !important; }
+      .stat-value { font-size: clamp(20px, 7vw, 26px) !important; white-space: nowrap !important; word-break: keep-all !important; }
+      .special-date-row { grid-template-columns: minmax(0, 1fr) 52px !important; gap: 5px !important; }
+      .special-date-btn,
+      .special-date-reset-btn { height: 30px !important; font-size: 10px !important; letter-spacing: 0 !important; }
+      .special-date-day-btn,
+      .special-date-empty-cell { min-height: 34px !important; }
+      .special-date-week-grid,
+      .special-date-calendar-grid { gap: 4px !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -1348,7 +1471,15 @@
           </div>
         </div>
       </section>
-      <section class="panel core-stats-panel">
+      <details class="panel core-stats-panel">
+        <summary class="section-header-toggle">
+          <div>
+            <div>各時數資訊</div>
+            <div id="coreStatsSummary" class="special-summary">點此展開值班總工時、交接班時數、國定時數、保養時數</div>
+          </div>
+          <div class="details-icon">＋</div>
+        </summary>
+        <div id="coreStatsContent" class="core-stats-content">
         <div class="core-stats-grid">
           <div class="core-stat-item">
             <div class="core-stat-label">值班總工時</div>
@@ -1367,7 +1498,8 @@
             <div id="maintenanceHours" class="core-stat-value accent-amber">0<span class="stat-suffix">HR</span></div>
           </div>
         </div>
-      </section>
+        </div>
+      </details>
       <section class="panel stats-panel">
         <div class="stats-grid-sub">
           <div class="stat-card">
@@ -1432,6 +1564,15 @@
           </div>
         </div>
       </section>
+      <details class="panel version-info-panel special-panel">
+        <summary class="section-header-toggle">
+          <div>
+            <div>目前版本資訊</div>
+            <div id="versionInfoSummary" class="special-summary">點此查看目前版本狀態</div>
+          </div>
+          <div class="details-icon">＋</div>
+        </summary>
+        <div id="versionInfoContent" class="version-info-content">
       <section class="limit-box">
         <div class="limit-title">目前版本狀態</div>
         <ul>
@@ -1448,6 +1589,8 @@
           <li>公司新年判斷已納入 D8：1/1 的一、二、三值與 12/31 一般出勤日的三值，會顯示為新年出勤。</li>
         </ul>
       </section>
+        </div>
+      </details>
       <footer class="designer-footer">
         <div class="designer-inner">
           <span class="designer-label">System Designed By</span>
@@ -1458,6 +1601,17 @@
           <div class="designer-line"></div>
         </div>
       </footer>
+    </div>
+  </div>
+  <div id="specialDateModal" class="special-date-modal" aria-hidden="true">
+    <div class="special-date-card">
+      <div id="specialDateTitle" class="special-date-title">選擇日期</div>
+      <div id="specialDateWeekGrid" class="special-date-week-grid"></div>
+      <div id="specialDateCalendarGrid" class="special-date-calendar-grid"></div>
+      <div class="special-date-actions">
+        <button id="specialDateClearBtn" class="special-date-action-btn clear-choice" type="button">清除日期</button>
+        <button id="specialDateCancelBtn" class="special-date-action-btn" type="button">取消</button>
+      </div>
     </div>
   </div>
   <div id="overhaulChoiceModal" class="overhaul-choice-modal" aria-hidden="true">
@@ -1541,6 +1695,7 @@
       overrides: {}
     };
     let selectedOverhaulDay = 0;
+    let activeSpecialDateTarget = null;
     const specialDates = {
       closure: [
         { day: 0, type: "full" },
@@ -2971,17 +3126,90 @@
       document.getElementById("specialToggleIcon").textContent = specialPanelOpen ? "－" : "＋";
       document.getElementById("specialContent").classList.toggle("open", specialPanelOpen);
     }
-    function renderSpecialDateControls() {
+
+    function getSpecialDateLabel(day) {
+      return Number(day) > 0 ? `${Number(day)} 日` : "選擇日期";
+    }
+    function buildSpecialDateButton(group, index, day) {
+      return `<div class="special-date-row"><button class="special-date-btn" type="button" data-special-date-group="${group}" data-index="${index}">${getSpecialDateLabel(day)}</button><button class="special-date-reset-btn" type="button" data-special-reset-group="${group}" data-index="${index}">RESET</button></div>`;
+    }
+    function setSpecialDateValue(group, index, value) {
+      const day = Number(value) || 0;
+      if (group === "closure") specialDates.closure[index].day = day;
+      if (group === "election") specialDates.election[index] = day;
+      if (group === "training") specialDates.training[index].day = day;
+      saveCurrentMonthState();
+      renderAll(false);
+    }
+    function openSpecialDatePicker(group, index) {
+      activeSpecialDateTarget = { group, index: Number(index) };
+      const modal = document.getElementById("specialDateModal");
+      const title = document.getElementById("specialDateTitle");
+      const titleMap = { closure: "停止辦公日期", election: "選舉日日期", training: "教育訓練日期" };
+      if (title) title.textContent = titleMap[group] || "選擇日期";
+      renderSpecialDatePickerCalendar();
+      if (modal) {
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+      }
+    }
+    function closeSpecialDatePicker() {
+      const modal = document.getElementById("specialDateModal");
+      if (modal) {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+      }
+      activeSpecialDateTarget = null;
+    }
+    function getActiveSpecialDateValue() {
+      if (!activeSpecialDateTarget) return 0;
+      const group = activeSpecialDateTarget.group;
+      const index = activeSpecialDateTarget.index;
+      if (group === "closure") return Number((specialDates.closure[index] || {}).day || 0);
+      if (group === "election") return Number(specialDates.election[index] || 0);
+      if (group === "training") return Number((specialDates.training[index] || {}).day || 0);
+      return 0;
+    }
+    function renderSpecialDatePickerCalendar() {
       const rocYear = Number(document.getElementById("rocYear").value);
       const month = Number(document.getElementById("month").value);
       const year = rocYear + 1911;
       const daysInMonth = new Date(year, month, 0).getDate();
+      const firstOffset = getDisplayWeekIndex(new Date(year, month - 1, 1));
+      const weekGrid = document.getElementById("specialDateWeekGrid");
+      const calendarGrid = document.getElementById("specialDateCalendarGrid");
+      if (!weekGrid || !calendarGrid) return;
+      weekGrid.innerHTML = getCalendarWeekLabels().map(label => `<div class="special-date-week-cell">${label}</div>`).join("");
+      const selectedDay = getActiveSpecialDateValue();
+      const totalCells = Math.ceil((firstOffset + daysInMonth) / 7) * 7;
+      let pickerHtml = "";
+      for (let i = 0; i < totalCells; i++) {
+        const day = i - firstOffset + 1;
+        if (day < 1 || day > daysInMonth) {
+          pickerHtml += `<div class="special-date-empty-cell"></div>`;
+          continue;
+        }
+        pickerHtml += `<button class="special-date-day-btn ${selectedDay === day ? "selected" : ""}" type="button" data-special-picker-day="${day}">${day}</button>`;
+      }
+      calendarGrid.innerHTML = pickerHtml;
+      calendarGrid.querySelectorAll("button[data-special-picker-day]").forEach(btn => {
+        btn.addEventListener("click", function() {
+          if (!activeSpecialDateTarget) return;
+          setSpecialDateValue(activeSpecialDateTarget.group, activeSpecialDateTarget.index, Number(this.dataset.specialPickerDay));
+          closeSpecialDatePicker();
+        });
+      });
+    }
+    function clearActiveSpecialDatePickerValue() {
+      if (!activeSpecialDateTarget) return;
+      setSpecialDateValue(activeSpecialDateTarget.group, activeSpecialDateTarget.index, 0);
+      closeSpecialDatePicker();
+    }
+    function renderSpecialDateControls() {
       document.getElementById("closureRecordList").innerHTML = specialDates.closure.map((record, idx) => {
         return `
           <div class="special-record">
-            <select class="special-date-select" data-group="closureDay" data-index="${idx}">
-              ${buildDateOptions(daysInMonth, record.day)}
-            </select>
+            ${buildSpecialDateButton("closure", idx, record.day)}
             <select class="special-type-select" data-group="closureType" data-index="${idx}">
               ${buildClosureTypeOptions(record.type)}
             </select>
@@ -2989,31 +3217,36 @@
         `;
       }).join("");
       document.getElementById("electionRecordList").innerHTML = specialDates.election.map((value, idx) => {
-        return `<select class="special-date-select" data-group="election" data-index="${idx}">${buildDateOptions(daysInMonth, value)}</select>`;
+        return buildSpecialDateButton("election", idx, value);
       }).join("");
       document.getElementById("trainingRecordList").innerHTML = (specialDates.training || []).map((record, idx) => {
         return `
           <div class="special-record">
-            <select class="special-date-select" data-group="trainingDay" data-index="${idx}">
-              ${buildDateOptions(daysInMonth, record.day)}
-            </select>
+            ${buildSpecialDateButton("training", idx, record.day)}
             <select class="special-hour-select" data-group="trainingHours" data-index="${idx}">
               ${buildTrainingHourOptions(record.hours)}
             </select>
           </div>
         `;
       }).join("");
-      document.querySelectorAll(".special-date-select, .special-type-select, .special-hour-select").forEach(sel => {
+      document.querySelectorAll(".special-date-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          openSpecialDatePicker(this.dataset.specialDateGroup, Number(this.dataset.index));
+        });
+      });
+      document.querySelectorAll(".special-date-reset-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          setSpecialDateValue(this.dataset.specialResetGroup, Number(this.dataset.index), 0);
+        });
+      });
+      document.querySelectorAll(".special-type-select, .special-hour-select").forEach(sel => {
         sel.addEventListener("change", function() {
           const group = this.dataset.group;
           const index = Number(this.dataset.index);
-          if (group === "closureDay") specialDates.closure[index].day = Number(this.value);
           if (group === "closureType") {
             specialDates.closure[index].type = this.value;
             if (this.value === "none") specialDates.closure[index].day = 0;
           }
-          if (group === "election") specialDates.election[index] = Number(this.value);
-          if (group === "trainingDay") specialDates.training[index].day = Number(this.value);
           if (group === "trainingHours") specialDates.training[index].hours = Number(this.value);
           saveCurrentMonthState();
           renderAll(false);
@@ -3312,6 +3545,16 @@
         rewardPanelOpen = !rewardPanelOpen;
         saveCurrentMonthState();
         updateCollapsePanels();
+      });
+
+      document.getElementById("specialDateCancelBtn").addEventListener("click", () => {
+        closeSpecialDatePicker();
+      });
+      document.getElementById("specialDateClearBtn").addEventListener("click", () => {
+        clearActiveSpecialDatePickerValue();
+      });
+      document.getElementById("specialDateModal").addEventListener("click", event => {
+        if (event.target && event.target.id === "specialDateModal") closeSpecialDatePicker();
       });
       const weekStartToggle = document.getElementById("weekStartToggle");
       if (weekStartToggle) {
