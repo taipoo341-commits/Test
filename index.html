@@ -282,12 +282,8 @@
       border-color: rgba(0, 240, 255, 0.62);
       box-shadow: 0 0 24px rgba(0, 240, 255, 0.18);
     }
-    .day-card.code-picker-card-open {
-      z-index: 10000;
-    }
-    .code-picker.open {
-      z-index: 10001;
-    }
+    .day-card.code-picker-card-open { z-index: 10000; }
+    .code-picker.open { z-index: 10001; }
     .day-card.weekday-card {
       border-color: rgba(204, 204, 255, 0.30);
     }
@@ -355,113 +351,24 @@
       font-weight: 800;
       outline: none;
     }
-    .code-picker {
-      position: relative;
-      width: 112px;
-      z-index: 20;
-    }
+    .code-picker { position: relative; width: 112px; z-index: 20; }
     .code-picker-button {
-      width: 112px;
-      height: 28px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 7px;
-      background: rgba(0, 0, 0, 0.46);
-      color: #e2e8f0;
-      padding: 4px 22px 4px 6px;
-      font-size: 11px;
-      font-weight: 900;
-      outline: none;
-      cursor: pointer;
-      text-align: left;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      position: relative;
+      width: 112px; height: 28px; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(0,0,0,.46); color: #e2e8f0; padding: 4px 22px 4px 6px; font-size: 11px; font-weight: 900; outline: none; cursor: pointer; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; position: relative;
     }
-    .code-picker-button::after {
-      content: "▾";
-      position: absolute;
-      right: 7px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #cbd5e1;
-      font-size: 10px;
-    }
-    .code-picker-menu {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: 31px;
-      width: 166px;
-      max-height: 268px;
-      overflow-y: auto;
-      border: 1px solid rgba(103, 232, 249, 0.34);
-      border-radius: 10px;
-      background: #0b1220;
-      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.48), 0 0 18px rgba(0, 240, 255, 0.16);
-      padding: 6px;
-      z-index: 10002;
-    }
+    .code-picker-button::after { content: "▾"; position: absolute; right: 7px; top: 50%; transform: translateY(-50%); color: #cbd5e1; font-size: 10px; }
+    .code-picker-menu { display: none; position: absolute; right: 0; top: 31px; width: 166px; max-height: 268px; overflow-y: auto; border: 1px solid rgba(103,232,249,.34); border-radius: 10px; background: #0b1220; box-shadow: 0 18px 38px rgba(0,0,0,.48), 0 0 18px rgba(0,240,255,.16); padding: 6px; z-index: 10002; }
     .code-picker.open .code-picker-menu { display: block; }
-    .code-all-toggle {
-      width: 100%;
-      border: 1px solid rgba(103, 232, 249, 0.26);
-      border-radius: 8px;
-      background: rgba(14, 165, 233, 0.12);
-      color: #bae6fd;
-      padding: 6px 7px;
-      font-size: 11px;
-      font-weight: 950;
-      cursor: pointer;
-      text-align: left;
-      margin-bottom: 5px;
-    }
-    .code-all-toggle:hover { background: rgba(14, 165, 233, 0.22); }
-    .code-picker-favorites,
-    .code-picker-all { display: grid; gap: 2px; }
+    .code-all-toggle { width: 100%; border: 1px solid rgba(103,232,249,.26); border-radius: 8px; background: rgba(14,165,233,.12); color: #bae6fd; padding: 6px 7px; font-size: 11px; font-weight: 950; cursor: pointer; text-align: left; margin-bottom: 5px; }
+    .code-all-toggle:hover { background: rgba(14,165,233,.22); }
+    .code-picker-favorites, .code-picker-all { display: grid; gap: 2px; }
     .code-picker-all.collapsed-detail { display: none !important; }
-    .code-option-row {
-      display: grid;
-      grid-template-columns: 24px minmax(0, 1fr);
-      align-items: center;
-      gap: 2px;
-      border-radius: 7px;
-    }
-    .code-option-row:hover { background: rgba(255,255,255,0.06); }
-    .code-star-btn {
-      width: 24px;
-      height: 28px;
-      border: none;
-      background: transparent;
-      color: #facc15;
-      cursor: pointer;
-      font-size: 14px;
-      line-height: 1;
-      padding: 0;
-    }
-    .code-option-btn {
-      min-width: 0;
-      height: 28px;
-      border: none;
-      background: transparent;
-      color: #e5e7eb;
-      cursor: pointer;
-      text-align: left;
-      font-size: 11px;
-      font-weight: 850;
-      padding: 0 6px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .code-option-row.selected { background: rgba(37, 99, 235, 0.68); }
+    .code-option-row { display: grid; grid-template-columns: 24px minmax(0,1fr); align-items: center; gap: 2px; border-radius: 7px; }
+    .code-option-row:hover { background: rgba(255,255,255,.06); }
+    .code-star-btn { width: 24px; height: 28px; border: none; background: transparent; color: #facc15; cursor: pointer; font-size: 14px; line-height: 1; padding: 0; }
+    .code-option-btn { min-width: 0; height: 28px; border: none; background: transparent; color: #e5e7eb; cursor: pointer; text-align: left; font-size: 11px; font-weight: 850; padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .code-option-row.selected { background: rgba(37,99,235,.68); }
     .code-option-row.selected .code-option-btn { color: #fff; }
-    .code-empty-favorite {
-      color: #64748b;
-      font-size: 10px;
-      line-height: 1.45;
-      padding: 5px 6px 7px;
-    }
+    .code-empty-favorite { color: #64748b; font-size: 10px; line-height: 1.45; padding: 5px 6px 7px; }
     .hour-select { width: 78px; }
     .hour-select:disabled { opacity: 0.35; }
     .reset-btn {
@@ -561,6 +468,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      font-size: 16px;
       font-weight: 950;
       letter-spacing: 0.12em;
       border-bottom: 1px solid rgba(0, 240, 255, 0.12);
@@ -653,7 +561,7 @@
     }
     .core-stats-grid {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
     .core-stat-item {
       padding: 16px;
@@ -964,25 +872,9 @@
         padding: 2px;
         height: 23px;
       }
-      .code-picker,
-      .code-picker-button {
-        width: 100%;
-      }
-      .code-picker-button {
-        height: 23px;
-        font-size: 9px;
-        padding: 2px 18px 2px 4px;
-      }
-      .code-picker.open .code-picker-menu {
-        position: fixed;
-        left: 8px;
-        right: auto;
-        top: 50%;
-        transform: translateY(-50%);
-        width: min(260px, calc(100vw - 16px));
-        max-height: 70vh;
-        z-index: 30000;
-      }
+      .code-picker, .code-picker-button { width: 100%; }
+      .code-picker-button { height: 23px; font-size: 9px; padding: 2px 18px 2px 4px; }
+      .code-picker.open .code-picker-menu { position: fixed; left: 50%; right: auto; top: 50%; transform: translate(-50%, -50%); width: min(300px, calc(100vw - 24px)); max-height: 70vh; z-index: 30000; }
       .card-center { padding: 3px 0; }
       .holiday-badge,
       .special-badge {
@@ -1116,7 +1008,7 @@
     .batch-row,
     .overhaul-range-row {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
       align-items: end;
       border: 1px solid rgba(0, 240, 255, 0.14);
@@ -1372,55 +1264,30 @@
     @media(max-width:760px){.section-header-toggle{padding:12px!important}.core-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.core-stat-item{min-width:0!important}.core-stat-label{font-size:clamp(8px,2.55vw,11px)!important;letter-spacing:0!important}.core-stat-value{font-size:clamp(15px,5.2vw,23px)!important;white-space:nowrap!important;word-break:keep-all!important}.core-stat-value .stat-suffix,.stat-suffix{font-size:clamp(8px,2.4vw,10px)!important;white-space:nowrap!important}.stat-label{font-size:clamp(10px,3.2vw,12px)!important;white-space:nowrap!important}.stat-value{font-size:clamp(20px,7vw,26px)!important;white-space:nowrap!important;word-break:keep-all!important}.special-date-row{grid-template-columns:minmax(0,1fr) 52px!important;gap:5px!important}.special-date-btn,.special-date-reset-btn{height:30px!important;font-size:10px!important;letter-spacing:0!important}.special-date-day-btn,.special-date-empty-cell{min-height:34px!important}.special-date-week-grid,.special-date-calendar-grid{gap:4px!important}}
 
 
-    .salary-overview-panel {
-      margin-bottom: 16px;
-      padding: 0;
-      overflow: hidden;
-    }
-    .salary-overview-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-    .salary-overview-item {
-      padding: 16px;
-      border-right: 1px solid rgba(0, 240, 255, 0.14);
-      background: rgba(255, 255, 255, 0.025);
-      min-width: 0;
-    }
+    .salary-overview-panel { margin-bottom: 16px; padding: 0; overflow: hidden; }
+    .salary-overview-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .salary-overview-item { padding: 16px; border-right: 1px solid rgba(0, 240, 255, 0.14); background: linear-gradient(180deg, rgba(15,23,42,.62), rgba(2,6,23,.72)); min-width: 0; }
     .salary-overview-item:last-child { border-right: none; }
-    .salary-overview-label {
-      color: #94a3b8;
-      font-size: 12px;
-      letter-spacing: 0.16em;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-    .salary-overview-value {
-      margin-top: 8px;
-      font-size: 25px;
-      font-weight: 950;
-      line-height: 1.2;
-      color: #67e8f9;
-      white-space: nowrap;
-    }
-    .salary-overview-input {
-      width: 100%;
-      max-width: 210px;
-      height: 34px;
-      border: 2px solid #0f52ba;
-      border-radius: 10px;
-      background: #12161c;
-      color: #fff;
-      text-align: center;
-      font-size: 18px;
-      font-weight: 900;
-      outline: none;
-      box-shadow: 0 0 16px rgba(15, 82, 186, 0.34), inset 0 0 12px rgba(15, 82, 186, 0.10);
-    }
-    .salary-overview-input:focus {
-      border-color: #38bdf8;
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.45), inset 0 0 14px rgba(15, 82, 186, 0.16);
-    }
+    .salary-overview-label { color: #f8fafc; font-size: 14px; letter-spacing: 0.08em; font-weight: 950; white-space: nowrap; text-shadow: 0 0 10px rgba(56,189,248,.42); }
+    .salary-overview-value { margin-top: 8px; font-size: 25px; font-weight: 950; line-height: 1.2; white-space: nowrap; }
+    .salary-overview-input { width: 100%; max-width: 220px; height: 38px; border: 2px solid #2563eb; border-radius: 10px; background: #12161c; text-align: center; font-size: 21px; font-weight: 950; outline: none; box-shadow: 0 0 16px rgba(37,99,235,.34), inset 0 0 12px rgba(37,99,235,.10); }
+    .salary-overview-input:focus { border-color: #38bdf8; box-shadow: 0 0 20px rgba(56,189,248,.45), inset 0 0 14px rgba(37,99,235,.16); }
+    .money-finance, .salary-overview-input { color: #f6c453 !important; text-shadow: 0 0 8px rgba(246,196,83,.50), 0 0 18px rgba(245,158,11,.28); }
+    .lavender-purple { color: #c4b5fd !important; text-shadow: 0 0 10px rgba(196,181,253,.36); }
+    .core-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    .core-stat-item { border-bottom: 1px solid rgba(0, 240, 255, 0.14); }
+    .core-stat-item:nth-child(2), .core-stat-item:nth-child(4) { border-right: none; }
+    .core-stat-item:nth-child(3), .core-stat-item:nth-child(4) { border-bottom: none; }
+    .core-rest-combo { padding: 16px; border-top: 1px solid rgba(0, 240, 255, 0.14); display: grid; grid-template-columns: minmax(0, 1fr) minmax(140px, 1fr); gap: 14px; align-items: center; }
+    .core-rest-main-label { color: #94a3b8; font-size: 12px; letter-spacing: 0.10em; font-weight: 950; }
+    .core-rest-main-value { margin-top: 8px; font-size: 28px; font-weight: 950; }
+    .core-rest-split-list { display: grid; gap: 8px; }
+    .core-rest-split-row { display: grid; grid-template-columns: 76px minmax(0,1fr); gap: 8px; align-items: baseline; }
+    .core-rest-split-label { color: #94a3b8; font-size: 13px; font-weight: 950; letter-spacing: 0.06em; }
+    .core-rest-split-value { color: #6ee7b7; font-size: 18px; font-weight: 950; white-space: nowrap; }
+    .stats-panel.panel-empty { display: none !important; }
+    .batch-note { display: none !important; }
+    .section-header-toggle, .special-toggle { font-size: 16px; }
     .salary-panel {
       margin-top: 16px;
       padding: 16px;
@@ -1496,12 +1363,17 @@
     @media (max-width: 760px) {
       .salary-panel { padding: 12px !important; }
       .salary-overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-      .salary-overview-item { padding: 10px 6px !important; border-bottom: 1px solid rgba(0, 240, 255, 0.14); }
+      .salary-overview-item { padding: 12px 10px !important; border-bottom: 1px solid rgba(0, 240, 255, 0.14); }
       .salary-overview-item:nth-child(2), .salary-overview-item:nth-child(4) { border-right: none !important; }
       .salary-overview-item:nth-child(3), .salary-overview-item:nth-child(4) { border-bottom: none !important; }
-      .salary-overview-label { font-size: 9px !important; letter-spacing: 0 !important; }
-      .salary-overview-value { font-size: 16px !important; }
-      .salary-overview-input { height: 30px !important; font-size: 14px !important; }
+      .salary-overview-label { font-size: clamp(13px, 3.8vw, 16px) !important; letter-spacing: 0.02em !important; }
+      .salary-overview-value { font-size: clamp(22px, 6vw, 28px) !important; }
+      .salary-overview-input { height: 36px !important; font-size: clamp(20px, 5.6vw, 26px) !important; max-width: 100% !important; }
+      .core-rest-combo { grid-template-columns: minmax(0, 1fr) minmax(120px, 1fr) !important; padding: 12px !important; }
+      .core-rest-main-value { font-size: clamp(24px, 7vw, 32px) !important; }
+      .core-rest-split-row { grid-template-columns: 68px minmax(0,1fr) !important; }
+      .core-rest-split-value { font-size: 16px !important; }
+      .section-header-toggle, .special-toggle { font-size: 16px !important; }
       .salary-header-row { display: block !important; }
       .salary-input-wrap { width: 100% !important; margin-top: 10px !important; }
       .salary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; }
@@ -1648,13 +1520,180 @@
       .salary-sub-grid { grid-template-columns: 1fr !important; }
     }
 
+  
+
+    /* === 華爾街黑金版標題與各時數資訊重排 === */
+    .title {
+      position: relative;
+      display: inline-block;
+      padding: 0 18px 6px;
+      font-family: "Segoe UI Variable Display", "Segoe UI", "Microsoft JhengHei", sans-serif;
+      letter-spacing: 0.16em;
+      background: linear-gradient(90deg, #f8d878 0%, #f6c453 28%, #10b981 54%, #f6c453 78%, #fff3b0 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(246, 196, 83, 0.55), 0 0 26px rgba(16, 185, 129, 0.28), 0 0 42px rgba(0, 0, 0, 0.85);
+      filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.22));
+    }
+    .title::after {
+      content: "";
+      position: absolute;
+      left: 9%;
+      right: 9%;
+      bottom: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, rgba(246, 196, 83, 0.95), rgba(16, 185, 129, 0.92), transparent);
+      box-shadow: 0 0 14px rgba(246, 196, 83, 0.42), 0 0 22px rgba(16, 185, 129, 0.22);
+    }
+    details.core-stats-panel {
+      border-color: rgba(16, 185, 129, 0.34);
+      background: linear-gradient(180deg, rgba(3, 7, 18, 0.96), rgba(6, 10, 16, 0.96));
+      box-shadow: 0 0 22px rgba(16, 185, 129, 0.12), inset 0 0 34px rgba(246, 196, 83, 0.035);
+    }
+    details.core-stats-panel > .section-header-toggle,
+    details.core-stats-panel > summary.section-header-toggle {
+      background: linear-gradient(90deg, rgba(2, 44, 34, 0.72), rgba(17, 24, 39, 0.94));
+      color: #6ee7b7;
+      border-bottom-color: rgba(16, 185, 129, 0.24);
+      text-shadow: 0 0 10px rgba(16, 185, 129, 0.34);
+    }
+    details.core-stats-panel .special-summary {
+      color: #94a3b8;
+      text-shadow: none;
+    }
+    details.core-stats-panel .details-icon {
+      color: #67e8f9;
+      text-shadow: 0 0 10px rgba(103, 232, 249, 0.55);
+    }
+    details.core-stats-panel .core-stats-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.18);
+    }
+    details.core-stats-panel .core-stat-item {
+      min-height: 86px;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, 0.018);
+      border-right: 1px solid rgba(16, 185, 129, 0.18) !important;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.18) !important;
+    }
+    details.core-stats-panel .core-stat-item:nth-child(2),
+    details.core-stats-panel .core-stat-item:nth-child(4) {
+      border-right: none !important;
+    }
+    details.core-stats-panel .core-stat-item:nth-child(3),
+    details.core-stats-panel .core-stat-item:nth-child(4) {
+      border-bottom: none !important;
+    }
+    details.core-stats-panel .core-rest-combo {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 1fr) !important;
+      gap: 18px;
+      align-items: center;
+      padding: 18px 16px;
+      border-top: none;
+      background: linear-gradient(90deg, rgba(3, 7, 18, 0.62), rgba(16, 185, 129, 0.045));
+    }
+    details.core-stats-panel .core-rest-main-box {
+      min-width: 0;
+    }
+    details.core-stats-panel .core-rest-main-label {
+      color: #cbd5e1;
+      font-size: 12px;
+      letter-spacing: 0.10em;
+      font-weight: 950;
+    }
+    details.core-stats-panel .core-rest-main-value {
+      margin-top: 8px;
+      font-size: 30px;
+      font-weight: 950;
+      color: #c4b5fd !important;
+      text-shadow: 0 0 12px rgba(196, 181, 253, 0.46);
+      white-space: nowrap;
+    }
+    details.core-stats-panel .core-rest-right-box {
+      min-width: 0;
+      display: grid;
+      gap: 12px;
+      align-items: center;
+    }
+    details.core-stats-panel .rest-split-toggle {
+      width: 100%;
+      margin: 0;
+      border-color: rgba(16, 185, 129, 0.50);
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.12), rgba(246, 196, 83, 0.08));
+      color: #6ee7b7;
+      box-shadow: inset 0 0 12px rgba(16, 185, 129, 0.08), 0 0 10px rgba(16, 185, 129, 0.08);
+    }
+    details.core-stats-panel .rest-split-toggle:hover {
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.22), rgba(246, 196, 83, 0.14));
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.20), 0 0 18px rgba(246, 196, 83, 0.10);
+    }
+    details.core-stats-panel .core-rest-split-list {
+      display: grid;
+      gap: 0;
+      border: 1px solid rgba(16, 185, 129, 0.24);
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.20);
+      box-shadow: inset 0 0 18px rgba(16, 185, 129, 0.05);
+    }
+    details.core-stats-panel .core-rest-split-row {
+      display: grid;
+      grid-template-columns: minmax(88px, 0.75fr) minmax(92px, 1fr);
+      gap: 10px;
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.18);
+    }
+    details.core-stats-panel .core-rest-split-row:last-child {
+      border-bottom: none;
+    }
+    details.core-stats-panel .core-rest-split-label {
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    details.core-stats-panel .core-rest-split-value {
+      color: #6ee7b7;
+      font-size: 20px;
+      font-weight: 950;
+      white-space: nowrap;
+      text-shadow: 0 0 10px rgba(110, 231, 183, 0.34);
+    }
+    @media (max-width: 760px) {
+      details.core-stats-panel .core-rest-combo {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 12px !important;
+        padding: 12px !important;
+      }
+      details.core-stats-panel .core-stat-item {
+        min-height: 76px;
+        padding: 12px 10px !important;
+      }
+      details.core-stats-panel .core-rest-main-value {
+        font-size: clamp(24px, 7vw, 32px) !important;
+      }
+      details.core-stats-panel .core-rest-split-row {
+        grid-template-columns: minmax(76px, 0.75fr) minmax(84px, 1fr);
+        padding: 9px 10px;
+      }
+      details.core-stats-panel .core-rest-split-value {
+        font-size: 17px !important;
+      }
+    }
+
   </style>
 </head>
 <body>
   <div class="app">
     <div class="container">
       <header class="top-header">
-        <h1 class="title">加班費計算</h1>
+        <h1 class="title">$加班費計算</h1>
       </header>
       <section class="panel control-panel">
         <div class="controls-grid">
@@ -1693,15 +1732,15 @@
           </div>
           <div class="salary-overview-item">
             <div id="topSalaryMonthLabel" class="salary-overview-label">加班費</div>
-            <div id="topSalaryTotalAmount" class="salary-overview-value accent-amber">$0</div>
+            <div id="topSalaryTotalAmount" class="salary-overview-value money-finance">$0</div>
           </div>
           <div class="salary-overview-item">
             <div class="salary-overview-label">12切總工時</div>
-            <div id="topRestHours" class="salary-overview-value accent-violet">0<span class="stat-suffix">HR</span></div>
+            <div id="topRestHours" class="salary-overview-value lavender-purple">0<span class="stat-suffix">HR</span></div>
           </div>
           <div class="salary-overview-item">
             <div class="salary-overview-label">夜點費</div>
-            <div id="topNightFee" class="salary-overview-value accent-rose">0<span class="stat-suffix">元</span></div>
+            <div id="topNightFee" class="salary-overview-value money-finance">0<span class="stat-suffix">元</span></div>
           </div>
         </div>
       </section>
@@ -1725,7 +1764,7 @@
                 <span id="calcInfoToggleText" class="calc-info-text">計算資訊關</span>
               </label>
             </div>
-            <div id="calendarNote" class="calendar-note">週一至週日排列；每日可手動選擇實錄代碼，RESET 可回復原班別</div>
+            <div id="calendarNote" class="calendar-note">每日可手動選擇代碼，RESET 可回復原班別</div>
           </div>
           <div id="syncMessage" class="sync-message">初始化中...</div>
         </div>
@@ -1769,9 +1808,6 @@
         </button>
         <div id="batchContent" class="batch-content special-content">
           <div id="batchRangeList" class="batch-row-list"></div>
-          <div class="batch-note">
-            批次假別保留常用長區間項目。選擇「受訓」時，模式會自動預設為「包含空班」；受訓遇到六日或國定假日會依 D8 規則顯示週休或國定假日，D10 與 D11 均為 0。
-          </div>
         </div>
       </section>
       <section class="panel overhaul-panel">
@@ -1798,7 +1834,7 @@
             </div>
           </div>
           <div class="overhaul-calendar-wrap">
-            <div class="overhaul-calendar-title">代理小月曆：點日期後選 15、30 或清除</div>
+            <div class="overhaul-calendar-title">代理小月曆：點日期後選 15、30 或清除，預設選項為 30</div>
             <div id="overhaulWeekGrid" class="overhaul-week-grid"></div>
             <div id="overhaulCalendarGrid" class="overhaul-calendar-grid"></div>
           </div>
@@ -1809,53 +1845,31 @@
       </section>
       <details class="panel core-stats-panel">
         <summary class="section-header-toggle">
-          <div><div>各時數資訊</div><div id="coreStatsSummary" class="special-summary">點此展開值班總工時、交接班時數、固定時數、保養時數、12切總工時</div></div>
+          <div><div>各時數資訊</div><div id="coreStatsSummary" class="special-summary">點此展開值班總工時、交接班時數、國定時數、保養時數、12切總工時</div></div>
           <div class="details-icon">＋</div>
         </summary>
         <div id="coreStatsContent" class="core-stats-content">
-        <div class="core-stats-grid">
-          <div class="core-stat-item">
-            <div class="core-stat-label">值班總工時</div>
-            <div id="totalHours" class="core-stat-value accent-cyan">0<span class="stat-suffix">HR</span></div>
+          <div class="core-stats-grid">
+            <div class="core-stat-item"><div class="core-stat-label">值班總工時</div><div id="totalHours" class="core-stat-value accent-cyan">0<span class="stat-suffix">HR</span></div></div>
+            <div class="core-stat-item"><div class="core-stat-label">交接班時數</div><div id="handoverHours" class="core-stat-value accent-sky">0<span class="stat-suffix">HR</span></div></div>
+            <div class="core-stat-item"><div class="core-stat-label">國定時數</div><div id="nationalHolidayHours" class="core-stat-value accent-rose">0<span class="stat-suffix">HR</span></div></div>
+            <div class="core-stat-item"><div class="core-stat-label">保養時數</div><div id="maintenanceHours" class="core-stat-value accent-amber">0<span class="stat-suffix">HR</span></div></div>
           </div>
-          <div class="core-stat-item">
-            <div class="core-stat-label">交接班時數</div>
-            <div id="handoverHours" class="core-stat-value accent-sky">0<span class="stat-suffix">HR</span></div>
-          </div>
-          <div class="core-stat-item">
-            <div class="core-stat-label">國定時數</div>
-            <div id="nationalHolidayHours" class="core-stat-value accent-rose">0<span class="stat-suffix">HR</span></div>
-          </div>
-          <div class="core-stat-item">
-            <div class="core-stat-label">固定時數</div>
-            <div id="maintenanceHours" class="core-stat-value accent-amber">0<span class="stat-suffix">HR</span></div>
-          </div>
-          <div class="core-stat-item">
-            <div class="core-stat-label">12切總工時</div>
-            <div id="restHours" class="core-stat-value accent-violet">0<span class="stat-suffix">HR</span></div>
-          </div>
-        </div>
-        <div style="padding: 0 16px 16px;">
-          <button id="restSplitToggle" class="sub-panel-toggle" type="button">展開倍率明細</button>
-          <div id="restSplitDetails" class="split-grid collapsed-detail">
-            <div class="split-box">
-              <div class="split-label">1.33倍</div>
-              <div id="code7Hours" class="split-value">0 HR</div>
-            </div>
-            <div class="split-box">
-              <div class="split-label">1.67倍</div>
-              <div id="code8Hours" class="split-value">0 HR</div>
-            </div>
-            <div class="split-box">
-              <div class="split-label">2.66倍</div>
-              <div id="code6Hours" class="split-value">0 HR</div>
+          <div id="restSplitDetails" class="core-rest-combo">
+            <div class="core-rest-main-box"><div class="core-rest-main-label">12切總工時</div><div id="restHours" class="core-rest-main-value lavender-purple">0<span class="stat-suffix">HR</span></div></div>
+            <div class="core-rest-right-box">
+              <button id="restSplitToggle" class="sub-panel-toggle rest-split-toggle" type="button">展開倍率明細</button>
+              <div id="restSplitList" class="core-rest-split-list collapsed-detail">
+                <div class="core-rest-split-row"><div class="core-rest-split-label">1.33倍</div><div id="code7Hours" class="core-rest-split-value">0 HR</div></div>
+                <div class="core-rest-split-row"><div class="core-rest-split-label">1.67倍</div><div id="code8Hours" class="core-rest-split-value">0 HR</div></div>
+                <div class="core-rest-split-row"><div class="core-rest-split-label">2.66倍</div><div id="code6Hours" class="core-rest-split-value">0 HR</div></div>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </details>
       <section class="panel stats-panel">
-      <div class="holiday-benefit-grid">
+        <div class="holiday-benefit-grid">
           <div class="stat-card">
             <div class="stat-label">假日待遇</div>
             <div class="benefit-combo">
@@ -1906,7 +1920,7 @@
             <li class="salary-row">
               <div class="salary-row-main">
                 <div class="salary-label">基本薪給</div>
-                <div id="salaryBasePayDetailValue" class="salary-value accent-cyan">$0</div>
+                <div id="salaryBasePayDetailValue" class="salary-value money-finance">$0</div>
               </div>
             </li>
             <li id="salaryHolidayBox" class="salary-row salary-hidden">
@@ -2289,10 +2303,10 @@
       shiftGroup.classList.add(`shift-active-${shiftGroup.value}`);
     }
     function updateCollapsePanels() {
-      const restSplitDetails = document.getElementById("restSplitDetails");
+      const restSplitList = document.getElementById("restSplitList");
       const restSplitToggle = document.getElementById("restSplitToggle");
-      if (restSplitDetails && restSplitToggle) {
-        restSplitDetails.classList.toggle("collapsed-detail", !restSplitOpen);
+      if (restSplitList && restSplitToggle) {
+        restSplitList.classList.toggle("collapsed-detail", !restSplitOpen);
         restSplitToggle.textContent = restSplitOpen ? "收合倍率明細" : "展開倍率明細";
       }
       const rewardDetails = document.getElementById("rewardDetails");
@@ -2331,9 +2345,7 @@
       const note = document.getElementById("calendarNote");
       if (toggle) toggle.checked = weekStartMode === "sunday";
       if (textEl) textEl.textContent = weekStartMode === "sunday" ? "週日開始" : "週一開始";
-      if (note) note.textContent = weekStartMode === "sunday"
-        ? "週日至週六排列；每日可手動選擇實錄代碼，RESET 可回復原班別"
-        : "週一至週日排列；每日可手動選擇實錄代碼，RESET 可回復原班別";
+      if (note) note.textContent = "每日可手動選擇代碼，RESET 可回復原班別";
     }
     function updateCalculationInfoToggleUI() {
       const toggle = document.getElementById("calcInfoToggle");
@@ -2358,27 +2370,17 @@
       }
     }
     function saveCodeFavorites() {
-      try {
-        localStorage.setItem(CODE_FAVORITES_STORAGE_KEY, JSON.stringify(Array.from(codeFavoriteSet)));
-      } catch (err) {
-        console.warn("無法儲存我的最愛假別", err);
-      }
+      try { localStorage.setItem(CODE_FAVORITES_STORAGE_KEY, JSON.stringify(Array.from(codeFavoriteSet))); }
+      catch (err) { console.warn("無法儲存我的最愛假別", err); }
     }
-    function isCodeFavorite(code) {
-      return codeFavoriteSet.has(keyOf(code));
-    }
+    function isCodeFavorite(code) { return codeFavoriteSet.has(keyOf(code)); }
     function toggleCodeFavorite(code) {
       const codeKey = keyOf(code);
-      if (codeFavoriteSet.has(codeKey)) {
-        codeFavoriteSet.delete(codeKey);
-      } else {
-        codeFavoriteSet.add(codeKey);
-      }
+      if (codeFavoriteSet.has(codeKey)) codeFavoriteSet.delete(codeKey);
+      else codeFavoriteSet.add(codeKey);
       saveCodeFavorites();
     }
-    function getFavoriteCodeOptions() {
-      return CODE_OPTIONS.filter(code => isCodeFavorite(code));
-    }
+    function getFavoriteCodeOptions() { return CODE_OPTIONS.filter(code => isCodeFavorite(code)); }
     function buildCodeOptionRow(code, selectedCode, favoriteOnly) {
       const favorite = isCodeFavorite(code);
       const selected = Number(code) === Number(selectedCode);
@@ -2391,20 +2393,9 @@
     }
     function buildCodePickerHtml(day, selectedCode) {
       const favoriteOptions = getFavoriteCodeOptions();
-      const favoriteHtml = favoriteOptions.length
-        ? favoriteOptions.map(code => buildCodeOptionRow(code, selectedCode, true)).join("")
-        : `<div class="code-empty-favorite">尚未設定我的最愛，請展開全部假別後點 ☆。</div>`;
+      const favoriteHtml = favoriteOptions.length ? favoriteOptions.map(code => buildCodeOptionRow(code, selectedCode, true)).join("") : `<div class="code-empty-favorite">未設定我的最愛</div>`;
       const allHtml = CODE_OPTIONS.map(code => buildCodeOptionRow(code, selectedCode, false)).join("");
-      return `
-        <div class="code-picker" data-code-picker="${day}">
-          <button class="code-picker-button" type="button" data-code-picker-button="${day}">${selectedCode} ${getLabel(selectedCode)}</button>
-          <div class="code-picker-menu">
-            <button class="code-all-toggle" type="button" data-code-all-toggle="${day}">全部假別</button>
-            <div class="code-picker-favorites">${favoriteHtml}</div>
-            <div class="code-picker-all collapsed-detail" data-code-all-list="${day}">${allHtml}</div>
-          </div>
-        </div>
-      `;
+      return `<div class="code-picker" data-code-picker="${day}"><button class="code-picker-button" type="button" data-code-picker-button="${day}">${selectedCode} ${getLabel(selectedCode)}</button><div class="code-picker-menu"><button class="code-all-toggle" type="button" data-code-all-toggle="${day}">全部假別</button><div class="code-picker-favorites">${favoriteHtml}</div><div class="code-picker-all collapsed-detail" data-code-all-list="${day}">${allHtml}</div></div></div>`;
     }
     function closeAllCodePickers(exceptPicker) {
       document.querySelectorAll(".code-picker.open").forEach(picker => {
@@ -2463,10 +2454,7 @@
           event.stopPropagation();
           const picker = btn.closest(".code-picker");
           const allList = picker ? picker.querySelector(".code-picker-all") : null;
-          pendingCodePickerReopen = {
-            day: picker ? Number(picker.dataset.codePicker) : 0,
-            allOpen: allList ? !allList.classList.contains("collapsed-detail") : false
-          };
+          pendingCodePickerReopen = { day: picker ? Number(picker.dataset.codePicker) : 0, allOpen: allList ? !allList.classList.contains("collapsed-detail") : false };
           toggleCodeFavorite(btn.dataset.codeStar);
           renderAll(false);
         });
@@ -3369,8 +3357,11 @@
     }
     function updateHolidayBenefitGridVisibility(days) {
       const holidayBenefitGrid = document.querySelector(".holiday-benefit-grid");
+      const statsPanel = document.querySelector(".stats-panel");
       if (!holidayBenefitGrid) return;
-      holidayBenefitGrid.classList.toggle("conditional-hidden", !shouldShowHolidayBenefitGrid(days));
+      const hidden = !shouldShowHolidayBenefitGrid(days);
+      holidayBenefitGrid.classList.toggle("conditional-hidden", hidden);
+      if (statsPanel) statsPanel.classList.toggle("panel-empty", hidden);
     }
     function calcNationalHolidayHours(days) {
       return days.reduce((sum, dayInfo) => {
@@ -3502,7 +3493,7 @@
         startDay: hasBothDays ? Math.min(startDay, endDay) : startDay,
         endDay: hasBothDays ? Math.max(startDay, endDay) : endDay,
         code,
-        leaveHours: Number(record.leaveHours || 0),
+        leaveHours: 0,
         mode: code === 4 ? "all" : (record.mode === "all" ? "all" : "workOnly")
       };
     }
@@ -3562,10 +3553,6 @@
             <label>
               <div class="batch-field-title">假別</div>
               <select class="batch-select" data-batch-field="code" data-index="${idx}">${buildBatchCodeOptions(safeRecord.code)}</select>
-            </label>
-            <label>
-              <div class="batch-field-title">時數</div>
-              <select class="batch-select" data-batch-field="leaveHours" data-index="${idx}">${buildBatchHourOptions(safeRecord.leaveHours)}</select>
             </label>
             <label>
               <div class="batch-field-title">模式</div>
@@ -4029,7 +4016,6 @@
       const lunarNewYearRedEnvelopeCount = Number(metrics.lunarNewYearRedEnvelopeCount || 0);
       const reunionDinnerCount = Number(metrics.reunionDinnerCount || 0);
       const split = metrics.split || { code7: 0, code8: 0, code6: 0 };
-      const nightFee = Number(metrics.nightFee || 0);
       const holidayWorkAmount = Math.ceil(basePay / 240 * (nationalHolidayHours + additionalHolidayWorkHours));
       const mealAmount = breakfastCount * 75 + lunchDinnerCount * 150;
       const code7Amount = Math.ceil(basePay / 240 * Number(split.code7 || 0) * 4 / 3);
