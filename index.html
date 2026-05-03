@@ -2139,87 +2139,33 @@
 
 
     /* === 華爾街奢侈、榮華富貴靜態背景：無鈔票雨版本 === */
-    body {
-      background:
-        radial-gradient(circle at 12% 18%, rgba(246, 196, 83, 0.16), transparent 28%),
-        radial-gradient(circle at 86% 12%, rgba(16, 185, 129, 0.14), transparent 30%),
-        radial-gradient(circle at 50% 100%, rgba(120, 84, 20, 0.16), transparent 42%),
-        linear-gradient(135deg, #05070b 0%, #07130f 42%, #0d0f12 66%, #15100a 100%);
-    }
-    .app {
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-      background:
-        radial-gradient(circle at top left, rgba(246, 196, 83, 0.16), transparent 34%),
-        radial-gradient(circle at top right, rgba(16, 185, 129, 0.16), transparent 30%),
-        linear-gradient(135deg, rgba(5, 7, 11, 0.96), rgba(7, 19, 15, 0.96) 46%, rgba(21, 16, 10, 0.96));
-    }
-    .app::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      pointer-events: none;
-      background:
-        linear-gradient(115deg, transparent 0%, rgba(246, 196, 83, 0.045) 18%, transparent 34%),
-        linear-gradient(245deg, transparent 0%, rgba(16, 185, 129, 0.055) 22%, transparent 42%),
-        repeating-linear-gradient(135deg, rgba(246, 196, 83, 0.045) 0 1px, transparent 1px 42px),
-        repeating-linear-gradient(45deg, rgba(16, 185, 129, 0.035) 0 1px, transparent 1px 54px);
-      opacity: 0.78;
-    }
-    .app::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 20% 82%, rgba(246, 196, 83, 0.12), transparent 24%),
-        radial-gradient(circle at 78% 72%, rgba(16, 185, 129, 0.11), transparent 28%),
-        linear-gradient(90deg, transparent, rgba(255, 243, 176, 0.045), transparent);
-      box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.58), inset 0 0 220px rgba(246, 196, 83, 0.035);
-    }
-    .panel {
-      background: linear-gradient(180deg, rgba(10, 12, 16, 0.94), rgba(5, 10, 18, 0.92));
-      border-color: rgba(246, 196, 83, 0.20);
-      box-shadow: 0 0 20px rgba(246, 196, 83, 0.08), 0 0 28px rgba(16, 185, 129, 0.055), inset 0 0 30px rgba(246, 196, 83, 0.035);
-    }
-    .calendar-head {
-      background: linear-gradient(90deg, rgba(6, 12, 18, 0.98), rgba(2, 44, 34, 0.52), rgba(21, 16, 10, 0.90));
-      border-bottom-color: rgba(246, 196, 83, 0.18);
-    }
-    .return-today-btn {
-      height: 36px;
-      border: 1px solid rgba(246, 196, 83, 0.62);
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(246, 196, 83, 0.13), rgba(16, 185, 129, 0.18), rgba(14, 165, 233, 0.13));
-      color: #fff3b0;
-      padding: 7px 12px;
-      font-size: 11px;
-      font-weight: 950;
-      letter-spacing: 0.08em;
-      cursor: pointer;
-      white-space: nowrap;
-      box-shadow: 0 0 15px rgba(246, 196, 83, 0.22), inset 0 0 14px rgba(16, 185, 129, 0.09);
-      text-shadow: 0 0 9px rgba(246, 196, 83, 0.50);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
-    .return-today-btn:hover {
-      transform: translateY(-1px);
-      border-color: rgba(103, 232, 249, 0.76);
-      color: #ecfeff;
-      box-shadow: 0 0 18px rgba(103, 232, 249, 0.30), 0 0 28px rgba(246, 196, 83, 0.22), inset 0 0 16px rgba(16, 185, 129, 0.13);
-    }
-    .return-today-btn:active { transform: translateY(0); }
-    @media (max-width: 760px) {
-      .return-today-btn {
-        height: 30px;
-        padding: 5px 8px;
-        font-size: 9px;
-        letter-spacing: 0.02em;
-      }
-    }
+    body{background:radial-gradient(circle at 12% 18%,rgba(246,196,83,.16),transparent 28%),radial-gradient(circle at 86% 12%,rgba(16,185,129,.14),transparent 30%),linear-gradient(135deg,#05070b 0%,#07130f 42%,#0d0f12 66%,#15100a 100%)}
+    .app{position:relative;overflow:hidden;isolation:isolate;background:radial-gradient(circle at top left,rgba(246,196,83,.16),transparent 34%),radial-gradient(circle at top right,rgba(16,185,129,.16),transparent 30%),linear-gradient(135deg,rgba(5,7,11,.96),rgba(7,19,15,.96) 46%,rgba(21,16,10,.96))}
+    .app::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(115deg,transparent 0%,rgba(246,196,83,.045) 18%,transparent 34%),linear-gradient(245deg,transparent 0%,rgba(16,185,129,.055) 22%,transparent 42%),repeating-linear-gradient(135deg,rgba(246,196,83,.045) 0 1px,transparent 1px 42px),repeating-linear-gradient(45deg,rgba(16,185,129,.035) 0 1px,transparent 1px 54px);opacity:.78}
+    .app::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 20% 82%,rgba(246,196,83,.12),transparent 24%),radial-gradient(circle at 78% 72%,rgba(16,185,129,.11),transparent 28%),linear-gradient(90deg,transparent,rgba(255,243,176,.045),transparent);box-shadow:inset 0 0 120px rgba(0,0,0,.58),inset 0 0 220px rgba(246,196,83,.035)}
+    .panel{background:linear-gradient(180deg,rgba(10,12,16,.94),rgba(5,10,18,.92));border-color:rgba(246,196,83,.20);box-shadow:0 0 20px rgba(246,196,83,.08),0 0 28px rgba(16,185,129,.055),inset 0 0 30px rgba(246,196,83,.035)}
+    .calendar-head{background:linear-gradient(90deg,rgba(6,12,18,.98),rgba(2,44,34,.52),rgba(21,16,10,.90));border-bottom-color:rgba(246,196,83,.18)}
+    .day-card.saturday-card.weekend{border-color:rgba(78,203,113,.72)!important;background:rgba(78,203,113,.08)!important;box-shadow:inset 0 0 24px rgba(78,203,113,.035)}
+    .day-card.sunday-card.weekend{border-color:rgba(255,179,171,.74)!important;background:rgba(255,179,171,.10)!important;box-shadow:inset 0 0 24px rgba(255,179,171,.04)}
+    .return-today-btn{height:36px;border:1px solid rgba(246,196,83,.62);border-radius:999px;background:linear-gradient(90deg,rgba(246,196,83,.13),rgba(16,185,129,.18),rgba(14,165,233,.13));color:#fff3b0;padding:7px 12px;font-size:11px;font-weight:950;letter-spacing:.08em;cursor:pointer;white-space:nowrap;box-shadow:0 0 15px rgba(246,196,83,.22),inset 0 0 14px rgba(16,185,129,.09);text-shadow:0 0 9px rgba(246,196,83,.50)}
+    .batch-code-picker{width:100%}.batch-code-picker-button{width:100%;height:34px;border:1px solid rgba(246,196,83,.38);border-radius:10px;background:linear-gradient(90deg,rgba(246,196,83,.10),rgba(16,185,129,.12),rgba(37,99,235,.12));color:#fde68a;text-align:left;padding:0 12px;font-size:12px;font-weight:950;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.batch-code-picker-portal .batch-code-option-list{display:grid;gap:7px}.batch-code-option-row{display:grid;grid-template-columns:minmax(0,1fr);align-items:center;min-height:50px;border-radius:13px;border:1px solid transparent;overflow:hidden}.batch-code-option-row:hover,.batch-code-option-row.selected{border-color:rgba(110,231,183,.38);background:linear-gradient(90deg,rgba(16,185,129,.42),rgba(37,99,235,.32))}.batch-code-option-btn{width:100%;height:50px;line-height:50px;padding:0 14px;border:none;background:transparent;color:#e5e7eb;text-align:left;font-size:16px;font-weight:950;cursor:pointer}.code-option-row.code-other-row{grid-template-columns:62px 76px minmax(0,1fr)!important}.code-other-name-input,.batch-other-name-input{width:100%;min-width:0;height:38px;border:1px solid rgba(246,196,83,.42);border-radius:10px;background:rgba(0,0,0,.28);color:#fff3b0;padding:0 10px;font-size:14px;font-weight:950;outline:none}.batch-code-option-row.batch-other-row{grid-template-columns:76px minmax(0,1fr);gap:8px;padding-right:8px}
+    @media(max-width:760px){.return-today-btn{height:30px;padding:5px 8px;font-size:9px;letter-spacing:.02em}.batch-code-picker-button{height:30px;font-size:10px;padding:0 8px}.code-option-row.code-other-row{grid-template-columns:64px 72px minmax(0,1fr)!important}.code-other-name-input,.batch-other-name-input{height:40px;font-size:14px}.batch-code-option-btn{height:54px;line-height:54px;font-size:17px}}
+
+
+    /* === 複合式假別拆分時數：加號與輸入面板 === */
+    .code-picker-portal .compound-code-row { grid-template-columns: 62px minmax(0, 1fr) 58px !important; }
+    .code-picker-portal .code-other-row.compound-code-row { grid-template-columns: 62px 76px minmax(0, 1fr) 58px !important; }
+    .compound-toggle-btn { width:58px; min-width:58px; height:50px; border:none; border-radius:13px; background:transparent; color:#ffee00; font-size:42px; font-weight:300; line-height:1; cursor:pointer; text-shadow:0 0 10px rgba(255,238,0,.72),0 0 18px rgba(246,196,83,.36); touch-action:manipulation; }
+    .compound-toggle-btn:hover,.compound-toggle-btn:focus-visible { background:rgba(246,196,83,.10); outline:1px solid rgba(246,196,83,.36); }
+    .compound-split-panel { margin:-2px 0 7px 70px; padding:10px; border:1px solid rgba(246,196,83,.30); border-radius:14px; background:linear-gradient(90deg,rgba(246,196,83,.08),rgba(16,185,129,.08),rgba(37,99,235,.08)); box-shadow:inset 0 0 14px rgba(246,196,83,.05); display:grid; gap:8px; animation:codePickerSlideDownGold .16s ease both; }
+    .compound-split-title { color:#fde68a; font-size:11px; font-weight:950; letter-spacing:.06em; text-shadow:0 0 8px rgba(246,196,83,.32); }
+    .compound-split-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+    .compound-split-field { display:grid; grid-template-columns:30px minmax(0,1fr) 28px; gap:5px; align-items:center; color:#a7f3d0; font-size:12px; font-weight:950; white-space:nowrap; }
+    .compound-split-input { width:100%; min-width:0; height:34px; border:1px solid rgba(103,232,249,.36); border-radius:9px; background:rgba(0,0,0,.34); color:#ecfeff; text-align:center; font-size:14px; font-weight:950; outline:none; box-shadow:inset 0 0 10px rgba(103,232,249,.06); }
+    .compound-split-input:focus { border-color:rgba(246,196,83,.70); color:#fff3b0; box-shadow:0 0 12px rgba(246,196,83,.18), inset 0 0 10px rgba(16,185,129,.08); }
+    .compound-split-hint { color:#94a3b8; font-size:10px; line-height:1.45; }
+    .compound-split-clear { min-height:32px; border:1px solid rgba(251,113,133,.42); border-radius:10px; background:rgba(244,63,94,.12); color:#fda4af; font-size:11px; font-weight:950; cursor:pointer; }
+    @media(max-width:760px){ .code-picker-portal .compound-code-row{grid-template-columns:64px minmax(0,1fr) 56px!important}.code-picker-portal .code-other-row.compound-code-row{grid-template-columns:64px 72px minmax(0,1fr) 56px!important}.compound-toggle-btn{width:56px;min-width:56px;height:54px;font-size:40px}.compound-split-panel{margin-left:0}.compound-split-grid{grid-template-columns:1fr} }
 
   </style>
 </head>
@@ -2516,6 +2462,7 @@
     </div>
   </div>
   <div id="codePickerPortal" class="code-picker-portal" aria-hidden="true"></div>
+  <div id="batchCodePickerPortal" class="code-picker-portal batch-code-picker-portal" aria-hidden="true"></div>
   <div id="specialDateModal" class="special-date-modal" aria-hidden="true">
     <div class="special-date-card">
       <div id="specialDateTitle" class="special-date-title">選擇日期</div>
@@ -2570,7 +2517,7 @@
       5: "特休", 5.1: "特補", 5.2: "特事", 5.3: "特病", 5.4: "特停", 5.5: "特公",
       6: "補假", 6.1: "補事", 6.2: "補病", 6.3: "補休", 6.4: "補停", 6.5: "補公",
       7: "病假", 7.1: "事病", 7.2: "病停", 7.3: "事停",
-      8: "事假", 8.1: "喪假", 8.2: "婚假", 8.3: "陪產假", 8.4: "停止辦公日", 8.5: "家庭照顧假", 8.6: "身心調適假", 8.7: "身特", 8.8: "身補",
+      8: "事假", 8.1: "喪假", 8.2: "婚假", 8.3: "陪產假", 8.4: "停止辦公日", 8.5: "家庭照顧假", 8.6: "身心調適假", 8.7: "身特", 8.8: "身補", 8.9: "其他",
       9: "調整例假日",
       10: "調空", 11: "調一", 12: "調二", 13: "調三",
       21: "代一", 22: "代二", 23: "代三"
@@ -2581,7 +2528,7 @@
       5, 5.1, 5.2, 5.3, 5.4, 5.5,
       6, 6.1, 6.2, 6.3, 6.4, 6.5,
       7, 7.1, 7.2, 7.3,
-      8, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8,
+      8, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8, 8.9,
       9, 10, 11, 12, 13, 21, 22, 23
     ];
     const LEAVE_CODES = new Set([
@@ -2589,13 +2536,13 @@
       5, 5.1, 5.2, 5.3, 5.4, 5.5,
       6, 6.1, 6.2, 6.3, 6.4, 6.5,
       7, 7.1, 7.2, 7.3,
-      8, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8
+      8, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8, 8.9
     ]);
     const WORK_CODES = new Set([1, 2, 3, 11, 12, 13, 21, 22, 23]);
     const ADJUST_CODES = new Set([10, 11, 12, 13]);
     const SUBSTITUTE_CODES = new Set([21, 22, 23]);
     const manualRecords = {};
-    const BATCH_RANGE_CODES = [5, 4, 7, 8.1, 8.2, 8.5, 8.6];
+    const BATCH_RANGE_CODES = [5, 4, 7, 8.1, 8.2, 8.5, 8.6, 8.9];
     const BATCH_RANGE_LABELS = {
       5: "特休",
       4: "受訓",
@@ -2603,7 +2550,8 @@
       8.1: "喪假",
       8.2: "婚假",
       8.5: "家庭照顧假",
-      8.6: "身心照顧假"
+      8.6: "身心照顧假",
+      8.9: "其他"
     };
     const batchRangeRecords = [];
     const overhaulSettings = {
@@ -2671,7 +2619,8 @@
           endDay: 0,
           code: 5,
           leaveHours: 0,
-          mode: "workOnly"
+          mode: "workOnly",
+          otherLabel: "其他"
         });
       }
     }
@@ -2735,9 +2684,10 @@
             endDay: Number(item.endDay || 0),
             code: Number(item.code || 5),
             leaveHours: Number(item.leaveHours || 0),
-            mode: item.mode === "all" ? "all" : "workOnly"
+            mode: item.mode === "all" ? "all" : "workOnly",
+            otherLabel: normalizeOtherCodeLabel(item.otherLabel || "其他")
           }));
-          while (batchRangeRecords.length < 3) batchRangeRecords.push({ startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly" });
+          while (batchRangeRecords.length < 3) batchRangeRecords.push({ startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly", otherLabel: "其他" });
         }
         if (data.overhaulSettings && typeof data.overhaulSettings === "object") {
           overhaulSettings.startDay = Number(data.overhaulSettings.startDay || 0);
@@ -2893,8 +2843,109 @@
     function keyOf(value) {
       return String(Number(value));
     }
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    }
+    function normalizeOtherCodeLabel(value) {
+      const trimmed = String(value || "").trim().slice(0, 20);
+      return trimmed || "其他";
+    }
+    function getOtherCodeLabelForDay(day) {
+      const record = manualRecords[day] || {};
+      return normalizeOtherCodeLabel(record.otherLabel || "其他");
+    }
+    function getLabelForDay(code, day) {
+      if (Number(code) === 8.9) return getOtherCodeLabelForDay(day);
+      return getLabel(code);
+    }
+    function getOtherCodeLabelForDayInfo(dayInfo) {
+      return normalizeOtherCodeLabel(dayInfo && dayInfo.otherLabel ? dayInfo.otherLabel : "其他");
+    }
+    function getLabelForDayInfo(code, dayInfo) {
+      if (Number(code) === 8.9) return getOtherCodeLabelForDayInfo(dayInfo);
+      return getLabel(code);
+    }
+    function saveOtherCodeLabelForDay(day, value) {
+      if (!manualRecords[day]) manualRecords[day] = {};
+      manualRecords[day].otherLabel = normalizeOtherCodeLabel(value);
+      saveCurrentMonthState();
+    }
     function getLabel(code) {
       return CODE_LABELS[keyOf(code)] || `代碼${code}`;
+    }
+    function hasDecimalCode(code) {
+      return String(code).includes(".");
+    }
+    function isSingleEndingLabel(label) {
+      const text = String(label || "").trim();
+      return text.endsWith("日") || text.endsWith("假");
+    }
+    function getCompoundCandidateLabel(code, day) {
+      if (Number(code) === 8.9) return getOtherCodeLabelForDay(day);
+      return getLabel(code);
+    }
+    function isCompoundLeaveCodeForDay(code, day) {
+      const numericCode = Number(code);
+      const label = getCompoundCandidateLabel(numericCode, day);
+      if (!hasDecimalCode(numericCode)) return false;
+      if (numericCode === 8.9 && normalizeOtherCodeLabel(label) === "其他") return false;
+      if (isSingleEndingLabel(label)) return false;
+      return isLeaveCode(numericCode);
+    }
+    function getCompoundPartsForDay(code, day) {
+      const label = getCompoundCandidateLabel(code, day).replace(/\s+/g, "");
+      if (!isCompoundLeaveCodeForDay(code, day)) return [];
+      if (label.length <= 1) return [label || "項目"];
+      return Array.from(label).slice(0, 4);
+    }
+    function getCompoundSplitRecord(day) {
+      const record = manualRecords[day] || {};
+      return record.compoundSplit && typeof record.compoundSplit === "object" ? record.compoundSplit : {};
+    }
+    function getCompoundSplitValue(day, part) {
+      const split = getCompoundSplitRecord(day);
+      const value = split[part];
+      return value === undefined || value === "" ? "" : String(value);
+    }
+    function hasCompoundSplitInput(dayInfo) {
+      const split = getCompoundSplitRecord(dayInfo.day);
+      return Object.values(split).some(value => String(value ?? "").trim() !== "");
+    }
+    function getCompoundSplitTotalHours(dayInfo) {
+      const split = getCompoundSplitRecord(dayInfo.day);
+      return Object.values(split).reduce((sum, value) => sum + Math.max(0, Number(value) || 0), 0);
+    }
+    function calcCompoundFullDayDeduct(dayInfo) {
+      const code = Number(dayInfo.actualCode);
+      if (isSpecialDeductDay(dayInfo) && Math.trunc(code) >= 5 && Math.trunc(code) < 9) {
+        return Math.max(0, calcD11BaseByWeight(dayInfo) - 8);
+      }
+      return 0;
+    }
+    function getCompoundFullDayThresholdHours(dayInfo) {
+      if (!isLeaveCode(dayInfo.actualCode) || Number(dayInfo.baseCode) === 0) return 0;
+      return Math.max(0, calcD11BaseByWeight(dayInfo) + calcD11PositiveAdjustment(dayInfo) - calcCompoundFullDayDeduct(dayInfo));
+    }
+    function isCompoundSplitPartialLeave(dayInfo) {
+      if (!isCompoundLeaveCodeForDay(dayInfo.actualCode, dayInfo.day)) return false;
+      if (!hasCompoundSplitInput(dayInfo)) return false;
+      const threshold = getCompoundFullDayThresholdHours(dayInfo);
+      if (threshold <= 0) return false;
+      return getCompoundSplitTotalHours(dayInfo) < threshold;
+    }
+    function saveCompoundSplitValue(day, part, value) {
+      if (!manualRecords[day]) manualRecords[day] = {};
+      if (!manualRecords[day].compoundSplit || typeof manualRecords[day].compoundSplit !== "object") manualRecords[day].compoundSplit = {};
+      const raw = String(value || "").replace(/[^0-9.]/g, "");
+      const numeric = raw === "" ? "" : Math.max(0, Math.round((Number(raw) || 0) * 10) / 10);
+      if (numeric === "") delete manualRecords[day].compoundSplit[part];
+      else manualRecords[day].compoundSplit[part] = numeric;
+      if (Object.keys(manualRecords[day].compoundSplit).length === 0) delete manualRecords[day].compoundSplit;
+      saveCurrentMonthState();
+    }
+    function clearCompoundSplit(day) {
+      if (manualRecords[day]) delete manualRecords[day].compoundSplit;
+      saveCurrentMonthState();
     }
     function loadCodeFavorites() {
       try {
@@ -2918,18 +2969,58 @@
       saveCodeFavorites();
     }
     function getFavoriteCodeOptions() { return CODE_OPTIONS.filter(code => isCodeFavorite(code)); }
-    function buildCodeOptionRow(code, selectedCode, favoriteOnly) {
-      const favorite = isCodeFavorite(code);
-      const selected = Number(code) === Number(selectedCode);
+    function buildCompoundSplitPanel(code, day, panelKey) {
+      const parts = getCompoundPartsForDay(code, day);
+      if (!parts.length) return "";
+      const fields = parts.map(part => `
+        <label class="compound-split-field">
+          <span>${escapeHtml(part)}：</span>
+          <input class="compound-split-input" type="text" inputmode="decimal" value="${escapeHtml(getCompoundSplitValue(day, part))}" data-compound-day="${day}" data-compound-part="${escapeHtml(part)}" />
+          <span>HR</span>
+        </label>
+      `).join("");
       return `
-        <div class="code-option-row ${selected ? "selected" : ""}" data-code-row="${code}">
-          <button class="code-star-btn" type="button" data-code-star="${code}" title="${favorite ? "取消我的最愛" : "加入我的最愛"}">${favorite ? "★" : "☆"}</button>
-          <button class="code-option-btn" type="button" data-code-option="${code}">${favoriteOnly ? "★" : ""}${code} ${getLabel(code)}</button>
+        <div class="compound-split-panel collapsed-detail" data-compound-panel="${panelKey}">
+          <div class="compound-split-title">複合式假別時數拆分</div>
+          <div class="compound-split-grid">${fields}</div>
+          <div class="compound-split-hint">未輸入時沿用原始規則；已輸入且加總達 D11 視為全日，未達 D11 視為部分請假，D10=15。</div>
+          <button class="compound-split-clear" type="button" data-compound-clear="${day}">清除拆分時數</button>
         </div>
       `;
     }
+    function buildCompoundToggleButton(code, day, panelKey) {
+      if (!isCompoundLeaveCodeForDay(code, day)) return "";
+      return `<button class="compound-toggle-btn" type="button" data-compound-toggle="${panelKey}" title="輸入複合式假別時數">＋</button>`;
+    }
+    function buildCodeOptionRow(code, selectedCode, favoriteOnly, day) {
+      const favorite = isCodeFavorite(code);
+      const selected = Number(code) === Number(selectedCode);
+      const panelKey = `${day}-${code}-${favoriteOnly ? "fav" : "all"}`;
+      const compoundButton = buildCompoundToggleButton(code, day, panelKey);
+      const compoundClass = compoundButton ? "compound-code-row" : "";
+      const compoundPanel = compoundButton ? buildCompoundSplitPanel(code, day, panelKey) : "";
+      if (Number(code) === 8.9) {
+        return `
+        <div class="code-option-row code-other-row ${compoundClass} ${selected ? "selected" : ""}" data-code-row="${code}">
+          <button class="code-star-btn" type="button" data-code-star="${code}" title="${favorite ? "取消我的最愛" : "加入我的最愛"}">${favorite ? "★" : "☆"}</button>
+          <button class="code-option-btn" type="button" data-code-option="${code}">${favoriteOnly ? "★" : ""}${code}</button>
+          <input class="code-other-name-input" type="text" value="${escapeHtml(getOtherCodeLabelForDay(day))}" maxlength="20" data-other-code-input="1" data-other-code-day="${day}" title="點一下全選，可改成該日專用名稱" />
+          ${compoundButton}
+        </div>
+        ${compoundPanel}
+      `;
+      }
+      return `
+        <div class="code-option-row ${compoundClass} ${selected ? "selected" : ""}" data-code-row="${code}">
+          <button class="code-star-btn" type="button" data-code-star="${code}" title="${favorite ? "取消我的最愛" : "加入我的最愛"}">${favorite ? "★" : "☆"}</button>
+          <button class="code-option-btn" type="button" data-code-option="${code}">${favoriteOnly ? "★" : ""}${code} ${getLabel(code)}</button>
+          ${compoundButton}
+        </div>
+        ${compoundPanel}
+      `;
+    }
     function buildCodePickerHtml(day, selectedCode) {
-      return `<div class="code-picker" data-code-picker="${day}"><button class="code-picker-button" type="button" data-code-picker-button="${day}">${selectedCode} ${getLabel(selectedCode)}</button></div>`;
+      return `<div class="code-picker" data-code-picker="${day}"><button class="code-picker-button" type="button" data-code-picker-button="${day}">${selectedCode} ${getLabelForDay(selectedCode, day)}</button></div>`;
     }
     function ensureCodePickerPortal() {
       let portal = document.getElementById("codePickerPortal");
@@ -2963,8 +3054,8 @@
     }
     function buildCodePickerPortalHtml(day, selectedCode, allOpen) {
       const favoriteOptions = getFavoriteCodeOptions();
-      const favoriteHtml = favoriteOptions.length ? favoriteOptions.map(code => buildCodeOptionRow(code, selectedCode, true)).join("") : `<div class="code-empty-favorite">未設定我的最愛</div>`;
-      const allHtml = CODE_OPTIONS.map(code => buildCodeOptionRow(code, selectedCode, false)).join("");
+      const favoriteHtml = favoriteOptions.length ? favoriteOptions.map(code => buildCodeOptionRow(code, selectedCode, true, day)).join("") : `<div class="code-empty-favorite">未設定我的最愛</div>`;
+      const allHtml = CODE_OPTIONS.map(code => buildCodeOptionRow(code, selectedCode, false, day)).join("");
       return `
         <div class="code-picker-portal-backdrop" data-code-portal-close="1"></div>
         <div class="code-picker-portal-sheet" role="dialog" aria-modal="true" aria-label="代碼選單" data-code-portal-day="${day}">
@@ -3015,6 +3106,9 @@
       closeCodePickerPortal();
       if (!manualRecords[day]) manualRecords[day] = {};
       manualRecords[day].code = Number(code);
+      if (Number(code) === 8.9) manualRecords[day].otherLabel = getOtherCodeLabelForDay(day);
+      if (Number(code) !== 8.9) delete manualRecords[day].otherLabel;
+      if (!isCompoundLeaveCodeForDay(Number(code), day)) delete manualRecords[day].compoundSplit;
       if (!isLeaveCode(Number(code))) delete manualRecords[day].leaveHours;
       if (Number(code) !== 4) delete manualRecords[day].trainingMode;
       saveCurrentMonthState();
@@ -3056,6 +3150,42 @@
           event.stopPropagation();
           if (!activeCodePickerPortalState) return;
           selectActualCodeForDay(activeCodePickerPortalState.day, Number(btn.dataset.codeOption));
+        });
+      });
+      portal.querySelectorAll("[data-other-code-input]").forEach(input => {
+        input.addEventListener("click", event => { event.stopPropagation(); input.select(); });
+        input.addEventListener("focus", () => { input.select(); });
+        input.addEventListener("input", () => { saveOtherCodeLabelForDay(Number(input.dataset.otherCodeDay), input.value); });
+        input.addEventListener("change", () => {
+          saveOtherCodeLabelForDay(Number(input.dataset.otherCodeDay), input.value);
+          if (activeCodePickerPortalState) renderCodePickerPortal(activeCodePickerPortalState.day, activeCodePickerPortalState.allOpen, 0);
+          renderAll(false);
+        });
+      });
+      portal.querySelectorAll("[data-compound-toggle]").forEach(btn => {
+        btn.addEventListener("click", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          const panel = portal.querySelector(`[data-compound-panel="${btn.dataset.compoundToggle}"]`);
+          if (panel) panel.classList.toggle("collapsed-detail");
+        });
+      });
+      portal.querySelectorAll("[data-compound-day][data-compound-part]").forEach(input => {
+        input.addEventListener("click", event => { event.stopPropagation(); input.select(); });
+        input.addEventListener("focus", () => { input.select(); });
+        input.addEventListener("input", () => {
+          input.value = String(input.value || "").replace(/[^0-9.]/g, "");
+          saveCompoundSplitValue(Number(input.dataset.compoundDay), input.dataset.compoundPart, input.value);
+        });
+        input.addEventListener("change", () => { renderAll(false); });
+      });
+      portal.querySelectorAll("[data-compound-clear]").forEach(btn => {
+        btn.addEventListener("click", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          clearCompoundSplit(Number(btn.dataset.compoundClear));
+          if (activeCodePickerPortalState) renderCodePickerPortal(activeCodePickerPortalState.day, activeCodePickerPortalState.allOpen, 0);
+          renderAll(false);
         });
       });
     }
@@ -3312,6 +3442,7 @@
     }
     function hasPartialLeaveHrText(dayInfo) {
       const record = manualRecords[dayInfo.day] || {};
+      if (isCompoundSplitPartialLeave(dayInfo)) return true;
       return isLeaveCode(dayInfo.actualCode) && record.leaveHours !== undefined && Number(record.leaveHours) > 0;
     }
     function isWeekendTrainingClass(dayInfo) {
@@ -3322,6 +3453,7 @@
       const code = Number(dayInfo.actualCode);
       if (!isLeaveCode(code)) return 0;
       const record = manualRecords[dayInfo.day] || {};
+      if (isCompoundLeaveCodeForDay(code, dayInfo.day) && hasCompoundSplitInput(dayInfo)) return getCompoundSplitTotalHours(dayInfo);
       if (record.leaveHours !== undefined && Number(record.leaveHours) > 0) return Number(record.leaveHours);
       if (record.code !== undefined) return Number(dayInfo.baseHours || 0);
       return Number(dayInfo.leaveHours || 0);
@@ -3352,7 +3484,7 @@
         return `新年${actionName}${valueName}`;
       }
       if (isLeaveCode(code)) {
-        const label = getLabel(code);
+        const label = getLabelForDayInfo(code, dayInfo);
         return hasPartialLeaveHrText(dayInfo) ? `${label}${fmtHourWithUnit(getEffectiveLeaveHours(dayInfo))}` : label;
       }
       if (isWorkCode(code)) {
@@ -3371,7 +3503,7 @@
       if (isLeaveCode(code)) {
         return hasPartialLeaveHrText(dayInfo) ? fmtHourWithUnit(getEffectiveLeaveHours(dayInfo)) : "";
       }
-      if (code > 9) return getLabel(code);
+      if (code > 9) return getLabelForDayInfo(code, dayInfo);
       return "";
     }
     function calcElectionD10AdjustmentMinutes(dayInfo) {
@@ -3396,6 +3528,9 @@
       if (isOverhaulActiveDay(dayInfo.day)) return 0;
       if (code === 0 || code === 9 || code === 10) return trainingMinutes;
       if (isLeaveCode(code)) {
+        if (isCompoundLeaveCodeForDay(code, dayInfo.day) && hasCompoundSplitInput(dayInfo)) {
+          return isCompoundSplitPartialLeave(dayInfo) ? 15 + trainingMinutes : trainingMinutes;
+        }
         if (isWorkCode(baseCode) && hasPartialLeaveHrText(dayInfo)) return 15 + trainingMinutes;
         return trainingMinutes;
       }
@@ -3651,7 +3786,7 @@
       if (isLeaveCode(code)) {
         if (isWeekendTrainingClass(dayInfo)) return "受訓(上課)";
         if (isRestTextForD11(dayInfo.changeText)) return dayInfo.changeText;
-        const leaveLabel = getLabel(code);
+        const leaveLabel = getLabelForDayInfo(code, dayInfo);
         if (hasPartialLeaveHrText(dayInfo)) {
           return `${leaveLabel}${fmtHourWithUnit(getEffectiveLeaveHours(dayInfo))}(${baseLabel})`;
         }
@@ -3662,7 +3797,7 @@
         if (isAdjustCode(code)) return `調${valueName.replace("值", "")}`;
         return valueName;
       }
-      return dayInfo.changeText || getLabel(code);
+      return dayInfo.changeText || getLabelForDayInfo(code, dayInfo);
     }
 
     function getNextDayInfoForCalendarClosure(dayInfo, allDays) {
@@ -4041,6 +4176,8 @@
           cycleIndex: base.cycleIndex,
           actualCode,
           leaveHours,
+          otherLabel: record.otherLabel || "",
+          compoundSplit: record.compoundSplit || null,
           holidayName: calendarData.holidayMap.get(dateKey(year, month, day)) || "",
           isWeekend: current.getDay() === 0 || current.getDay() === 6
         };
@@ -4078,6 +4215,41 @@
       if (batchToggleIcon) batchToggleIcon.textContent = batchPanelOpen ? "－" : "＋";
       if (batchContent) batchContent.classList.toggle("open", batchPanelOpen);
     }
+    function buildBatchCodePickerHtml(index, selectedCode) {
+      const record = normalizeBatchRangeRecord(batchRangeRecords[index] || {});
+      const label = Number(selectedCode) === 8.9 ? normalizeOtherCodeLabel(record.otherLabel || "其他") : getLabel(selectedCode);
+      return `<div class="batch-code-picker" data-batch-code-picker="${index}"><button class="batch-code-picker-button" type="button" data-batch-code-button="${index}" data-selected-code="${selectedCode}">${selectedCode} ${label}</button></div>`;
+    }
+    function ensureBatchCodePickerPortal() {
+      let portal = document.getElementById("batchCodePickerPortal");
+      if (!portal) { portal = document.createElement("div"); portal.id = "batchCodePickerPortal"; portal.className = "code-picker-portal batch-code-picker-portal"; document.body.appendChild(portal); }
+      return portal;
+    }
+    function closeBatchCodePickerPortal() {
+      const portal = document.getElementById("batchCodePickerPortal");
+      if (portal) { portal.classList.remove("open", "all-open"); portal.innerHTML = ""; portal.setAttribute("aria-hidden", "true"); }
+    }
+    function buildBatchCodeOptionRow(code, selectedCode, index) {
+      const selected = Number(code) === Number(selectedCode);
+      const record = normalizeBatchRangeRecord(batchRangeRecords[index] || {});
+      if (Number(code) === 8.9) return `<div class="batch-code-option-row batch-other-row ${selected ? "selected" : ""}" data-batch-code-row="${code}"><button class="batch-code-option-btn" type="button" data-batch-code-option="${code}">${code}</button><input class="batch-other-name-input" type="text" value="${escapeHtml(normalizeOtherCodeLabel(record.otherLabel || "其他"))}" maxlength="20" data-batch-other-code-input="1" title="點一下全選，可改成這一筆批次專用名稱" /></div>`;
+      return `<div class="batch-code-option-row ${selected ? "selected" : ""}" data-batch-code-row="${code}"><button class="batch-code-option-btn" type="button" data-batch-code-option="${code}">${code} ${getLabel(code)}</button></div>`;
+    }
+    function buildBatchCodePickerPortalHtml(index) {
+      const record = normalizeBatchRangeRecord(batchRangeRecords[index] || {});
+      const optionHtml = BATCH_RANGE_CODES.map(code => buildBatchCodeOptionRow(code, record.code, index)).join("");
+      return `<div class="code-picker-portal-backdrop" data-batch-code-portal-close="1"></div><div class="code-picker-portal-sheet" role="dialog" aria-modal="true" aria-label="批次假別選單" data-batch-code-portal-index="${index}"><div class="code-picker-portal-header"><div><div class="code-picker-portal-title">第 ${index + 1} 筆假別</div><div class="code-picker-portal-subtitle">點選假別即可套用，8.9 名稱為本批次專用</div></div><button class="code-picker-portal-close" type="button" data-batch-code-portal-close="1">關閉</button></div><div class="code-picker-portal-scroll"><div class="code-picker-portal-section-title">全部假別</div><div class="batch-code-option-list">${optionHtml}</div></div></div>`;
+    }
+    function renderBatchCodePickerPortal(index) { const portal = ensureBatchCodePickerPortal(); portal.innerHTML = buildBatchCodePickerPortalHtml(index); portal.classList.add("open", "all-open"); portal.setAttribute("aria-hidden", "false"); bindBatchCodePickerPortalEvents(portal, index); }
+    function openBatchCodePicker(index) { closeCodePickerPortal(); renderBatchCodePickerPortal(index); }
+    function selectBatchCode(index, code) { if (!batchRangeRecords[index]) batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly", otherLabel: "其他" }; batchRangeRecords[index].code = Number(code); if (Number(code) === 8.9) batchRangeRecords[index].otherLabel = normalizeOtherCodeLabel(batchRangeRecords[index].otherLabel || "其他"); if (Number(code) === 4) batchRangeRecords[index].mode = "all"; saveCurrentMonthState(); closeBatchCodePickerPortal(); renderAll(false); }
+    function bindBatchCodePickerPortalEvents(portal, index) {
+      portal.querySelectorAll("[data-batch-code-portal-close]").forEach(btn => btn.addEventListener("click", event => { event.preventDefault(); event.stopPropagation(); closeBatchCodePickerPortal(); }));
+      portal.querySelectorAll("[data-batch-code-option]").forEach(btn => btn.addEventListener("click", event => { event.preventDefault(); event.stopPropagation(); selectBatchCode(index, Number(btn.dataset.batchCodeOption)); }));
+      portal.querySelectorAll("[data-batch-other-code-input]").forEach(input => { input.addEventListener("click", event => { event.stopPropagation(); input.select(); }); input.addEventListener("focus", () => input.select()); input.addEventListener("input", () => { if (!batchRangeRecords[index]) batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 8.9, leaveHours: 0, mode: "workOnly", otherLabel: "其他" }; batchRangeRecords[index].otherLabel = normalizeOtherCodeLabel(input.value); saveCurrentMonthState(); }); input.addEventListener("change", () => { if (!batchRangeRecords[index]) batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 8.9, leaveHours: 0, mode: "workOnly", otherLabel: "其他" }; batchRangeRecords[index].otherLabel = normalizeOtherCodeLabel(input.value); saveCurrentMonthState(); renderBatchCodePickerPortal(index); renderAll(false); }); });
+    }
+    function bindBatchCodePickerEvents(container) { container.querySelectorAll("[data-batch-code-button]").forEach(btn => btn.addEventListener("click", event => { event.preventDefault(); event.stopPropagation(); openBatchCodePicker(Number(btn.dataset.batchCodeButton)); })); }
+
     function buildBatchCodeOptions(selectedCode) {
       return BATCH_RANGE_CODES.map(code => {
         const label = BATCH_RANGE_LABELS[keyOf(code)] || getLabel(code);
@@ -4101,7 +4273,8 @@
         endDay: hasBothDays ? Math.max(startDay, endDay) : endDay,
         code,
         leaveHours: 0,
-        mode: code === 4 ? "all" : (record.mode === "all" ? "all" : "workOnly")
+        mode: code === 4 ? "all" : (record.mode === "all" ? "all" : "workOnly"),
+        otherLabel: normalizeOtherCodeLabel(record.otherLabel || "其他")
       };
     }
     function applyBatchRangeRecord(index) {
@@ -4117,6 +4290,7 @@
         const base = calcBaseShift(year, month, day, shiftGroup);
         if (record.mode === "workOnly" && Number(base.baseCode) === 0) continue;
         manualRecords[day] = { code: record.code };
+        if (Number(record.code) === 8.9) manualRecords[day].otherLabel = normalizeOtherCodeLabel(record.otherLabel || "其他");
         if (record.leaveHours > 0) manualRecords[day].leaveHours = record.leaveHours;
       }
       batchRangeRecords[index] = record;
@@ -4131,10 +4305,11 @@
           if (!current) continue;
           const sameCode = Number(current.code) === Number(record.code);
           const sameHours = Number(current.leaveHours || 0) === Number(record.leaveHours || 0);
-          if (sameCode && sameHours) delete manualRecords[day];
+          const sameOtherLabel = Number(record.code) !== 8.9 || normalizeOtherCodeLabel(current.otherLabel || "其他") === normalizeOtherCodeLabel(record.otherLabel || "其他");
+          if (sameCode && sameHours && sameOtherLabel) delete manualRecords[day];
         }
       }
-      batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly" };
+      batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly", otherLabel: "其他" };
       saveCurrentMonthState();
       renderAll(false);
     }
@@ -4157,10 +4332,10 @@
               <div class="batch-field-title">迄日</div>
               ${buildSpecialDateButton("batchEnd", idx, safeRecord.endDay)}
             </div>
-            <label>
+            <div>
               <div class="batch-field-title">假別</div>
-              <select class="batch-select" data-batch-field="code" data-index="${idx}">${buildBatchCodeOptions(safeRecord.code)}</select>
-            </label>
+              ${buildBatchCodePickerHtml(idx, safeRecord.code)}
+            </div>
             <label>
               <div class="batch-field-title">模式</div>
               <select class="batch-select" data-batch-field="mode" data-index="${idx}" ${safeRecord.code === 4 ? "disabled" : ""}>
@@ -4180,7 +4355,7 @@
         sel.addEventListener("change", function() {
           const index = Number(this.dataset.index);
           const field = this.dataset.batchField;
-          if (!batchRangeRecords[index]) batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly" };
+          if (!batchRangeRecords[index]) batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly", otherLabel: "其他" };
           if (["startDay", "endDay", "code", "leaveHours"].includes(field)) {
             batchRangeRecords[index][field] = Number(this.value);
           } else {
@@ -4191,6 +4366,7 @@
           renderAll(false);
         });
       });
+      bindBatchCodePickerEvents(list);
       list.querySelectorAll("button[data-batch-action]").forEach(btn => {
         btn.addEventListener("click", function() {
           const index = Number(this.dataset.index);
@@ -4338,11 +4514,11 @@
       if (group === "election") specialDates.election[index] = day;
       if (group === "training") specialDates.training[index].day = day;
       if (group === "batchStart") {
-        if (!batchRangeRecords[index]) batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly" };
+        if (!batchRangeRecords[index]) batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly", otherLabel: "其他" };
         batchRangeRecords[index].startDay = day;
       }
       if (group === "batchEnd") {
-        if (!batchRangeRecords[index]) batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly" };
+        if (!batchRangeRecords[index]) batchRangeRecords[index] = { startDay: 0, endDay: 0, code: 5, leaveHours: 0, mode: "workOnly", otherLabel: "其他" };
         batchRangeRecords[index].endDay = day;
       }
       if (group === "overhaulStart") overhaulSettings.startDay = day;
@@ -4532,9 +4708,11 @@
           if (this.value === "class") {
             manualRecords[day].trainingMode = "class";
             delete manualRecords[day].leaveHours;
+            delete manualRecords[day].compoundSplit;
           } else {
             manualRecords[day].leaveHours = Number(this.value);
             delete manualRecords[day].trainingMode;
+            delete manualRecords[day].compoundSplit;
           }
           saveCurrentMonthState();
           renderAll(false);
@@ -4791,11 +4969,7 @@
         updateSpecialSummary();
       });
       const returnTodayBtn = document.getElementById("returnTodayBtn");
-      if (returnTodayBtn) {
-        returnTodayBtn.addEventListener("click", () => {
-          returnToTodayMonth();
-        });
-      }
+      if (returnTodayBtn) returnTodayBtn.addEventListener("click", () => returnToTodayMonth());
       const rocYearInput = document.getElementById("rocYear");
       rocYearInput.setAttribute("maxlength", "3");
       rocYearInput.addEventListener("focus", function() {
@@ -4896,6 +5070,7 @@
       });
       document.addEventListener("click", event => {
         if (!event.target.closest(".code-picker") && !event.target.closest("#codePickerPortal")) closeAllCodePickers(null);
+        if (!event.target.closest(".batch-code-picker") && !event.target.closest("#batchCodePickerPortal")) closeBatchCodePickerPortal();
       });
       window.addEventListener("beforeunload", () => {
         saveCurrentMonthState();
