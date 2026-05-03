@@ -2187,6 +2187,35 @@
     .reset-confirm-ok:hover,.reset-confirm-ok:focus-visible { outline:1px solid rgba(253,224,71,.74); background:linear-gradient(90deg,rgba(220,38,38,.36),rgba(251,191,36,.28)); }
     @media(max-width:760px){ .compound-split-actions{grid-template-columns:1fr!important}.compound-split-confirm{min-height:38px;font-size:12px}.reset-confirm-card{border-radius:20px}.reset-confirm-title{font-size:24px}.reset-confirm-body{font-size:21px}.reset-confirm-warning{font-size:15px}.reset-confirm-btn{height:48px;font-size:16px} }
 
+
+    /* === 假別統計資訊：月累計、考勤年度、會計年度 === */
+    .leave-stats-panel { margin-top: 16px; padding: 0; overflow: hidden; }
+    .leave-stats-content { padding: 16px; display: grid; gap: 14px; }
+    .leave-stats-card { border: 1px solid rgba(246, 196, 83, 0.24); border-radius: 16px; background: rgba(0, 0, 0, 0.18); padding: 15px; box-shadow: inset 0 0 18px rgba(246, 196, 83, 0.035); }
+    .leave-stats-title { color: #f6c453; font-size: 15px; font-weight: 950; letter-spacing: 0.12em; text-shadow: 0 0 10px rgba(246,196,83,.35); margin-bottom: 12px; }
+    .leave-stats-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+    .leave-stats-year-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: stretch; }
+    .leave-stats-year-box { border: 1px solid rgba(16, 185, 129, 0.22); border-radius: 14px; background: rgba(16, 185, 129, 0.055); padding: 13px; }
+    .leave-stats-year-title { color: #a7f3d0; font-size: 14px; font-weight: 950; letter-spacing: 0.10em; text-align: center; margin-bottom: 10px; white-space: nowrap; }
+    .leave-stats-year-box .leave-stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .leave-stats-year-box.accounting-year .leave-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .leave-stat-item { min-width: 0; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; background: rgba(255,255,255,.035); padding: 10px 8px; text-align: center; }
+    .leave-stat-label { color: #94a3b8; font-size: 12px; font-weight: 950; letter-spacing: 0.10em; white-space: nowrap; }
+    .leave-stat-value { margin-top: 6px; color: #f6c453; font-size: 18px; font-weight: 950; white-space: nowrap; text-shadow: 0 0 10px rgba(246,196,83,.28); }
+    .leave-stat-value.empty { color: #64748b; text-shadow: none; }
+    @media (max-width: 760px) {
+      .leave-stats-content { padding: 12px !important; gap: 10px !important; }
+      .leave-stats-card { padding: 11px !important; }
+      .leave-stats-grid { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 5px !important; }
+      .leave-stats-year-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+      .leave-stats-year-box .leave-stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+      .leave-stats-year-box.accounting-year .leave-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+      .leave-stat-item { padding: 8px 3px !important; border-radius: 10px !important; }
+      .leave-stats-title, .leave-stats-year-title { font-size: 12px !important; letter-spacing: 0.02em !important; }
+      .leave-stat-label { font-size: 10px !important; letter-spacing: 0 !important; }
+      .leave-stat-value { font-size: clamp(11px, 3.4vw, 15px) !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -2369,6 +2398,46 @@
           </div>
         </div>
       </details>
+
+      <section class="panel leave-stats-panel">
+        <div class="section-header-toggle">
+          <div>
+            <div>假別統計資訊</div>
+            <div id="leaveStatsSummary" class="special-summary">統計特休、身心調適假、病假、事假、家庭照顧假</div>
+          </div>
+          <div class="details-icon">＋</div>
+        </div>
+        <div class="leave-stats-content">
+          <div class="leave-stats-card">
+            <div id="leaveStatsMonthTitle" class="leave-stats-title">本月假別累計統計資訊</div>
+            <div class="leave-stats-grid">
+              <div class="leave-stat-item"><div class="leave-stat-label">特休</div><div id="leaveMonthSpecial" class="leave-stat-value empty">0HR</div></div>
+              <div class="leave-stat-item"><div class="leave-stat-label">身心</div><div id="leaveMonthMind" class="leave-stat-value empty">0HR</div></div>
+              <div class="leave-stat-item"><div class="leave-stat-label">病假</div><div id="leaveMonthSick" class="leave-stat-value empty">0HR</div></div>
+              <div class="leave-stat-item"><div class="leave-stat-label">事假</div><div id="leaveMonthPersonal" class="leave-stat-value empty">0HR</div></div>
+              <div class="leave-stat-item"><div class="leave-stat-label">家庭</div><div id="leaveMonthFamily" class="leave-stat-value empty">0HR</div></div>
+            </div>
+          </div>
+          <div class="leave-stats-year-grid">
+            <div class="leave-stats-year-box">
+              <div id="leaveStatsAttendanceTitle" class="leave-stats-year-title">考勤年度</div>
+              <div class="leave-stats-grid">
+                <div class="leave-stat-item"><div class="leave-stat-label">特休</div><div id="leaveAttendanceSpecial" class="leave-stat-value empty">0HR</div></div>
+                <div class="leave-stat-item"><div class="leave-stat-label">身心</div><div id="leaveAttendanceMind" class="leave-stat-value empty">0HR</div></div>
+                <div class="leave-stat-item"><div class="leave-stat-label">家庭</div><div id="leaveAttendanceFamily" class="leave-stat-value empty">0HR</div></div>
+              </div>
+            </div>
+            <div class="leave-stats-year-box accounting-year">
+              <div id="leaveStatsAccountingTitle" class="leave-stats-year-title">會計年度</div>
+              <div class="leave-stats-grid">
+                <div class="leave-stat-item"><div class="leave-stat-label">事假</div><div id="leaveAccountingPersonal" class="leave-stat-value empty">0HR</div></div>
+                <div class="leave-stat-item"><div class="leave-stat-label">病假</div><div id="leaveAccountingSick" class="leave-stat-value empty">0HR</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="panel stats-panel">
         <div class="holiday-benefit-grid">
           <div class="stat-card">
@@ -5064,6 +5133,7 @@
       });
       updateCollapsePanels();
       updateShiftSelectStyle();
+      renderLeaveStats(days);
       const substituteTargets = [
         { el: document.getElementById("substituteInfoTop"), baseClass: "substitute-top-value" },
         { el: document.getElementById("substituteInfo"), baseClass: "stat-value" }
@@ -5079,6 +5149,192 @@
         }
       });
     }
+
+
+    /* === 假別統計資訊：計算邏輯 BEGIN === */
+    function createEmptyLeaveStats() {
+      return { special: 0, mind: 0, sick: 0, personal: 0, family: 0 };
+    }
+    function addLeaveStats(target, source) {
+      Object.keys(target).forEach(key => { target[key] += Number(source[key] || 0); });
+      return target;
+    }
+    function roundLeaveStatHours(value) {
+      return Math.round((Number(value) || 0) * 2) / 2;
+    }
+    function formatLeaveStatValue(hours) {
+      const total = roundLeaveStatHours(hours);
+      if (total <= 0) return "0HR";
+      const days = Math.floor(total / 8);
+      const remain = roundLeaveStatHours(total - days * 8);
+      if (days > 0 && remain > 0) return `${days}天${fmtHour(remain)}HR`;
+      if (days > 0) return `${days}天`;
+      return `${fmtHour(total)}HR`;
+    }
+    function setLeaveStatText(id, hours) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = formatLeaveStatValue(hours);
+      el.classList.toggle("empty", roundLeaveStatHours(hours) <= 0);
+    }
+    function classifyLeaveStatByCode(code, dayInfo) {
+      const n = Number(code);
+      if (n >= 5 && n < 6) return "special";
+      if (n >= 7 && n < 8) return "sick";
+      if (n === 8) return "personal";
+      if (n === 8.5) return "family";
+      if (n === 8.6) return "mind";
+      if (n === 8.9) {
+        const label = typeof getLabelForDayInfo === "function" ? getLabelForDayInfo(n, dayInfo) : String(dayInfo.otherLabel || "");
+        if (label.includes("特")) return "special";
+        if (label.includes("身")) return "mind";
+        if (label.includes("家")) return "family";
+        if (label.includes("病")) return "sick";
+        if (label.includes("事")) return "personal";
+      }
+      return "";
+    }
+    function addCompoundSplitToLeaveStats(stats, split) {
+      if (!split || typeof split !== "object") return 0;
+      let used = 0;
+      Object.entries(split).forEach(([rawKey, rawValue]) => {
+        const key = String(rawKey || "").trim();
+        const value = Math.max(0, Number(rawValue) || 0);
+        if (value <= 0) return;
+        if (key.includes("特")) { stats.special += value; used += value; return; }
+        if (key.includes("身")) { stats.mind += value; used += value; return; }
+        if (key.includes("家")) { stats.family += value; used += value; return; }
+        if (key.includes("病")) { stats.sick += value; used += value; return; }
+        if (key.includes("事")) { stats.personal += value; used += value; return; }
+      });
+      return used;
+    }
+    function collectLeaveStatsFromDays(days) {
+      const stats = createEmptyLeaveStats();
+      (days || []).forEach(dayInfo => {
+        if (!dayInfo || dayInfo.isViolation) return;
+        if (dayInfo.changeText === "錯誤登錄" || dayInfo.noteText === "錯誤登錄") return;
+        const code = Number(dayInfo.actualCode);
+        if (!isLeaveCode(code)) return;
+        const record = manualRecords[dayInfo.day] || {};
+        const split = record.compoundSplit && typeof record.compoundSplit === "object" ? record.compoundSplit : (dayInfo.compoundSplit || null);
+        const splitUsedHours = addCompoundSplitToLeaveStats(stats, split);
+        if (splitUsedHours > 0) return;
+        const category = classifyLeaveStatByCode(code, dayInfo);
+        if (!category) return;
+        const leaveHours = Math.max(0, Number(getEffectiveLeaveHours(dayInfo)) || 0);
+        if (leaveHours > 0) stats[category] += leaveHours;
+      });
+      Object.keys(stats).forEach(key => { stats[key] = roundLeaveStatHours(stats[key]); });
+      return stats;
+    }
+    function applyLeaveStatsSnapshotForMonth(rocYear, month, shiftGroup, currentDays) {
+      const currentRocYear = Number(document.getElementById("rocYear").value);
+      const currentMonth = Number(document.getElementById("month").value);
+      const currentShift = document.getElementById("shiftGroup").value;
+      if (Number(rocYear) === currentRocYear && Number(month) === currentMonth && String(shiftGroup) === currentShift && Array.isArray(currentDays)) {
+        return collectLeaveStatsFromDays(currentDays);
+      }
+      const key = `personalOvertimeState:${shiftGroup}:${rocYear}:${month}`;
+      let data = null;
+      try { data = JSON.parse(localStorage.getItem(key) || "null"); } catch (err) { data = null; }
+      if (!data || !data.manualRecords) return createEmptyLeaveStats();
+      const backup = {
+        rocYear: document.getElementById("rocYear").value,
+        month: document.getElementById("month").value,
+        shiftGroup: document.getElementById("shiftGroup").value,
+        manualRecords: JSON.parse(JSON.stringify(manualRecords)),
+        specialDates: JSON.parse(JSON.stringify(specialDates)),
+        overhaulSettings: JSON.parse(JSON.stringify(overhaulSettings))
+      };
+      try {
+        document.getElementById("rocYear").value = rocYear;
+        document.getElementById("month").value = month;
+        document.getElementById("shiftGroup").value = shiftGroup;
+        clearObject(manualRecords);
+        Object.assign(manualRecords, data.manualRecords || {});
+        resetSpecialDatesToDefault();
+        if (data.specialDates && typeof data.specialDates === "object") {
+          specialDates.closure = Array.isArray(data.specialDates.closure) ? data.specialDates.closure : specialDates.closure;
+          specialDates.election = Array.isArray(data.specialDates.election) ? data.specialDates.election : specialDates.election;
+          specialDates.training = Array.isArray(data.specialDates.training) ? data.specialDates.training : specialDates.training;
+        }
+        resetOverhaulSettingsToDefault();
+        if (data.overhaulSettings && typeof data.overhaulSettings === "object") {
+          overhaulSettings.startDay = Number(data.overhaulSettings.startDay || 0);
+          overhaulSettings.endDay = Number(data.overhaulSettings.endDay || 0);
+          overhaulSettings.overrides = data.overhaulSettings.overrides && typeof data.overhaulSettings.overrides === "object" ? JSON.parse(JSON.stringify(data.overhaulSettings.overrides)) : {};
+        }
+        return collectLeaveStatsFromDays(buildDays());
+      } catch (err) {
+        console.warn("假別統計資訊計算失敗", err);
+        return createEmptyLeaveStats();
+      } finally {
+        document.getElementById("rocYear").value = backup.rocYear;
+        document.getElementById("month").value = backup.month;
+        document.getElementById("shiftGroup").value = backup.shiftGroup;
+        clearObject(manualRecords);
+        Object.assign(manualRecords, backup.manualRecords);
+        specialDates.closure = backup.specialDates.closure;
+        specialDates.election = backup.specialDates.election;
+        specialDates.training = backup.specialDates.training;
+        overhaulSettings.startDay = backup.overhaulSettings.startDay;
+        overhaulSettings.endDay = backup.overhaulSettings.endDay;
+        overhaulSettings.overrides = backup.overhaulSettings.overrides || {};
+      }
+    }
+    function getAttendanceYearMonthPairs(attendanceYear) {
+      const pairs = [];
+      for (let m = 11; m <= 12; m++) pairs.push({ rocYear: attendanceYear - 1, month: m });
+      for (let m = 1; m <= 10; m++) pairs.push({ rocYear: attendanceYear, month: m });
+      return pairs;
+    }
+    function getAccountingYearMonthPairs(accountingYear) {
+      const pairs = [];
+      for (let m = 1; m <= 12; m++) pairs.push({ rocYear: accountingYear, month: m });
+      return pairs;
+    }
+    function collectLeaveStatsForPairs(pairs, shiftGroup, currentDays) {
+      const total = createEmptyLeaveStats();
+      const currentRocYear = Number(document.getElementById("rocYear").value);
+      const currentMonth = Number(document.getElementById("month").value);
+      (pairs || []).forEach(pair => {
+        const stats = applyLeaveStatsSnapshotForMonth(pair.rocYear, pair.month, shiftGroup, (pair.rocYear === currentRocYear && pair.month === currentMonth) ? currentDays : null);
+        addLeaveStats(total, stats);
+      });
+      Object.keys(total).forEach(key => { total[key] = roundLeaveStatHours(total[key]); });
+      return total;
+    }
+    function renderLeaveStats(days) {
+      const rocYear = Number(document.getElementById("rocYear").value);
+      const month = Number(document.getElementById("month").value);
+      const shiftGroup = document.getElementById("shiftGroup").value;
+      const monthStats = collectLeaveStatsFromDays(days);
+      const attendanceYear = rocYear;
+      const accountingYear = rocYear;
+      const attendanceStats = collectLeaveStatsForPairs(getAttendanceYearMonthPairs(attendanceYear), shiftGroup, days);
+      const accountingStats = collectLeaveStatsForPairs(getAccountingYearMonthPairs(accountingYear), shiftGroup, days);
+      const monthTitle = document.getElementById("leaveStatsMonthTitle");
+      if (monthTitle) monthTitle.textContent = `${month}月假別累計統計資訊`;
+      const attendanceTitle = document.getElementById("leaveStatsAttendanceTitle");
+      if (attendanceTitle) attendanceTitle.textContent = `${attendanceYear}年考勤年度`;
+      const accountingTitle = document.getElementById("leaveStatsAccountingTitle");
+      if (accountingTitle) accountingTitle.textContent = `${accountingYear}年會計年度`;
+      const summary = document.getElementById("leaveStatsSummary");
+      if (summary) summary.textContent = `${month}月、本考勤年度與本會計年度累計統計`;
+      setLeaveStatText("leaveMonthSpecial", monthStats.special);
+      setLeaveStatText("leaveMonthMind", monthStats.mind);
+      setLeaveStatText("leaveMonthSick", monthStats.sick);
+      setLeaveStatText("leaveMonthPersonal", monthStats.personal);
+      setLeaveStatText("leaveMonthFamily", monthStats.family);
+      setLeaveStatText("leaveAttendanceSpecial", attendanceStats.special);
+      setLeaveStatText("leaveAttendanceMind", attendanceStats.mind);
+      setLeaveStatText("leaveAttendanceFamily", attendanceStats.family);
+      setLeaveStatText("leaveAccountingPersonal", accountingStats.personal);
+      setLeaveStatText("leaveAccountingSick", accountingStats.sick);
+    }
+    /* === 假別統計資訊：計算邏輯 END === */
+
     async function loadCalendar() {
       const rocYear = Number(document.getElementById("rocYear").value);
       const sync = document.getElementById("syncMessage");
