@@ -1788,135 +1788,71 @@
 
   
 
-    /* === 最終修正：移除實錄代碼標題列，修正手機版選單擠壓 === */
-    .code-picker-menu-head,
-    .code-picker-menu-title,
-    .code-picker-menu-note {
-      display: none !important;
-    }
-    .code-picker.open .code-picker-menu {
-      display: block !important;
-      writing-mode: horizontal-tb !important;
-      text-orientation: mixed !important;
-      white-space: normal !important;
-      overflow-x: hidden !important;
+    /* === 代碼選單手機滿版與捲動位置修正 === */
+    .code-picker.open.all-open .code-picker-menu {
       overflow-y: auto !important;
-      border-color: rgba(246, 196, 83, 0.52) !important;
-      background: linear-gradient(180deg, rgba(14, 16, 22, 0.985), rgba(5, 10, 18, 0.985)) !important;
-      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(16, 185, 129, 0.16), 0 0 22px rgba(246, 196, 83, 0.24), 0 0 34px rgba(16, 185, 129, 0.12) !important;
-      animation: codePickerSlideDownGold .18s ease both !important;
+      overscroll-behavior: contain !important;
+      scrollbar-gutter: stable !important;
     }
-    .code-all-toggle,
-    .code-option-row,
-    .code-star-btn,
-    .code-option-btn,
-    .code-empty-favorite {
-      writing-mode: horizontal-tb !important;
-      text-orientation: mixed !important;
-    }
-    .code-all-toggle {
-      display: block !important;
-      width: 100% !important;
-      min-height: 40px !important;
-      margin: 0 0 8px 0 !important;
-      padding: 9px 12px !important;
-      text-align: left !important;
-      white-space: nowrap !important;
-      border-color: rgba(246, 196, 83, 0.40) !important;
-      background: linear-gradient(90deg, rgba(246, 196, 83, 0.12), rgba(16, 185, 129, 0.10)) !important;
-      color: #fde68a !important;
-      text-shadow: 0 0 9px rgba(246, 196, 83, 0.36) !important;
-    }
-    .code-picker-favorites,
-    .code-picker-all {
+    .code-picker.open.all-open .code-picker-all:not(.collapsed-detail) {
       display: grid !important;
-      grid-template-columns: minmax(0, 1fr) !important;
-      gap: 4px !important;
-      width: 100% !important;
-      min-width: 0 !important;
     }
-    .code-picker-all.collapsed-detail {
-      display: none !important;
-    }
-    .code-option-row {
-      display: grid !important;
-      grid-template-columns: 56px minmax(0, 1fr) !important;
-      align-items: center !important;
-      gap: 6px !important;
-      width: 100% !important;
-      min-width: 0 !important;
-      min-height: 44px !important;
-      margin: 2px 0 !important;
-      border-radius: 10px !important;
-    }
-    .code-star-btn {
-      width: 56px !important;
-      min-width: 56px !important;
-      height: 44px !important;
-      min-height: 44px !important;
-      font-size: 23px !important;
-      line-height: 1 !important;
-      padding: 0 !important;
-      border-radius: 10px !important;
-      touch-action: manipulation !important;
-    }
-    .code-option-btn {
-      display: block !important;
-      width: 100% !important;
-      min-width: 0 !important;
-      height: 44px !important;
-      min-height: 44px !important;
-      padding: 0 10px !important;
-      text-align: left !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      font-size: 13px !important;
-      line-height: 44px !important;
-      touch-action: manipulation !important;
-    }
-    .code-empty-favorite {
-      width: 100% !important;
-      min-height: 40px !important;
-      padding: 8px 10px !important;
-      font-size: 12px !important;
-      line-height: 1.4 !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
+    .code-picker.open.all-open .code-all-toggle {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 3 !important;
+      margin-bottom: 10px !important;
+      backdrop-filter: blur(10px) !important;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.26), 0 0 14px rgba(246, 196, 83, 0.18) !important;
     }
     @media (max-width: 760px) {
       .code-picker.open .code-picker-menu {
-        position: fixed !important;
-        left: 12px !important;
+        left: max(10px, env(safe-area-inset-left)) !important;
         right: auto !important;
-        top: auto !important;
         bottom: max(12px, env(safe-area-inset-bottom)) !important;
-        transform: none !important;
-        width: calc(100vw - 24px) !important;
-        min-width: calc(100vw - 24px) !important;
-        max-width: calc(100vw - 24px) !important;
-        max-height: min(68vh, 520px) !important;
-        padding: 10px !important;
+        width: calc(100vw - 20px - env(safe-area-inset-left) - env(safe-area-inset-right)) !important;
+        min-width: 0 !important;
+        max-width: calc(100vw - 20px - env(safe-area-inset-left) - env(safe-area-inset-right)) !important;
+        max-height: min(46vh, 390px) !important;
+      }
+      .code-picker.open.all-open .code-picker-menu {
+        top: max(10px, env(safe-area-inset-top)) !important;
+        bottom: max(10px, env(safe-area-inset-bottom)) !important;
+        left: max(10px, env(safe-area-inset-left)) !important;
+        right: max(10px, env(safe-area-inset-right)) !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        height: auto !important;
+        max-height: calc(100dvh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+        padding: 12px !important;
         border-radius: 18px !important;
-        z-index: 50000 !important;
+        transform: none !important;
+        z-index: 60000 !important;
         animation: codePickerMobileSlideUpGold .22s ease both !important;
-        box-shadow: 0 -10px 46px rgba(0, 0, 0, 0.72), 0 0 0 1px rgba(246, 196, 83, 0.32), 0 0 28px rgba(246, 196, 83, 0.30), 0 0 42px rgba(16, 185, 129, 0.18) !important;
       }
-      .code-option-row {
-        grid-template-columns: 58px minmax(0, 1fr) !important;
-        min-height: 46px !important;
+      .code-picker.open.all-open .code-picker-favorites,
+      .code-picker.open.all-open .code-picker-all {
+        gap: 6px !important;
       }
-      .code-star-btn {
-        width: 58px !important;
-        min-width: 58px !important;
-        height: 46px !important;
-        min-height: 46px !important;
+      .code-picker.open.all-open .code-option-row {
+        grid-template-columns: 64px minmax(0, 1fr) !important;
+        min-height: 54px !important;
+        gap: 8px !important;
       }
-      .code-option-btn {
-        height: 46px !important;
-        min-height: 46px !important;
-        line-height: 46px !important;
+      .code-picker.open.all-open .code-star-btn {
+        width: 64px !important;
+        min-width: 64px !important;
+        height: 54px !important;
+        min-height: 54px !important;
+        font-size: 28px !important;
+      }
+      .code-picker.open.all-open .code-option-btn {
+        height: 54px !important;
+        min-height: 54px !important;
+        line-height: 54px !important;
+        font-size: 17px !important;
+        padding: 0 12px !important;
       }
     }
 
@@ -2633,22 +2569,29 @@
     function closeAllCodePickers(exceptPicker) {
       document.querySelectorAll(".code-picker.open").forEach(picker => {
         if (picker !== exceptPicker) {
-          picker.classList.remove("open");
+          picker.classList.remove("open", "all-open");
           const card = picker.closest(".day-card");
           if (card) card.classList.remove("code-picker-card-open");
         }
       });
     }
-    function openCodePickerByDay(day, openAllList) {
+    function openCodePickerByDay(day, openAllList, restoreScrollTop) {
       const picker = document.querySelector(`.code-picker[data-code-picker="${day}"]`);
       if (!picker) return;
       closeAllCodePickers(picker);
       picker.classList.add("open");
+      picker.classList.toggle("all-open", Boolean(openAllList));
       const card = picker.closest(".day-card");
       if (card) card.classList.add("code-picker-card-open");
-      if (openAllList) {
-        const allList = picker.querySelector(".code-picker-all");
-        if (allList) allList.classList.remove("collapsed-detail");
+      const allList = picker.querySelector(".code-picker-all");
+      if (allList) allList.classList.toggle("collapsed-detail", !openAllList);
+      if (restoreScrollTop !== undefined && restoreScrollTop !== null) {
+        const menu = picker.querySelector(".code-picker-menu");
+        if (menu) {
+          window.setTimeout(() => {
+            menu.scrollTop = Number(restoreScrollTop) || 0;
+          }, 0);
+        }
       }
     }
     function selectActualCodeForDay(day, code) {
@@ -2670,6 +2613,12 @@
           const isOpen = picker.classList.contains("open");
           closeAllCodePickers(picker);
           picker.classList.toggle("open", !isOpen);
+          if (isOpen) picker.classList.remove("all-open");
+          if (!isOpen) {
+            picker.classList.remove("all-open");
+            const allList = picker.querySelector(".code-picker-all");
+            if (allList) allList.classList.add("collapsed-detail");
+          }
           const card = picker.closest(".day-card");
           if (card) card.classList.toggle("code-picker-card-open", !isOpen);
         });
@@ -2679,7 +2628,16 @@
           event.stopPropagation();
           const picker = btn.closest(".code-picker");
           const allList = picker ? picker.querySelector(".code-picker-all") : null;
-          if (allList) allList.classList.toggle("collapsed-detail");
+          if (allList && picker) {
+            const willOpen = allList.classList.contains("collapsed-detail");
+            allList.classList.toggle("collapsed-detail", !willOpen);
+            picker.classList.toggle("all-open", willOpen);
+            btn.textContent = willOpen ? "收合全部代碼" : "全部代碼";
+            if (willOpen) {
+              const menu = picker.querySelector(".code-picker-menu");
+              if (menu) menu.scrollTop = 0;
+            }
+          }
         });
       });
       container.querySelectorAll(".code-star-btn").forEach(btn => {
@@ -2688,11 +2646,13 @@
           event.stopPropagation();
           const picker = btn.closest(".code-picker");
           const day = picker ? Number(picker.dataset.codePicker) : 0;
-          pendingCodePickerReopen = { day, allOpen: true };
+          const menu = picker ? picker.querySelector(".code-picker-menu") : null;
+          const scrollTop = menu ? menu.scrollTop : 0;
+          pendingCodePickerReopen = { day, allOpen: true, scrollTop };
           toggleCodeFavorite(btn.dataset.codeStar);
           renderAll(false);
           window.setTimeout(() => {
-            if (day) openCodePickerByDay(day, true);
+            if (day) openCodePickerByDay(day, true, scrollTop);
           }, 0);
         });
       });
@@ -4152,7 +4112,7 @@
       dayGrid.innerHTML = html;
       bindCodePickerEvents(dayGrid);
       if (pendingCodePickerReopen && pendingCodePickerReopen.day) {
-        openCodePickerByDay(pendingCodePickerReopen.day, pendingCodePickerReopen.allOpen);
+        openCodePickerByDay(pendingCodePickerReopen.day, pendingCodePickerReopen.allOpen, pendingCodePickerReopen.scrollTop);
         pendingCodePickerReopen = null;
       }
       dayGrid.querySelectorAll(".hour-select").forEach(sel => {
