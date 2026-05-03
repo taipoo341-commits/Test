@@ -1,6 +1,6 @@
 {
-  "name": "個人薪水計算系統",
-  "short_name": "個人待遇",
+  "name": "加班費計算系統",
+  "short_name": "加班費計算",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#0d0f12",
