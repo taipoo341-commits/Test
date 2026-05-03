@@ -2167,6 +2167,26 @@
     .compound-split-clear { min-height:32px; border:1px solid rgba(251,113,133,.42); border-radius:10px; background:rgba(244,63,94,.12); color:#fda4af; font-size:11px; font-weight:950; cursor:pointer; }
     @media(max-width:760px){ .code-picker-portal .compound-code-row{grid-template-columns:64px minmax(0,1fr) 56px!important}.code-picker-portal .code-other-row.compound-code-row{grid-template-columns:64px 72px minmax(0,1fr) 56px!important}.compound-toggle-btn{width:56px;min-width:56px;height:54px;font-size:40px}.compound-split-panel{margin-left:0}.compound-split-grid{grid-template-columns:1fr} }
 
+
+    /* === 複合式假別拆分確認與D11上限連動 === */
+    .compound-split-actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .compound-split-confirm { min-height:34px; border:1px solid rgba(52,211,153,.62); border-radius:10px; background:linear-gradient(90deg,rgba(16,185,129,.24),rgba(34,197,94,.18)); color:#a7f3d0; font-size:12px; font-weight:950; cursor:pointer; letter-spacing:.08em; box-shadow:0 0 14px rgba(16,185,129,.18), inset 0 0 12px rgba(16,185,129,.08); text-shadow:0 0 8px rgba(110,231,183,.45); }
+    .compound-split-confirm:hover,.compound-split-confirm:focus-visible { background:linear-gradient(90deg,rgba(16,185,129,.34),rgba(34,197,94,.26)); outline:1px solid rgba(110,231,183,.55); box-shadow:0 0 18px rgba(16,185,129,.28), inset 0 0 14px rgba(16,185,129,.12); }
+    .reset-confirm-modal { position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:120000; padding:18px; background:rgba(0,0,0,.72); backdrop-filter:blur(3px); }
+    .reset-confirm-modal.open { display:flex; }
+    .reset-confirm-card { width:min(430px,100%); border:2px solid rgba(251,191,36,.72); border-radius:22px; background:linear-gradient(180deg,rgba(31,20,6,.98),rgba(17,24,39,.98)); box-shadow:0 0 0 1px rgba(251,113,133,.28),0 0 34px rgba(251,191,36,.22),0 0 54px rgba(239,68,68,.16); overflow:hidden; }
+    .reset-confirm-header { padding:18px 18px 12px; border-bottom:1px solid rgba(251,191,36,.24); background:linear-gradient(90deg,rgba(127,29,29,.42),rgba(120,84,20,.28),rgba(15,23,42,.92)); }
+    .reset-confirm-title { color:#fde68a; font-size:22px; font-weight:950; letter-spacing:.08em; text-shadow:0 0 12px rgba(251,191,36,.55); }
+    .reset-confirm-subtitle { margin-top:6px; color:#fca5a5; font-size:13px; font-weight:900; line-height:1.45; }
+    .reset-confirm-body { padding:18px; color:#fff7ed; font-size:20px; font-weight:950; line-height:1.55; text-shadow:0 0 10px rgba(251,191,36,.18); }
+    .reset-confirm-warning { margin-top:10px; border:1px solid rgba(251,191,36,.34); border-radius:14px; background:rgba(251,191,36,.09); color:#fde68a; padding:11px 12px; font-size:14px; font-weight:900; line-height:1.55; }
+    .reset-confirm-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 18px 18px; }
+    .reset-confirm-btn { height:44px; border-radius:13px; font-size:15px; font-weight:950; cursor:pointer; letter-spacing:.08em; }
+    .reset-confirm-cancel { border:1px solid rgba(148,163,184,.30); background:rgba(148,163,184,.10); color:#e5e7eb; }
+    .reset-confirm-ok { border:1px solid rgba(251,191,36,.72); background:linear-gradient(90deg,rgba(220,38,38,.26),rgba(251,191,36,.20)); color:#fde68a; box-shadow:0 0 16px rgba(251,191,36,.18), inset 0 0 12px rgba(251,191,36,.08); }
+    .reset-confirm-ok:hover,.reset-confirm-ok:focus-visible { outline:1px solid rgba(253,224,71,.74); background:linear-gradient(90deg,rgba(220,38,38,.36),rgba(251,191,36,.28)); }
+    @media(max-width:760px){ .compound-split-actions{grid-template-columns:1fr!important}.compound-split-confirm{min-height:38px;font-size:12px}.reset-confirm-card{border-radius:20px}.reset-confirm-title{font-size:24px}.reset-confirm-body{font-size:21px}.reset-confirm-warning{font-size:15px}.reset-confirm-btn{height:48px;font-size:16px} }
+
   </style>
 </head>
 <body>
@@ -2463,6 +2483,22 @@
   </div>
   <div id="codePickerPortal" class="code-picker-portal" aria-hidden="true"></div>
   <div id="batchCodePickerPortal" class="code-picker-portal batch-code-picker-portal" aria-hidden="true"></div>
+  <div id="resetConfirmModal" class="reset-confirm-modal" aria-hidden="true">
+    <div class="reset-confirm-card" role="dialog" aria-modal="true" aria-labelledby="resetConfirmTitle">
+      <div class="reset-confirm-header">
+        <div id="resetConfirmTitle" class="reset-confirm-title">⚠ RESET 清除確認</div>
+        <div class="reset-confirm-subtitle">這是不可復原的資料清除動作</div>
+      </div>
+      <div class="reset-confirm-body">
+        <div id="resetConfirmMessage">確定要清除資料嗎？</div>
+        <div class="reset-confirm-warning">提醒：按下確認後，該範圍已輸入的考勤、薪資、天災、選舉日、批次與大修設定都會被清除。</div>
+      </div>
+      <div class="reset-confirm-actions">
+        <button id="resetConfirmCancel" class="reset-confirm-btn reset-confirm-cancel" type="button">取消</button>
+        <button id="resetConfirmOk" class="reset-confirm-btn reset-confirm-ok" type="button">確認清除</button>
+      </div>
+    </div>
+  </div>
   <div id="specialDateModal" class="special-date-modal" aria-hidden="true">
     <div class="special-date-card">
       <div id="specialDateTitle" class="special-date-title">選擇日期</div>
@@ -2716,9 +2752,33 @@
         applySalaryBasePayFromState(data);
       } catch (err) { console.warn("無法讀取當月資料", err); }
     }
-    function resetCurrentMonthState() {
+    let resetConfirmResolver = null;
+    function showResetConfirmDialog(message) {
+      const modal = document.getElementById("resetConfirmModal");
+      const messageEl = document.getElementById("resetConfirmMessage");
+      if (!modal || !messageEl) return Promise.resolve(window.confirm(message));
+      messageEl.textContent = message;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      return new Promise(resolve => {
+        resetConfirmResolver = resolve;
+      });
+    }
+    function closeResetConfirmDialog(result) {
+      const modal = document.getElementById("resetConfirmModal");
+      if (modal) {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+      }
+      if (resetConfirmResolver) {
+        const resolve = resetConfirmResolver;
+        resetConfirmResolver = null;
+        resolve(Boolean(result));
+      }
+    }
+    async function resetCurrentMonthState() {
       const month = Number(document.getElementById("month").value);
-      const confirmed = window.confirm(`確定要將${month}月的資料全部清除嗎？`);
+      const confirmed = await showResetConfirmDialog(`確定要將${month}月的資料全部清除嗎？`);
       if (!confirmed) return;
       const storageKey = activeStorageKey || getCurrentStorageKey();
       localStorage.removeItem(storageKey);
@@ -2735,10 +2795,10 @@
       salaryBasePaySource = "manual";
       renderAll(false);
     }
-    function resetCurrentYearState() {
+    async function resetCurrentYearState() {
       const rocYear = Number(document.getElementById("rocYear").value);
       const shiftGroup = document.getElementById("shiftGroup").value;
-      const confirmed = window.confirm(`確定要將${rocYear}年1~12月的資料全部清除嗎？`);
+      const confirmed = await showResetConfirmDialog(`確定要將${rocYear}年1~12月的資料全部清除嗎？`);
       if (!confirmed) return;
       for (let m = 1; m <= 12; m++) {
         localStorage.removeItem(`personalOvertimeState:${shiftGroup}:${rocYear}:${m}`);
@@ -2887,6 +2947,7 @@
     function isCompoundLeaveCodeForDay(code, day) {
       const numericCode = Number(code);
       const label = getCompoundCandidateLabel(numericCode, day);
+      if (!(numericCode >= 5 && numericCode < 9)) return false;
       if (!hasDecimalCode(numericCode)) return false;
       if (numericCode === 8.9 && normalizeOtherCodeLabel(label) === "其他") return false;
       if (isSingleEndingLabel(label)) return false;
@@ -2933,18 +2994,96 @@
       if (threshold <= 0) return false;
       return getCompoundSplitTotalHours(dayInfo) < threshold;
     }
+    function sanitizeCompoundHalfHourInputText(value) {
+      let raw = String(value || "").replace(/[^0-9.]/g, "");
+      if (raw.startsWith(".")) raw = `0${raw}`;
+      const firstDotIndex = raw.indexOf(".");
+      if (firstDotIndex >= 0) {
+        raw = raw.slice(0, firstDotIndex + 1) + raw.slice(firstDotIndex + 1).replace(/\./g, "");
+        const whole = raw.slice(0, firstDotIndex) || "0";
+        const fraction = raw.slice(firstDotIndex + 1);
+        if (fraction === "") return `${whole}.`;
+        return fraction.charAt(0) === "5" ? `${whole}.5` : whole;
+      }
+      return raw;
+    }
+    function isCompleteCompoundHalfHourInput(value) {
+      const text = String(value || "");
+      return /^\d+$/.test(text) || /^\d+\.5$/.test(text);
+    }
+    function compoundHalfHourInputToNumber(value) {
+      return Math.max(0, Number(value) || 0);
+    }
+    function getCompoundSyncDayInfo(day) {
+      const days = buildDays();
+      return days.find(item => Number(item.day) === Number(day)) || null;
+    }
+    function getCompoundSplitNumericTotal(split) {
+      return Object.values(split || {}).reduce((sum, value) => sum + Math.max(0, Number(value) || 0), 0);
+    }
+    function updateCompoundLinkedLeaveHours(day, dayInfo) {
+      const record = manualRecords[day] || {};
+      const split = record.compoundSplit && typeof record.compoundSplit === "object" ? record.compoundSplit : {};
+      const hasInput = Object.values(split).some(value => String(value ?? "").trim() !== "");
+      if (!hasInput) {
+        delete record.leaveHours;
+        return;
+      }
+      const threshold = Math.max(0, getCompoundFullDayThresholdHours(dayInfo || getCompoundSyncDayInfo(day)));
+      const total = Math.round(getCompoundSplitNumericTotal(split) * 2) / 2;
+      record.leaveHours = threshold > 0 && total >= threshold ? 0 : total;
+    }
+    function normalizeCompoundSplitByThreshold(day, preferredPart) {
+      const record = manualRecords[day] || {};
+      if (!record.compoundSplit || typeof record.compoundSplit !== "object") return "";
+      const dayInfo = getCompoundSyncDayInfo(day);
+      if (!dayInfo || !isCompoundLeaveCodeForDay(dayInfo.actualCode, day)) return "";
+      const threshold = Math.max(0, getCompoundFullDayThresholdHours(dayInfo));
+      if (threshold <= 0) {
+        updateCompoundLinkedLeaveHours(day, dayInfo);
+        return preferredPart ? (record.compoundSplit[preferredPart] ?? "") : "";
+      }
+      const parts = getCompoundPartsForDay(dayInfo.actualCode, day);
+      parts.forEach(part => {
+        if (record.compoundSplit[part] !== undefined) {
+          const value = Math.max(0, Math.round((Number(record.compoundSplit[part]) || 0) * 2) / 2);
+          record.compoundSplit[part] = value;
+        }
+      });
+      let total = getCompoundSplitNumericTotal(record.compoundSplit);
+      let overflow = Math.max(0, Math.round((total - threshold) * 2) / 2);
+      const reduceOrder = [];
+      if (preferredPart) reduceOrder.push(preferredPart);
+      parts.slice().reverse().forEach(part => { if (!reduceOrder.includes(part)) reduceOrder.push(part); });
+      reduceOrder.forEach(part => {
+        if (overflow <= 0) return;
+        const current = Math.max(0, Number(record.compoundSplit[part]) || 0);
+        const reduce = Math.min(current, overflow);
+        const nextValue = Math.round((current - reduce) * 2) / 2;
+        overflow = Math.round((overflow - reduce) * 2) / 2;
+        if (nextValue <= 0) delete record.compoundSplit[part];
+        else record.compoundSplit[part] = nextValue;
+      });
+      if (Object.keys(record.compoundSplit).length === 0) delete record.compoundSplit;
+      updateCompoundLinkedLeaveHours(day, dayInfo);
+      return preferredPart && record.compoundSplit ? (record.compoundSplit[preferredPart] ?? "") : "";
+    }
     function saveCompoundSplitValue(day, part, value) {
       if (!manualRecords[day]) manualRecords[day] = {};
       if (!manualRecords[day].compoundSplit || typeof manualRecords[day].compoundSplit !== "object") manualRecords[day].compoundSplit = {};
-      const raw = String(value || "").replace(/[^0-9.]/g, "");
-      const numeric = raw === "" ? "" : Math.max(0, Math.round((Number(raw) || 0) * 10) / 10);
-      if (numeric === "") delete manualRecords[day].compoundSplit[part];
-      else manualRecords[day].compoundSplit[part] = numeric;
+      const sanitized = sanitizeCompoundHalfHourInputText(value);
+      if (sanitized === "") delete manualRecords[day].compoundSplit[part];
+      else if (isCompleteCompoundHalfHourInput(sanitized)) manualRecords[day].compoundSplit[part] = compoundHalfHourInputToNumber(sanitized);
       if (Object.keys(manualRecords[day].compoundSplit).length === 0) delete manualRecords[day].compoundSplit;
+      const normalizedValue = normalizeCompoundSplitByThreshold(day, part);
       saveCurrentMonthState();
+      return { text: sanitized, normalizedValue };
     }
     function clearCompoundSplit(day) {
-      if (manualRecords[day]) delete manualRecords[day].compoundSplit;
+      if (manualRecords[day]) {
+        delete manualRecords[day].compoundSplit;
+        delete manualRecords[day].leaveHours;
+      }
       saveCurrentMonthState();
     }
     function loadCodeFavorites() {
@@ -2983,8 +3122,11 @@
         <div class="compound-split-panel collapsed-detail" data-compound-panel="${panelKey}">
           <div class="compound-split-title">複合式假別時數拆分</div>
           <div class="compound-split-grid">${fields}</div>
-          <div class="compound-split-hint">未輸入時沿用原始規則；已輸入且加總達 D11 視為全日，未達 D11 視為部分請假，D10=15。</div>
-          <button class="compound-split-clear" type="button" data-compound-clear="${day}">清除拆分時數</button>
+          <div class="compound-split-hint">未輸入時沿用原始規則；已輸入且加總達 D11 視為全日，未達 D11 視為部分請假，D10=15；僅允許整數或 .5，超過 D11 會自動修正到 D11。</div>
+          <div class="compound-split-actions">
+            <button class="compound-split-clear" type="button" data-compound-clear="${day}">清除拆分時數</button>
+            <button class="compound-split-confirm" type="button" data-compound-confirm="${day}">確認</button>
+          </div>
         </div>
       `;
     }
@@ -3174,10 +3316,18 @@
         input.addEventListener("click", event => { event.stopPropagation(); input.select(); });
         input.addEventListener("focus", () => { input.select(); });
         input.addEventListener("input", () => {
-          input.value = String(input.value || "").replace(/[^0-9.]/g, "");
-          saveCompoundSplitValue(Number(input.dataset.compoundDay), input.dataset.compoundPart, input.value);
+          input.value = sanitizeCompoundHalfHourInputText(input.value);
+          if (input.value === "" || isCompleteCompoundHalfHourInput(input.value)) {
+            const result = saveCompoundSplitValue(Number(input.dataset.compoundDay), input.dataset.compoundPart, input.value);
+            if (result && result.normalizedValue !== undefined && result.normalizedValue !== "" && String(result.normalizedValue) !== String(input.value)) input.value = String(result.normalizedValue);
+          }
         });
-        input.addEventListener("change", () => { renderAll(false); });
+        input.addEventListener("change", () => {
+          input.value = sanitizeCompoundHalfHourInputText(input.value);
+          if (input.value.endsWith(".")) input.value = input.value.slice(0, -1);
+          saveCompoundSplitValue(Number(input.dataset.compoundDay), input.dataset.compoundPart, input.value);
+          renderAll(false);
+        });
       });
       portal.querySelectorAll("[data-compound-clear]").forEach(btn => {
         btn.addEventListener("click", event => {
@@ -3185,6 +3335,16 @@
           event.stopPropagation();
           clearCompoundSplit(Number(btn.dataset.compoundClear));
           if (activeCodePickerPortalState) renderCodePickerPortal(activeCodePickerPortalState.day, activeCodePickerPortalState.allOpen, 0);
+          renderAll(false);
+        });
+      });
+      portal.querySelectorAll("[data-compound-confirm]").forEach(btn => {
+        btn.addEventListener("click", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          normalizeCompoundSplitByThreshold(Number(btn.dataset.compoundConfirm));
+          saveCurrentMonthState();
+          closeCodePickerPortal();
           renderAll(false);
         });
       });
@@ -4138,14 +4298,27 @@
       if (hours <= 0) return 0;
       return Math.max(0, hours - 0.5);
     }
+    function getCompoundLinkedLeaveSelectValue(dayInfo) {
+      if (isCompoundLeaveCodeForDay(dayInfo.actualCode, dayInfo.day) && hasCompoundSplitInput(dayInfo)) {
+        const threshold = getCompoundFullDayThresholdHours(dayInfo);
+        const total = Math.round(getCompoundSplitTotalHours(dayInfo) * 2) / 2;
+        return threshold > 0 && total >= threshold ? 0 : total;
+      }
+      return Number(dayInfo.leaveHours || 0);
+    }
     function buildLeaveHourOptionsForDay(dayInfo, trainingClassSelected) {
       const maxPartialHours = getMaxPartialLeaveHours(dayInfo);
+      const selectedLeaveHours = getCompoundLinkedLeaveSelectValue(dayInfo);
       const values = [0];
       for (let h = 0.5; h <= maxPartialHours + 0.0001; h += 0.5) {
         values.push(Math.round(h * 10) / 10);
       }
+      if (selectedLeaveHours > 0 && !values.some(value => Number(value) === Number(selectedLeaveHours))) {
+        values.push(Math.round(selectedLeaveHours * 2) / 2);
+        values.sort((a, b) => a - b);
+      }
       let options = values.map(h => {
-        return `<option value="${h}" ${!trainingClassSelected && Number(h) === Number(dayInfo.leaveHours) ? "selected" : ""}>${h === 0 ? "全日" : fmtHourWithUnit(h)}</option>`;
+        return `<option value="${h}" ${!trainingClassSelected && Number(h) === Number(selectedLeaveHours) ? "selected" : ""}>${h === 0 ? "全日" : fmtHourWithUnit(h)}</option>`;
       }).join("");
       if (Number(dayInfo.actualCode) === 4 && Boolean(dayInfo.isWeekend)) {
         options += `<option value="class" ${trainingClassSelected ? "selected" : ""}>上課</option>`;
@@ -5015,6 +5188,13 @@
         saveCurrentMonthState();
         updateCollapsePanels();
       });
+
+      const resetConfirmCancel = document.getElementById("resetConfirmCancel");
+      const resetConfirmOk = document.getElementById("resetConfirmOk");
+      const resetConfirmModal = document.getElementById("resetConfirmModal");
+      if (resetConfirmCancel) resetConfirmCancel.addEventListener("click", () => closeResetConfirmDialog(false));
+      if (resetConfirmOk) resetConfirmOk.addEventListener("click", () => closeResetConfirmDialog(true));
+      if (resetConfirmModal) resetConfirmModal.addEventListener("click", event => { if (event.target && event.target.id === "resetConfirmModal") closeResetConfirmDialog(false); });
 
       document.getElementById("specialDateCancelBtn").addEventListener("click", () => { closeSpecialDatePicker(); });
       document.getElementById("specialDateClearBtn").addEventListener("click", () => { clearActiveSpecialDatePickerValue(); });
