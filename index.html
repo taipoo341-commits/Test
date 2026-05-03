@@ -1786,6 +1786,140 @@
       details.core-stats-panel .core-rest-split-value { font-size: 17px !important; }
     }
 
+  
+
+    /* === 最終修正：移除實錄代碼標題列，修正手機版選單擠壓 === */
+    .code-picker-menu-head,
+    .code-picker-menu-title,
+    .code-picker-menu-note {
+      display: none !important;
+    }
+    .code-picker.open .code-picker-menu {
+      display: block !important;
+      writing-mode: horizontal-tb !important;
+      text-orientation: mixed !important;
+      white-space: normal !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      border-color: rgba(246, 196, 83, 0.52) !important;
+      background: linear-gradient(180deg, rgba(14, 16, 22, 0.985), rgba(5, 10, 18, 0.985)) !important;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(16, 185, 129, 0.16), 0 0 22px rgba(246, 196, 83, 0.24), 0 0 34px rgba(16, 185, 129, 0.12) !important;
+      animation: codePickerSlideDownGold .18s ease both !important;
+    }
+    .code-all-toggle,
+    .code-option-row,
+    .code-star-btn,
+    .code-option-btn,
+    .code-empty-favorite {
+      writing-mode: horizontal-tb !important;
+      text-orientation: mixed !important;
+    }
+    .code-all-toggle {
+      display: block !important;
+      width: 100% !important;
+      min-height: 40px !important;
+      margin: 0 0 8px 0 !important;
+      padding: 9px 12px !important;
+      text-align: left !important;
+      white-space: nowrap !important;
+      border-color: rgba(246, 196, 83, 0.40) !important;
+      background: linear-gradient(90deg, rgba(246, 196, 83, 0.12), rgba(16, 185, 129, 0.10)) !important;
+      color: #fde68a !important;
+      text-shadow: 0 0 9px rgba(246, 196, 83, 0.36) !important;
+    }
+    .code-picker-favorites,
+    .code-picker-all {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 4px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .code-picker-all.collapsed-detail {
+      display: none !important;
+    }
+    .code-option-row {
+      display: grid !important;
+      grid-template-columns: 56px minmax(0, 1fr) !important;
+      align-items: center !important;
+      gap: 6px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 44px !important;
+      margin: 2px 0 !important;
+      border-radius: 10px !important;
+    }
+    .code-star-btn {
+      width: 56px !important;
+      min-width: 56px !important;
+      height: 44px !important;
+      min-height: 44px !important;
+      font-size: 23px !important;
+      line-height: 1 !important;
+      padding: 0 !important;
+      border-radius: 10px !important;
+      touch-action: manipulation !important;
+    }
+    .code-option-btn {
+      display: block !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      height: 44px !important;
+      min-height: 44px !important;
+      padding: 0 10px !important;
+      text-align: left !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      font-size: 13px !important;
+      line-height: 44px !important;
+      touch-action: manipulation !important;
+    }
+    .code-empty-favorite {
+      width: 100% !important;
+      min-height: 40px !important;
+      padding: 8px 10px !important;
+      font-size: 12px !important;
+      line-height: 1.4 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    @media (max-width: 760px) {
+      .code-picker.open .code-picker-menu {
+        position: fixed !important;
+        left: 12px !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: max(12px, env(safe-area-inset-bottom)) !important;
+        transform: none !important;
+        width: calc(100vw - 24px) !important;
+        min-width: calc(100vw - 24px) !important;
+        max-width: calc(100vw - 24px) !important;
+        max-height: min(68vh, 520px) !important;
+        padding: 10px !important;
+        border-radius: 18px !important;
+        z-index: 50000 !important;
+        animation: codePickerMobileSlideUpGold .22s ease both !important;
+        box-shadow: 0 -10px 46px rgba(0, 0, 0, 0.72), 0 0 0 1px rgba(246, 196, 83, 0.32), 0 0 28px rgba(246, 196, 83, 0.30), 0 0 42px rgba(16, 185, 129, 0.18) !important;
+      }
+      .code-option-row {
+        grid-template-columns: 58px minmax(0, 1fr) !important;
+        min-height: 46px !important;
+      }
+      .code-star-btn {
+        width: 58px !important;
+        min-width: 58px !important;
+        height: 46px !important;
+        min-height: 46px !important;
+      }
+      .code-option-btn {
+        height: 46px !important;
+        min-height: 46px !important;
+        line-height: 46px !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -2494,7 +2628,7 @@
       const favoriteOptions = getFavoriteCodeOptions();
       const favoriteHtml = favoriteOptions.length ? favoriteOptions.map(code => buildCodeOptionRow(code, selectedCode, true)).join("") : `<div class="code-empty-favorite">未設定我的最愛</div>`;
       const allHtml = CODE_OPTIONS.map(code => buildCodeOptionRow(code, selectedCode, false)).join("");
-      return `<div class="code-picker" data-code-picker="${day}"><button class="code-picker-button" type="button" data-code-picker-button="${day}">${selectedCode} ${getLabel(selectedCode)}</button><div class="code-picker-menu"><div class="code-picker-menu-head"><div class="code-picker-menu-title">實錄代碼</div><div class="code-picker-menu-note">左側星號加入／取消我的最愛，右側文字套用代碼</div></div><button class="code-all-toggle" type="button" data-code-all-toggle="${day}">全部代碼</button><div class="code-picker-favorites">${favoriteHtml}</div><div class="code-picker-all collapsed-detail" data-code-all-list="${day}">${allHtml}</div></div></div>`;
+      return `<div class="code-picker" data-code-picker="${day}"><button class="code-picker-button" type="button" data-code-picker-button="${day}">${selectedCode} ${getLabel(selectedCode)}</button><div class="code-picker-menu"><button class="code-all-toggle" type="button" data-code-all-toggle="${day}">全部代碼</button><div class="code-picker-favorites">${favoriteHtml}</div><div class="code-picker-all collapsed-detail" data-code-all-list="${day}">${allHtml}</div></div></div>`;
     }
     function closeAllCodePickers(exceptPicker) {
       document.querySelectorAll(".code-picker.open").forEach(picker => {
