@@ -2486,7 +2486,7 @@
   <div id="resetConfirmModal" class="reset-confirm-modal" aria-hidden="true">
     <div class="reset-confirm-card" role="dialog" aria-modal="true" aria-labelledby="resetConfirmTitle">
       <div class="reset-confirm-header">
-        <div id="resetConfirmTitle" class="reset-confirm-title">⚠ RESET 清除確認</div>
+        <div id="resetConfirmTitle" class="reset-confirm-title">⚠ 清除確認 ⚠</div>
         <div class="reset-confirm-subtitle">這是不可復原的資料清除動作</div>
       </div>
       <div class="reset-confirm-body">
@@ -3125,7 +3125,7 @@
           <div class="compound-split-hint">未輸入時沿用原始規則；已輸入且加總達 D11 視為全日，未達 D11 視為部分請假，D10=15；僅允許整數或 .5，超過 D11 會自動修正到 D11。</div>
           <div class="compound-split-actions">
             <button class="compound-split-clear" type="button" data-compound-clear="${day}">清除拆分時數</button>
-            <button class="compound-split-confirm" type="button" data-compound-confirm="${day}">確認</button>
+            <button class="compound-split-confirm" type="button" data-compound-confirm="${day}" data-compound-confirm-code="${code}">確認</button>
           </div>
         </div>
       `;
@@ -3342,7 +3342,13 @@
         btn.addEventListener("click", event => {
           event.preventDefault();
           event.stopPropagation();
-          normalizeCompoundSplitByThreshold(Number(btn.dataset.compoundConfirm));
+          const day = Number(btn.dataset.compoundConfirm);
+          const code = Number(btn.dataset.compoundConfirmCode);
+          if (!manualRecords[day]) manualRecords[day] = {};
+          manualRecords[day].code = code;
+          if (code !== 8.9) delete manualRecords[day].otherLabel;
+          if (code !== 4) delete manualRecords[day].trainingMode;
+          normalizeCompoundSplitByThreshold(day);
           saveCurrentMonthState();
           closeCodePickerPortal();
           renderAll(false);
