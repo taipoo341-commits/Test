@@ -2885,18 +2885,18 @@
         <div class="code-picker-portal-sheet" role="dialog" aria-modal="true" aria-label="代碼選單" data-code-portal-day="${day}">
           <div class="code-picker-portal-header">
             <div>
-              <div class="code-picker-portal-title">第 ${day} 日代碼</div>
-              <div class="code-picker-portal-subtitle">星號設定我的最愛，點文字套用代碼</div>
+              <div class="code-picker-portal-title">第 ${day} 日假別</div>
+              <div class="code-picker-portal-subtitle">星號設定我的最愛，點文字套用假別</div>
             </div>
             <button class="code-picker-portal-close" type="button" data-code-portal-close="1">關閉</button>
           </div>
           <div class="code-picker-portal-actions">
-            <button class="code-all-toggle code-portal-all-toggle" type="button" data-code-portal-all-toggle="${day}">${allOpen ? "收合全部代碼" : "全部代碼"}</button>
+            <button class="code-all-toggle code-portal-all-toggle" type="button" data-code-portal-all-toggle="${day}">${allOpen ? "收合全部假別" : "全部假別"}</button>
           </div>
           <div class="code-picker-portal-scroll">
             <div class="code-picker-portal-section-title">我的最愛</div>
             <div class="code-picker-favorites">${favoriteHtml}</div>
-            <div class="code-picker-portal-section-title code-picker-all-title ${allOpen ? "" : "collapsed-detail"}">全部代碼</div>
+            <div class="code-picker-portal-section-title code-picker-all-title ${allOpen ? "" : "collapsed-detail"}">全部假別</div>
             <div class="code-picker-all ${allOpen ? "" : "collapsed-detail"}" data-code-all-list="${day}">${allHtml}</div>
           </div>
         </div>
