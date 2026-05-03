@@ -1788,71 +1788,352 @@
 
   
 
-    /* === 代碼選單手機滿版與捲動位置修正 === */
-    .code-picker.open.all-open .code-picker-menu {
+    /* === 最終修正：移除實錄代碼標題列，修正手機版選單擠壓 === */
+    .code-picker-menu-head,
+    .code-picker-menu-title,
+    .code-picker-menu-note {
+      display: none !important;
+    }
+    .code-picker.open .code-picker-menu {
+      display: block !important;
+      writing-mode: horizontal-tb !important;
+      text-orientation: mixed !important;
+      white-space: normal !important;
+      overflow-x: hidden !important;
       overflow-y: auto !important;
-      overscroll-behavior: contain !important;
-      scrollbar-gutter: stable !important;
+      border-color: rgba(246, 196, 83, 0.52) !important;
+      background: linear-gradient(180deg, rgba(14, 16, 22, 0.985), rgba(5, 10, 18, 0.985)) !important;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(16, 185, 129, 0.16), 0 0 22px rgba(246, 196, 83, 0.24), 0 0 34px rgba(16, 185, 129, 0.12) !important;
+      animation: codePickerSlideDownGold .18s ease both !important;
     }
-    .code-picker.open.all-open .code-picker-all:not(.collapsed-detail) {
+    .code-all-toggle,
+    .code-option-row,
+    .code-star-btn,
+    .code-option-btn,
+    .code-empty-favorite {
+      writing-mode: horizontal-tb !important;
+      text-orientation: mixed !important;
+    }
+    .code-all-toggle {
+      display: block !important;
+      width: 100% !important;
+      min-height: 40px !important;
+      margin: 0 0 8px 0 !important;
+      padding: 9px 12px !important;
+      text-align: left !important;
+      white-space: nowrap !important;
+      border-color: rgba(246, 196, 83, 0.40) !important;
+      background: linear-gradient(90deg, rgba(246, 196, 83, 0.12), rgba(16, 185, 129, 0.10)) !important;
+      color: #fde68a !important;
+      text-shadow: 0 0 9px rgba(246, 196, 83, 0.36) !important;
+    }
+    .code-picker-favorites,
+    .code-picker-all {
       display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 4px !important;
+      width: 100% !important;
+      min-width: 0 !important;
     }
-    .code-picker.open.all-open .code-all-toggle {
-      position: sticky !important;
-      top: 0 !important;
-      z-index: 3 !important;
-      margin-bottom: 10px !important;
-      backdrop-filter: blur(10px) !important;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.26), 0 0 14px rgba(246, 196, 83, 0.18) !important;
+    .code-picker-all.collapsed-detail {
+      display: none !important;
+    }
+    .code-option-row {
+      display: grid !important;
+      grid-template-columns: 56px minmax(0, 1fr) !important;
+      align-items: center !important;
+      gap: 6px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 44px !important;
+      margin: 2px 0 !important;
+      border-radius: 10px !important;
+    }
+    .code-star-btn {
+      width: 56px !important;
+      min-width: 56px !important;
+      height: 44px !important;
+      min-height: 44px !important;
+      font-size: 23px !important;
+      line-height: 1 !important;
+      padding: 0 !important;
+      border-radius: 10px !important;
+      touch-action: manipulation !important;
+    }
+    .code-option-btn {
+      display: block !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      height: 44px !important;
+      min-height: 44px !important;
+      padding: 0 10px !important;
+      text-align: left !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      font-size: 13px !important;
+      line-height: 44px !important;
+      touch-action: manipulation !important;
+    }
+    .code-empty-favorite {
+      width: 100% !important;
+      min-height: 40px !important;
+      padding: 8px 10px !important;
+      font-size: 12px !important;
+      line-height: 1.4 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
     }
     @media (max-width: 760px) {
       .code-picker.open .code-picker-menu {
-        left: max(10px, env(safe-area-inset-left)) !important;
+        position: fixed !important;
+        left: 12px !important;
         right: auto !important;
+        top: auto !important;
         bottom: max(12px, env(safe-area-inset-bottom)) !important;
-        width: calc(100vw - 20px - env(safe-area-inset-left) - env(safe-area-inset-right)) !important;
-        min-width: 0 !important;
-        max-width: calc(100vw - 20px - env(safe-area-inset-left) - env(safe-area-inset-right)) !important;
-        max-height: min(46vh, 390px) !important;
+        transform: none !important;
+        width: calc(100vw - 24px) !important;
+        min-width: calc(100vw - 24px) !important;
+        max-width: calc(100vw - 24px) !important;
+        max-height: min(68vh, 520px) !important;
+        padding: 10px !important;
+        border-radius: 18px !important;
+        z-index: 50000 !important;
+        animation: codePickerMobileSlideUpGold .22s ease both !important;
+        box-shadow: 0 -10px 46px rgba(0, 0, 0, 0.72), 0 0 0 1px rgba(246, 196, 83, 0.32), 0 0 28px rgba(246, 196, 83, 0.30), 0 0 42px rgba(16, 185, 129, 0.18) !important;
       }
-      .code-picker.open.all-open .code-picker-menu {
+      .code-option-row {
+        grid-template-columns: 58px minmax(0, 1fr) !important;
+        min-height: 46px !important;
+      }
+      .code-star-btn {
+        width: 58px !important;
+        min-width: 58px !important;
+        height: 46px !important;
+        min-height: 46px !important;
+      }
+      .code-option-btn {
+        height: 46px !important;
+        min-height: 46px !important;
+        line-height: 46px !important;
+      }
+    }
+
+  
+
+    /* === 代碼選單 Portal 結構性修正：脫離日曆格，避免手機寬度塌陷 === */
+    .code-picker-menu { display: none !important; }
+    .code-picker-portal {
+      position: fixed;
+      inset: 0;
+      z-index: 90000;
+      display: none;
+      pointer-events: none;
+    }
+    .code-picker-portal.open {
+      display: block;
+      pointer-events: auto;
+    }
+    .code-picker-portal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.46);
+      backdrop-filter: blur(2px);
+    }
+    .code-picker-portal-sheet {
+      position: absolute;
+      left: 50%;
+      bottom: max(14px, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      width: min(520px, calc(100vw - 24px));
+      max-height: min(72vh, 620px);
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      border: 1px solid rgba(246, 196, 83, 0.52);
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(14, 16, 22, 0.985), rgba(5, 10, 18, 0.985));
+      box-shadow: 0 -12px 46px rgba(0, 0, 0, 0.76), 0 0 0 1px rgba(16, 185, 129, 0.16), 0 0 26px rgba(246, 196, 83, 0.30), 0 0 42px rgba(16, 185, 129, 0.16);
+      overflow: hidden;
+      animation: codePickerMobileSlideUpGold .22s ease both;
+    }
+    .code-picker-portal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px 10px;
+      border-bottom: 1px solid rgba(246, 196, 83, 0.18);
+      background: linear-gradient(90deg, rgba(120, 84, 20, 0.20), rgba(6, 78, 59, 0.16), rgba(15, 23, 42, 0.82));
+    }
+    .code-picker-portal-title {
+      color: #f6c453;
+      font-size: 15px;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 10px rgba(246, 196, 83, 0.42);
+      white-space: nowrap;
+    }
+    .code-picker-portal-subtitle {
+      margin-top: 3px;
+      color: #94a3b8;
+      font-size: 11px;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+    .code-picker-portal-close {
+      flex: 0 0 auto;
+      min-width: 58px;
+      height: 34px;
+      border: 1px solid rgba(148, 163, 184, 0.30);
+      border-radius: 10px;
+      background: rgba(148, 163, 184, 0.10);
+      color: #e5e7eb;
+      font-size: 12px;
+      font-weight: 950;
+      cursor: pointer;
+    }
+    .code-picker-portal-actions {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(246, 196, 83, 0.14);
+      background: rgba(0, 0, 0, 0.14);
+    }
+    .code-picker-portal-scroll {
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 10px 12px 14px;
+    }
+    .code-picker-portal-section-title {
+      margin: 4px 0 8px;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      white-space: nowrap;
+    }
+    .code-picker-portal .code-all-toggle {
+      width: 100% !important;
+      min-height: 42px !important;
+      margin: 0 !important;
+      padding: 9px 12px !important;
+      border-color: rgba(246, 196, 83, 0.42) !important;
+      border-radius: 12px !important;
+      background: linear-gradient(90deg, rgba(246, 196, 83, 0.12), rgba(16, 185, 129, 0.10)) !important;
+      color: #fde68a !important;
+      text-align: left !important;
+      white-space: nowrap !important;
+      text-shadow: 0 0 9px rgba(246, 196, 83, 0.36) !important;
+    }
+    .code-picker-portal .code-picker-favorites,
+    .code-picker-portal .code-picker-all {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 6px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .code-picker-portal .code-picker-all.collapsed-detail,
+    .code-picker-portal .code-picker-all-title.collapsed-detail {
+      display: none !important;
+    }
+    .code-picker-portal .code-option-row {
+      display: grid !important;
+      grid-template-columns: 62px minmax(0, 1fr) !important;
+      align-items: center !important;
+      gap: 8px !important;
+      min-width: 0 !important;
+      min-height: 50px !important;
+      border-radius: 13px !important;
+      border: 1px solid transparent !important;
+      overflow: hidden !important;
+    }
+    .code-picker-portal .code-option-row:hover,
+    .code-picker-portal .code-option-row.selected {
+      border-color: rgba(110, 231, 183, 0.38) !important;
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.42), rgba(37, 99, 235, 0.32)) !important;
+    }
+    .code-picker-portal .code-star-btn {
+      width: 62px !important;
+      min-width: 62px !important;
+      height: 50px !important;
+      min-height: 50px !important;
+      border: none !important;
+      border-radius: 13px !important;
+      background: rgba(246, 196, 83, 0.09) !important;
+      color: #f6c453 !important;
+      font-size: 26px !important;
+      line-height: 1 !important;
+      text-shadow: 0 0 10px rgba(246, 196, 83, 0.50) !important;
+      touch-action: manipulation !important;
+    }
+    .code-picker-portal .code-option-btn {
+      display: block !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      height: 50px !important;
+      line-height: 50px !important;
+      padding: 0 12px !important;
+      border: none !important;
+      background: transparent !important;
+      color: #e5e7eb !important;
+      text-align: left !important;
+      font-size: 16px !important;
+      font-weight: 950 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      touch-action: manipulation !important;
+    }
+    .code-picker-portal .code-empty-favorite {
+      width: 100% !important;
+      min-height: 44px !important;
+      display: flex !important;
+      align-items: center !important;
+      padding: 10px 12px !important;
+      color: #94a3b8 !important;
+      font-size: 13px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    @media (max-width: 760px) {
+      .code-picker-portal-sheet {
+        left: max(8px, env(safe-area-inset-left)) !important;
+        right: max(8px, env(safe-area-inset-right)) !important;
+        bottom: max(10px, env(safe-area-inset-bottom)) !important;
+        transform: none !important;
+        width: auto !important;
+        max-width: none !important;
+        max-height: min(58vh, 460px) !important;
+        border-radius: 18px !important;
+      }
+      .code-picker-portal.all-open .code-picker-portal-sheet {
         top: max(10px, env(safe-area-inset-top)) !important;
         bottom: max(10px, env(safe-area-inset-bottom)) !important;
-        left: max(10px, env(safe-area-inset-left)) !important;
-        right: max(10px, env(safe-area-inset-right)) !important;
-        width: auto !important;
-        min-width: 0 !important;
-        max-width: none !important;
-        height: auto !important;
-        max-height: calc(100dvh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
-        padding: 12px !important;
-        border-radius: 18px !important;
-        transform: none !important;
-        z-index: 60000 !important;
-        animation: codePickerMobileSlideUpGold .22s ease both !important;
+        max-height: none !important;
       }
-      .code-picker.open.all-open .code-picker-favorites,
-      .code-picker.open.all-open .code-picker-all {
-        gap: 6px !important;
+      .code-picker-portal.all-open .code-picker-portal-scroll {
+        padding-bottom: 18px !important;
       }
-      .code-picker.open.all-open .code-option-row {
+      .code-picker-portal .code-option-row {
         grid-template-columns: 64px minmax(0, 1fr) !important;
         min-height: 54px !important;
-        gap: 8px !important;
       }
-      .code-picker.open.all-open .code-star-btn {
+      .code-picker-portal .code-star-btn {
         width: 64px !important;
         min-width: 64px !important;
         height: 54px !important;
         min-height: 54px !important;
         font-size: 28px !important;
       }
-      .code-picker.open.all-open .code-option-btn {
+      .code-picker-portal .code-option-btn {
         height: 54px !important;
-        min-height: 54px !important;
         line-height: 54px !important;
         font-size: 17px !important;
-        padding: 0 12px !important;
+      }
+      .code-picker-portal-subtitle {
+        white-space: normal !important;
       }
     }
 
@@ -2149,6 +2430,7 @@
       </footer>
     </div>
   </div>
+  <div id="codePickerPortal" class="code-picker-portal" aria-hidden="true"></div>
   <div id="specialDateModal" class="special-date-modal" aria-hidden="true">
     <div class="special-date-card">
       <div id="specialDateTitle" class="special-date-title">選擇日期</div>
@@ -2269,6 +2551,7 @@
     let salaryOvertimeDetailOpen = false;
     let salaryBasePaySource = "carry";
     let pendingCodePickerReopen = null;
+    let activeCodePickerPortalState = null;
     const CODE_FAVORITES_STORAGE_KEY = "personalOvertimeCodeFavorites";
     let codeFavoriteSet = new Set();
     let activeStorageKey = "";
@@ -2561,42 +2844,90 @@
       `;
     }
     function buildCodePickerHtml(day, selectedCode) {
-      const favoriteOptions = getFavoriteCodeOptions();
-      const favoriteHtml = favoriteOptions.length ? favoriteOptions.map(code => buildCodeOptionRow(code, selectedCode, true)).join("") : `<div class="code-empty-favorite">未設定我的最愛</div>`;
-      const allHtml = CODE_OPTIONS.map(code => buildCodeOptionRow(code, selectedCode, false)).join("");
-      return `<div class="code-picker" data-code-picker="${day}"><button class="code-picker-button" type="button" data-code-picker-button="${day}">${selectedCode} ${getLabel(selectedCode)}</button><div class="code-picker-menu"><button class="code-all-toggle" type="button" data-code-all-toggle="${day}">全部代碼</button><div class="code-picker-favorites">${favoriteHtml}</div><div class="code-picker-all collapsed-detail" data-code-all-list="${day}">${allHtml}</div></div></div>`;
+      return `<div class="code-picker" data-code-picker="${day}"><button class="code-picker-button" type="button" data-code-picker-button="${day}">${selectedCode} ${getLabel(selectedCode)}</button></div>`;
+    }
+    function ensureCodePickerPortal() {
+      let portal = document.getElementById("codePickerPortal");
+      if (!portal) {
+        portal = document.createElement("div");
+        portal.id = "codePickerPortal";
+        portal.className = "code-picker-portal";
+        document.body.appendChild(portal);
+      }
+      return portal;
+    }
+    function getDayInfoForCodePicker(day) {
+      const days = buildDays();
+      return days.find(item => Number(item.day) === Number(day)) || null;
+    }
+    function closeCodePickerPortal() {
+      const portal = document.getElementById("codePickerPortal");
+      if (portal) {
+        portal.classList.remove("open", "all-open");
+        portal.innerHTML = "";
+      }
+      document.querySelectorAll(".day-card.code-picker-card-open").forEach(card => card.classList.remove("code-picker-card-open"));
+      document.querySelectorAll(".code-picker.open").forEach(picker => picker.classList.remove("open"));
+      activeCodePickerPortalState = null;
     }
     function closeAllCodePickers(exceptPicker) {
       document.querySelectorAll(".code-picker.open").forEach(picker => {
-        if (picker !== exceptPicker) {
-          picker.classList.remove("open", "all-open");
-          const card = picker.closest(".day-card");
-          if (card) card.classList.remove("code-picker-card-open");
-        }
+        if (picker !== exceptPicker) picker.classList.remove("open");
       });
+      if (!exceptPicker) closeCodePickerPortal();
+    }
+    function buildCodePickerPortalHtml(day, selectedCode, allOpen) {
+      const favoriteOptions = getFavoriteCodeOptions();
+      const favoriteHtml = favoriteOptions.length ? favoriteOptions.map(code => buildCodeOptionRow(code, selectedCode, true)).join("") : `<div class="code-empty-favorite">未設定我的最愛</div>`;
+      const allHtml = CODE_OPTIONS.map(code => buildCodeOptionRow(code, selectedCode, false)).join("");
+      return `
+        <div class="code-picker-portal-backdrop" data-code-portal-close="1"></div>
+        <div class="code-picker-portal-sheet" role="dialog" aria-modal="true" aria-label="代碼選單" data-code-portal-day="${day}">
+          <div class="code-picker-portal-header">
+            <div>
+              <div class="code-picker-portal-title">第 ${day} 日代碼</div>
+              <div class="code-picker-portal-subtitle">星號設定我的最愛，點文字套用代碼</div>
+            </div>
+            <button class="code-picker-portal-close" type="button" data-code-portal-close="1">關閉</button>
+          </div>
+          <div class="code-picker-portal-actions">
+            <button class="code-all-toggle code-portal-all-toggle" type="button" data-code-portal-all-toggle="${day}">${allOpen ? "收合全部代碼" : "全部代碼"}</button>
+          </div>
+          <div class="code-picker-portal-scroll">
+            <div class="code-picker-portal-section-title">我的最愛</div>
+            <div class="code-picker-favorites">${favoriteHtml}</div>
+            <div class="code-picker-portal-section-title code-picker-all-title ${allOpen ? "" : "collapsed-detail"}">全部代碼</div>
+            <div class="code-picker-all ${allOpen ? "" : "collapsed-detail"}" data-code-all-list="${day}">${allHtml}</div>
+          </div>
+        </div>
+      `;
+    }
+    function renderCodePickerPortal(day, allOpen, restoreScrollTop) {
+      const dayInfo = getDayInfoForCodePicker(day);
+      if (!dayInfo) return;
+      const portal = ensureCodePickerPortal();
+      const selectedCode = Number(dayInfo.actualCode);
+      activeCodePickerPortalState = { day: Number(day), allOpen: Boolean(allOpen), selectedCode };
+      portal.innerHTML = buildCodePickerPortalHtml(day, selectedCode, Boolean(allOpen));
+      portal.classList.add("open");
+      portal.classList.toggle("all-open", Boolean(allOpen));
+      const picker = document.querySelector(`.code-picker[data-code-picker="${day}"]`);
+      if (picker) picker.classList.add("open");
+      const card = picker ? picker.closest(".day-card") : null;
+      if (card) card.classList.add("code-picker-card-open");
+      bindCodePickerPortalEvents(portal);
+      if (restoreScrollTop !== undefined && restoreScrollTop !== null) {
+        const scrollEl = portal.querySelector(".code-picker-portal-scroll");
+        if (scrollEl) window.setTimeout(() => { scrollEl.scrollTop = Number(restoreScrollTop) || 0; }, 0);
+      }
     }
     function openCodePickerByDay(day, openAllList, restoreScrollTop) {
-      const picker = document.querySelector(`.code-picker[data-code-picker="${day}"]`);
-      if (!picker) return;
-      closeAllCodePickers(picker);
-      picker.classList.add("open");
-      picker.classList.toggle("all-open", Boolean(openAllList));
-      const card = picker.closest(".day-card");
-      if (card) card.classList.add("code-picker-card-open");
-      const allList = picker.querySelector(".code-picker-all");
-      if (allList) allList.classList.toggle("collapsed-detail", !openAllList);
-      if (restoreScrollTop !== undefined && restoreScrollTop !== null) {
-        const menu = picker.querySelector(".code-picker-menu");
-        if (menu) {
-          window.setTimeout(() => {
-            menu.scrollTop = Number(restoreScrollTop) || 0;
-          }, 0);
-        }
-      }
+      closeAllCodePickers(null);
+      renderCodePickerPortal(day, openAllList, restoreScrollTop);
     }
     function selectActualCodeForDay(day, code) {
       pendingCodePickerReopen = null;
-      closeAllCodePickers(null);
+      closeCodePickerPortal();
       if (!manualRecords[day]) manualRecords[day] = {};
       manualRecords[day].code = Number(code);
       if (!isLeaveCode(Number(code))) delete manualRecords[day].leaveHours;
@@ -2604,62 +2935,56 @@
       saveCurrentMonthState();
       renderAll(false);
     }
+    function bindCodePickerPortalEvents(portal) {
+      portal.querySelectorAll("[data-code-portal-close]").forEach(btn => {
+        btn.addEventListener("click", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          closeCodePickerPortal();
+        });
+      });
+      portal.querySelectorAll(".code-portal-all-toggle").forEach(btn => {
+        btn.addEventListener("click", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          if (!activeCodePickerPortalState) return;
+          const scrollEl = portal.querySelector(".code-picker-portal-scroll");
+          const scrollTop = scrollEl ? scrollEl.scrollTop : 0;
+          const nextAllOpen = !activeCodePickerPortalState.allOpen;
+          renderCodePickerPortal(activeCodePickerPortalState.day, nextAllOpen, nextAllOpen ? 0 : scrollTop);
+        });
+      });
+      portal.querySelectorAll(".code-star-btn").forEach(btn => {
+        btn.addEventListener("click", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          if (!activeCodePickerPortalState) return;
+          const scrollEl = portal.querySelector(".code-picker-portal-scroll");
+          const scrollTop = scrollEl ? scrollEl.scrollTop : 0;
+          toggleCodeFavorite(btn.dataset.codeStar);
+          renderCodePickerPortal(activeCodePickerPortalState.day, activeCodePickerPortalState.allOpen, scrollTop);
+        });
+      });
+      portal.querySelectorAll(".code-option-btn").forEach(btn => {
+        btn.addEventListener("click", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          if (!activeCodePickerPortalState) return;
+          selectActualCodeForDay(activeCodePickerPortalState.day, Number(btn.dataset.codeOption));
+        });
+      });
+    }
     function bindCodePickerEvents(container) {
       container.querySelectorAll(".code-picker-button").forEach(btn => {
-        btn.addEventListener("click", event => {
-          event.stopPropagation();
-          const picker = btn.closest(".code-picker");
-          if (!picker) return;
-          const isOpen = picker.classList.contains("open");
-          closeAllCodePickers(picker);
-          picker.classList.toggle("open", !isOpen);
-          if (isOpen) picker.classList.remove("all-open");
-          if (!isOpen) {
-            picker.classList.remove("all-open");
-            const allList = picker.querySelector(".code-picker-all");
-            if (allList) allList.classList.add("collapsed-detail");
-          }
-          const card = picker.closest(".day-card");
-          if (card) card.classList.toggle("code-picker-card-open", !isOpen);
-        });
-      });
-      container.querySelectorAll(".code-all-toggle").forEach(btn => {
-        btn.addEventListener("click", event => {
-          event.stopPropagation();
-          const picker = btn.closest(".code-picker");
-          const allList = picker ? picker.querySelector(".code-picker-all") : null;
-          if (allList && picker) {
-            const willOpen = allList.classList.contains("collapsed-detail");
-            allList.classList.toggle("collapsed-detail", !willOpen);
-            picker.classList.toggle("all-open", willOpen);
-            btn.textContent = willOpen ? "收合全部代碼" : "全部代碼";
-            if (willOpen) {
-              const menu = picker.querySelector(".code-picker-menu");
-              if (menu) menu.scrollTop = 0;
-            }
-          }
-        });
-      });
-      container.querySelectorAll(".code-star-btn").forEach(btn => {
         btn.addEventListener("click", event => {
           event.preventDefault();
           event.stopPropagation();
           const picker = btn.closest(".code-picker");
-          const day = picker ? Number(picker.dataset.codePicker) : 0;
-          const menu = picker ? picker.querySelector(".code-picker-menu") : null;
-          const scrollTop = menu ? menu.scrollTop : 0;
-          pendingCodePickerReopen = { day, allOpen: true, scrollTop };
-          toggleCodeFavorite(btn.dataset.codeStar);
-          renderAll(false);
-          window.setTimeout(() => {
-            if (day) openCodePickerByDay(day, true, scrollTop);
-          }, 0);
-        });
-      });
-      container.querySelectorAll(".code-option-btn").forEach(btn => {
-        btn.addEventListener("click", event => {
-          event.stopPropagation();
-          selectActualCodeForDay(Number(btn.closest(".code-picker").dataset.codePicker), Number(btn.dataset.codeOption));
+          if (!picker) return;
+          const day = Number(picker.dataset.codePicker);
+          const isSameOpen = activeCodePickerPortalState && Number(activeCodePickerPortalState.day) === day;
+          if (isSameOpen) closeCodePickerPortal();
+          else openCodePickerByDay(day, false);
         });
       });
     }
@@ -4469,7 +4794,7 @@
         switchMonthState(true);
       });
       document.addEventListener("click", event => {
-        if (!event.target.closest(".code-picker")) closeAllCodePickers(null);
+        if (!event.target.closest(".code-picker") && !event.target.closest("#codePickerPortal")) closeAllCodePickers(null);
       });
       window.addEventListener("beforeunload", () => {
         saveCurrentMonthState();
